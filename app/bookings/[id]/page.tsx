@@ -45,7 +45,7 @@ export default function BookingDetailPage({
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Toast Feedback */}
       {toastMessage && (
-        <div className="p-4 bg-emerald-600 text-white font-semibold rounded-2xl shadow-lg flex items-center justify-between animate-in fade-in slide-in-from-top duration-300">
+        <div className="p-4 bg-emerald-600 text-white font-medium rounded-2xl shadow-lg flex items-center justify-between animate-in fade-in slide-in-from-top duration-300">
           <div className="flex items-center gap-3">
             <Check className="w-5 h-5 bg-white text-emerald-600 rounded-full p-0.5" />
             <span>{toastMessage}</span>
@@ -63,7 +63,7 @@ export default function BookingDetailPage({
       <div>
         <Link
           href="/bookings"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors mb-4"
+          className="inline-flex items-center gap-2 text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors mb-4"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Bookings</span>
@@ -77,19 +77,19 @@ export default function BookingDetailPage({
             <div className="flex items-center gap-4">
               <Avatar className="w-16 h-16 border-2 border-slate-100 shadow-sm">
                 <AvatarImage src={booking.customerAvatar} />
-                <AvatarFallback className="bg-amber-100 text-amber-900 text-lg font-bold">
+                <AvatarFallback className="bg-amber-100 text-amber-900 text-lg font-medium">
                   {booking.customer.charAt(0)}
                 </AvatarFallback>
               </Avatar>
               <div>
                 <div className="flex items-center gap-3">
-                  <h1 className="text-2xl font-black text-slate-900">
+                  <h1 className="text-2xl font-medium text-slate-900">
                     {booking.customer}
                   </h1>
                   <StatusBadge status={booking.status} />
                 </div>
                 <p className="text-xs font-mono text-slate-500 mt-1">
-                  Booking Code: <span className="font-bold text-slate-700">{booking.bookingCode}</span>
+                  Booking Code: <span className="font-medium text-slate-700">{booking.bookingCode}</span>
                 </p>
               </div>
             </div>
@@ -137,14 +137,14 @@ export default function BookingDetailPage({
               )}
 
               {booking.status === 'Completed' && (
-                <div className="flex items-center gap-2 px-4 py-2 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-semibold">
+                <div className="flex items-center gap-2 px-4 py-2 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-medium">
                   <CheckCircle2 className="w-4 h-4" />
                   <span>Session Completed</span>
                 </div>
               )}
 
               {booking.status === 'Cancelled' && (
-                <div className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-700 rounded-lg text-xs font-semibold">
+                <div className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-700 rounded-lg text-xs font-medium">
                   <XCircle className="w-4 h-4" />
                   <span>Booking Cancelled</span>
                 </div>
@@ -160,7 +160,7 @@ export default function BookingDetailPage({
               </div>
               <div>
                 <p className="text-xs text-slate-400 font-medium">Studio Room</p>
-                <p className="text-sm font-bold text-slate-900">{booking.studioRoom}</p>
+                <p className="text-sm font-medium text-slate-900">{booking.studioRoom}</p>
               </div>
             </div>
 
@@ -170,7 +170,7 @@ export default function BookingDetailPage({
               </div>
               <div>
                 <p className="text-xs text-slate-400 font-medium">Date & Time</p>
-                <p className="text-sm font-bold text-slate-900">{booking.dateTime}</p>
+                <p className="text-sm font-medium text-slate-900">{booking.dateTime}</p>
               </div>
             </div>
 
@@ -180,17 +180,17 @@ export default function BookingDetailPage({
               </div>
               <div>
                 <p className="text-xs text-slate-400 font-medium">Duration</p>
-                <p className="text-sm font-bold text-slate-900">{booking.duration}</p>
+                <p className="text-sm font-medium text-slate-900">{booking.duration}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
-                <span className="font-black text-xs">LKR</span>
+                <span className="font-medium text-xs">LKR</span>
               </div>
               <div>
                 <p className="text-xs text-slate-400 font-medium">Total Amount</p>
-                <p className="text-sm font-black text-slate-900">{booking.amount}</p>
+                <p className="text-sm font-medium text-slate-900">{booking.amount}</p>
               </div>
             </div>
           </div>
@@ -206,29 +206,29 @@ export default function BookingDetailPage({
               <div className="w-8 h-8 rounded-lg bg-amber-50 text-[#C85A17] flex items-center justify-center">
                 <Camera className="w-4 h-4" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Studio Setup & Equipment</h3>
+              <h3 className="text-base font-medium text-slate-900">Studio Setup & Equipment</h3>
             </div>
 
             <div className="space-y-3 text-xs">
               <div className="flex justify-between py-2.5 border-b border-slate-100">
                 <span className="text-slate-500 font-medium">Room Name</span>
-                <span className="font-bold text-slate-800">Studio Room A (Cyclorama Wall)</span>
+                <span className="font-medium text-slate-800">Studio Room A (Cyclorama Wall)</span>
               </div>
               <div className="flex justify-between py-2.5 border-b border-slate-100">
                 <span className="text-slate-500 font-medium">Lighting Package</span>
-                <span className="font-bold text-slate-800">3x Profoto D2 500W Strobes + Modifiers</span>
+                <span className="font-medium text-slate-800">3x Profoto D2 500W Strobes + Modifiers</span>
               </div>
               <div className="flex justify-between py-2.5 border-b border-slate-100">
                 <span className="text-slate-500 font-medium">Backdrops Included</span>
-                <span className="font-bold text-slate-800">Pure White, Warm Stone, Deep Charcoal</span>
+                <span className="font-medium text-slate-800">Pure White, Warm Stone, Deep Charcoal</span>
               </div>
               <div className="flex justify-between py-2.5 border-b border-slate-100">
                 <span className="text-slate-500 font-medium">Assistant on Standby</span>
-                <span className="font-bold text-emerald-600">Included</span>
+                <span className="font-medium text-emerald-600">Included</span>
               </div>
               <div className="flex justify-between py-2.5">
                 <span className="text-slate-500 font-medium">WiFi & Tether Station</span>
-                <span className="font-bold text-emerald-600">Available (Calibrated Display)</span>
+                <span className="font-medium text-emerald-600">Available (Calibrated Display)</span>
               </div>
             </div>
           </CardContent>
@@ -241,25 +241,25 @@ export default function BookingDetailPage({
               <div className="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center">
                 <User className="w-4 h-4" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Customer & Invoice</h3>
+              <h3 className="text-base font-medium text-slate-900">Customer & Invoice</h3>
             </div>
 
             <div className="space-y-3 text-xs">
               <div className="flex justify-between py-2.5 border-b border-slate-100">
                 <span className="text-slate-500 font-medium">Customer Name</span>
-                <span className="font-bold text-slate-900">{booking.customer}</span>
+                <span className="font-medium text-slate-900">{booking.customer}</span>
               </div>
               <div className="flex justify-between py-2.5 border-b border-slate-100">
                 <span className="text-slate-500 font-medium">Member ID</span>
-                <span className="font-mono font-bold text-slate-700">NX-682-A</span>
+                <span className="font-mono font-medium text-slate-700">NX-682-A</span>
               </div>
               <div className="flex justify-between py-2.5 border-b border-slate-100">
                 <span className="text-slate-500 font-medium">Payment Mode</span>
-                <span className="font-bold text-slate-800">Card / Studio Credit</span>
+                <span className="font-medium text-slate-800">Card / Studio Credit</span>
               </div>
               <div className="flex justify-between py-2.5">
                 <span className="text-slate-500 font-medium">Total Billed</span>
-                <span className="text-sm font-black text-slate-900">{booking.amount}</span>
+                <span className="text-sm font-medium text-slate-900">{booking.amount}</span>
               </div>
             </div>
           </CardContent>

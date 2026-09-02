@@ -25,7 +25,7 @@ export default function UserActivityPage() {
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-black text-slate-900 tracking-tight">User Activity</h1>
+        <h1 className="text-2xl font-medium text-slate-900 tracking-tight">User Activity</h1>
         <p className="text-xs text-slate-500 mt-1">
           Detailed audit trail of member point deposits, redemptions, and studio interactions
         </p>
@@ -57,7 +57,7 @@ export default function UserActivityPage() {
       <Card className="bg-white border-slate-200 shadow-xs">
         <CardContent className="p-6 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <h3 className="text-base font-bold text-slate-900">User Activity Feed</h3>
+            <h3 className="text-base font-medium text-slate-900">User Activity Feed</h3>
 
             {/* Search Input */}
             <div className="relative w-64">
@@ -75,7 +75,7 @@ export default function UserActivityPage() {
           {/* Activity Table */}
           <div className="overflow-x-auto rounded-xl border border-slate-100">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-500 font-bold uppercase border-b border-slate-100">
+              <thead className="bg-slate-50 text-slate-500 font-medium uppercase border-b border-slate-100">
                 <tr>
                   <th className="py-3 px-4">Member</th>
                   <th className="py-3 px-4">ID</th>
@@ -90,16 +90,16 @@ export default function UserActivityPage() {
                   <tr key={act.id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-3.5 px-4 flex items-center gap-3">
                       <Avatar className="w-8 h-8">
-                        <AvatarFallback className="bg-amber-100 text-amber-900 text-xs font-bold">
+                        <AvatarFallback className="bg-amber-100 text-amber-900 text-xs font-medium">
                           {act.member.charAt(0)}
                         </AvatarFallback>
                       </Avatar>
-                      <span className="font-semibold text-slate-900">{act.member}</span>
+                      <span className="font-medium text-slate-900">{act.member}</span>
                     </td>
                     <td className="py-3.5 px-4 font-mono text-slate-600">{act.memberId}</td>
                     <td className="py-3.5 px-4">
                       <span
-                        className={`font-bold px-2.5 py-0.5 rounded-full text-xs inline-flex items-center gap-1 ${
+                        className={`font-medium px-2.5 py-0.5 rounded-full text-xs inline-flex items-center gap-1 ${
                           act.amount > 0
                             ? 'bg-emerald-50 text-emerald-700'
                             : 'bg-rose-50 text-rose-700'

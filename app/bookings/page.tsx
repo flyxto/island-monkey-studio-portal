@@ -29,7 +29,7 @@ export default function BookingsPage() {
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-black text-slate-900 tracking-tight">Bookings</h1>
+        <h1 className="text-2xl font-medium text-slate-900 tracking-tight">Bookings</h1>
         <p className="text-xs text-slate-500 mt-1">Manage and track all studio booking requests</p>
       </div>
 
@@ -59,7 +59,7 @@ export default function BookingsPage() {
       <Card className="bg-white border-slate-200 shadow-xs">
         <CardContent className="p-6 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <h3 className="text-base font-bold text-slate-900">All Bookings</h3>
+            <h3 className="text-base font-medium text-slate-900">All Bookings</h3>
 
             {/* Filter Controls */}
             <div className="flex flex-wrap items-center gap-3">
@@ -96,7 +96,7 @@ export default function BookingsPage() {
           {/* Bookings Table */}
           <div className="overflow-x-auto rounded-xl border border-slate-100">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-500 font-bold uppercase border-b border-slate-100">
+              <thead className="bg-slate-50 text-slate-500 font-medium uppercase border-b border-slate-100">
                 <tr>
                   <th className="py-3 px-4">Customer</th>
                   <th className="py-3 px-4">Booking ID</th>
@@ -113,20 +113,20 @@ export default function BookingsPage() {
                     <td className="py-3.5 px-4 flex items-center gap-3">
                       <Avatar className="w-8 h-8">
                         <AvatarImage src={b.customerAvatar} />
-                        <AvatarFallback className="bg-amber-100 text-amber-900 text-xs font-bold">
+                        <AvatarFallback className="bg-amber-100 text-amber-900 text-xs font-medium">
                           {b.customer.charAt(0)}
                         </AvatarFallback>
                       </Avatar>
-                      <span className="font-semibold text-slate-900">{b.customer}</span>
+                      <span className="font-medium text-slate-900">{b.customer}</span>
                     </td>
                     <td className="py-3.5 px-4 font-mono text-slate-600">{b.bookingCode}</td>
                     <td className="py-3.5 px-4">
-                      <span className="bg-amber-50 text-amber-800 font-bold px-2 py-0.5 rounded-md text-xs">
+                      <span className="bg-amber-50 text-amber-800 font-medium px-2 py-0.5 rounded-md text-xs">
                         {b.studioRoom}
                       </span>
                     </td>
                     <td className="py-3.5 px-4 text-slate-600">{b.dateTime}</td>
-                    <td className="py-3.5 px-4 font-semibold text-slate-700">{b.duration}</td>
+                    <td className="py-3.5 px-4 font-medium text-slate-700">{b.duration}</td>
                     <td className="py-3.5 px-4">
                       <StatusBadge status={b.status} />
                     </td>

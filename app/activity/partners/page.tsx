@@ -25,7 +25,7 @@ export default function PartnerActivityPage() {
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-black text-slate-900 tracking-tight">Partner Activity</h1>
+        <h1 className="text-2xl font-medium text-slate-900 tracking-tight">Partner Activity</h1>
         <p className="text-xs text-slate-500 mt-1">
           Monitor partner point redemptions, deduction balances, and merchant settlements
         </p>
@@ -57,7 +57,7 @@ export default function PartnerActivityPage() {
       <Card className="bg-white border-slate-200 shadow-xs">
         <CardContent className="p-6 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <h3 className="text-base font-bold text-slate-900">Partner Activity Feed</h3>
+            <h3 className="text-base font-medium text-slate-900">Partner Activity Feed</h3>
 
             {/* Search Input */}
             <div className="relative w-64">
@@ -75,7 +75,7 @@ export default function PartnerActivityPage() {
           {/* Activity Table */}
           <div className="overflow-x-auto rounded-xl border border-slate-100">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-500 font-bold uppercase border-b border-slate-100">
+              <thead className="bg-slate-50 text-slate-500 font-medium uppercase border-b border-slate-100">
                 <tr>
                   <th className="py-3 px-4">Partner</th>
                   <th className="py-3 px-4">Customer</th>
@@ -88,16 +88,16 @@ export default function PartnerActivityPage() {
               <tbody className="divide-y divide-slate-100 font-medium">
                 {filteredActivities.map((act) => (
                   <tr key={act.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-3.5 px-4 font-bold text-slate-900 flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-amber-50 border border-amber-100 text-amber-800 flex items-center justify-center font-extrabold text-[10px]">
+                    <td className="py-3.5 px-4 font-medium text-slate-900 flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-lg bg-amber-50 border border-amber-100 text-amber-800 flex items-center justify-center font-medium text-[10px]">
                         {act.partnerName.charAt(0)}
                       </div>
                       <span>{act.partnerName}</span>
                     </td>
-                    <td className="py-3.5 px-4 text-slate-800 font-semibold">{act.customerName}</td>
+                    <td className="py-3.5 px-4 text-slate-800 font-medium">{act.customerName}</td>
                     <td className="py-3.5 px-4 font-mono text-slate-600">{act.customerId}</td>
                     <td className="py-3.5 px-4">
-                      <span className="font-bold px-2.5 py-0.5 rounded-full text-xs bg-rose-50 text-rose-700 inline-flex items-center gap-1">
+                      <span className="font-medium px-2.5 py-0.5 rounded-full text-xs bg-rose-50 text-rose-700 inline-flex items-center gap-1">
                         <ArrowDownLeft className="w-3 h-3" />
                         {act.amount} pt
                       </span>

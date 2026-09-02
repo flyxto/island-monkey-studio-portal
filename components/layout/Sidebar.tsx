@@ -38,11 +38,11 @@ export function Sidebar() {
         {/* Logo & Header */}
         <div className="p-6 border-b border-slate-200/60 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#C85A17] flex items-center justify-center text-white font-bold shadow-md shadow-orange-100">
+            <div className="w-9 h-9 rounded-xl bg-[#C85A17] flex items-center justify-center text-white font-medium shadow-md shadow-orange-100">
               IM
             </div>
             <div>
-              <h1 className="font-bold text-slate-900 text-lg leading-tight tracking-tight">
+              <h1 className="font-medium text-slate-900 text-lg leading-tight tracking-tight">
                 IslandMonkey
               </h1>
               <p className="text-xs text-[#C85A17] font-medium">Studio Portal</p>
@@ -52,11 +52,11 @@ export function Sidebar() {
 
         {/* User Card inside Sidebar */}
         <div className="mx-4 my-4 p-3 bg-amber-50/80 border border-amber-100 rounded-xl flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-amber-200 text-amber-900 flex items-center justify-center font-bold text-xs">
+          <div className="w-8 h-8 rounded-full bg-amber-200 text-amber-900 flex items-center justify-center font-medium text-xs">
             A
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-semibold text-slate-800 truncate">Admin</p>
+            <p className="text-xs font-medium text-slate-800 truncate">Admin</p>
             <p className="text-[11px] text-slate-500 truncate">Studio Manager</p>
           </div>
           <Sparkles className="w-4 h-4 text-amber-600" />
@@ -73,7 +73,7 @@ export function Sidebar() {
                 href={item.href}
                 className={`flex items-center gap-3.5 px-4 py-2.5 rounded-xl text-sm transition-all duration-150 ${
                   active
-                    ? 'bg-[#FDF2EA] text-[#C85A17] font-semibold shadow-xs'
+                    ? 'bg-[#FDF2EA] text-[#C85A17] font-medium shadow-xs'
                     : 'text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 font-medium'
                 }`}
               >

@@ -50,7 +50,7 @@ export default function UserActivityDetailPage({
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Toast Feedback */}
       {toastMessage && (
-        <div className="p-4 bg-emerald-600 text-white font-semibold rounded-2xl shadow-lg flex items-center justify-between animate-in fade-in slide-in-from-top duration-300">
+        <div className="p-4 bg-emerald-600 text-white font-medium rounded-2xl shadow-lg flex items-center justify-between animate-in fade-in slide-in-from-top duration-300">
           <div className="flex items-center gap-3">
             <Check className="w-5 h-5 bg-white text-emerald-600 rounded-full p-0.5" />
             <span>{toastMessage}</span>
@@ -68,7 +68,7 @@ export default function UserActivityDetailPage({
       <div>
         <Link
           href="/activity/users"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors mb-4"
+          className="inline-flex items-center gap-2 text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors mb-4"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to User Activity</span>
@@ -82,17 +82,17 @@ export default function UserActivityDetailPage({
             <div className="flex items-center gap-4">
               <Avatar className="w-16 h-16 border-2 border-slate-100 shadow-sm">
                 <AvatarImage src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop" />
-                <AvatarFallback className="bg-amber-100 text-amber-900 text-lg font-bold">
+                <AvatarFallback className="bg-amber-100 text-amber-900 text-lg font-medium">
                   {activity.member.charAt(0)}
                 </AvatarFallback>
               </Avatar>
               <div>
                 <div className="flex items-center gap-3">
-                  <h1 className="text-2xl font-black text-slate-900">
+                  <h1 className="text-2xl font-medium text-slate-900">
                     {activity.member}
                   </h1>
                   <span
-                    className={`font-bold px-3 py-1 rounded-full text-xs flex items-center gap-1 ${
+                    className={`font-medium px-3 py-1 rounded-full text-xs flex items-center gap-1 ${
                       isDeposit
                         ? 'bg-emerald-50 text-emerald-700'
                         : 'bg-red-50 text-red-700'
@@ -108,7 +108,7 @@ export default function UserActivityDetailPage({
                 </div>
                 <p className="text-xs font-mono text-slate-500 mt-1">
                   Member ID:{' '}
-                  <span className="font-bold text-slate-700">{activity.memberId}</span>
+                  <span className="font-medium text-slate-700">{activity.memberId}</span>
                 </p>
               </div>
             </div>
@@ -133,7 +133,7 @@ export default function UserActivityDetailPage({
               </div>
               <div>
                 <p className="text-xs text-slate-400 font-medium">Attribution Partner</p>
-                <p className="text-sm font-bold text-slate-900">{activity.partner}</p>
+                <p className="text-sm font-medium text-slate-900">{activity.partner}</p>
               </div>
             </div>
 
@@ -143,13 +143,13 @@ export default function UserActivityDetailPage({
               </div>
               <div>
                 <p className="text-xs text-slate-400 font-medium">Logged Time</p>
-                <p className="text-sm font-bold text-slate-900">{activity.time}</p>
+                <p className="text-sm font-medium text-slate-900">{activity.time}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
               <div
-                className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 font-bold text-sm ${
+                className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 font-medium text-sm ${
                   isDeposit ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-600'
                 }`}
               >
@@ -158,7 +158,7 @@ export default function UserActivityDetailPage({
               <div>
                 <p className="text-xs text-slate-400 font-medium">Point Amount</p>
                 <p
-                  className={`text-sm font-black ${
+                  className={`text-sm font-medium ${
                     isDeposit ? 'text-emerald-700' : 'text-red-600'
                   }`}
                 >
@@ -168,12 +168,12 @@ export default function UserActivityDetailPage({
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 font-bold text-xs">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 font-medium text-xs">
                 LKR
               </div>
               <div>
                 <p className="text-xs text-slate-400 font-medium">Conversion Value</p>
-                <p className="text-sm font-black text-slate-900">LKR {lkrEquivalent}</p>
+                <p className="text-sm font-medium text-slate-900">LKR {lkrEquivalent}</p>
               </div>
             </div>
           </div>
@@ -189,36 +189,36 @@ export default function UserActivityDetailPage({
               <div className="w-8 h-8 rounded-lg bg-amber-50 text-[#C85A17] flex items-center justify-center">
                 <FileText className="w-4 h-4" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Transaction Record</h3>
+              <h3 className="text-base font-medium text-slate-900">Transaction Record</h3>
             </div>
 
             <div className="space-y-3 text-xs">
               <div className="flex justify-between py-2.5 border-b border-slate-100">
                 <span className="text-slate-500 font-medium">Transaction Reference</span>
-                <span className="font-mono font-bold text-slate-800">
+                <span className="font-mono font-medium text-slate-800">
                   PTX-{activity.id.toUpperCase()}-IM
                 </span>
               </div>
               <div className="flex justify-between py-2.5 border-b border-slate-100">
                 <span className="text-slate-500 font-medium">Event Type</span>
-                <span className="font-bold text-slate-900">
+                <span className="font-medium text-slate-900">
                   {isDeposit ? 'Studio Admin Point Issue' : 'Partner Check-In Deduction'}
                 </span>
               </div>
               <div className="flex justify-between py-2.5 border-b border-slate-100">
                 <span className="text-slate-500 font-medium">Conversion Standard</span>
-                <span className="font-bold text-slate-800">1 Point = 200 LKR</span>
+                <span className="font-medium text-slate-800">1 Point = 200 LKR</span>
               </div>
               <div className="flex justify-between py-2.5 border-b border-slate-100">
                 <span className="text-slate-500 font-medium">Verification Status</span>
-                <span className="font-bold text-emerald-600 flex items-center gap-1">
+                <span className="font-medium text-emerald-600 flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5" />
                   <span>Authenticated & Balanced</span>
                 </span>
               </div>
               <div className="flex justify-between py-2.5">
                 <span className="text-slate-500 font-medium">Channel</span>
-                <span className="font-bold text-slate-800">Island Monkey Studio Portal</span>
+                <span className="font-medium text-slate-800">Island Monkey Studio Portal</span>
               </div>
             </div>
           </CardContent>
@@ -231,25 +231,25 @@ export default function UserActivityDetailPage({
               <div className="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center">
                 <User className="w-4 h-4" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Member Status</h3>
+              <h3 className="text-base font-medium text-slate-900">Member Status</h3>
             </div>
 
             <div className="space-y-3 text-xs">
               <div className="flex justify-between py-2.5 border-b border-slate-100">
                 <span className="text-slate-500 font-medium">Member Name</span>
-                <span className="font-bold text-slate-900">{activity.member}</span>
+                <span className="font-medium text-slate-900">{activity.member}</span>
               </div>
               <div className="flex justify-between py-2.5 border-b border-slate-100">
                 <span className="text-slate-500 font-medium">Membership ID</span>
-                <span className="font-mono font-bold text-slate-700">{activity.memberId}</span>
+                <span className="font-mono font-medium text-slate-700">{activity.memberId}</span>
               </div>
               <div className="flex justify-between py-2.5 border-b border-slate-100">
                 <span className="text-slate-500 font-medium">Membership Tier</span>
-                <span className="font-bold text-[#C85A17]">Island Monkey VIP</span>
+                <span className="font-medium text-[#C85A17]">Island Monkey VIP</span>
               </div>
               <div className="flex justify-between py-2.5">
                 <span className="text-slate-500 font-medium">Account Status</span>
-                <span className="font-bold text-emerald-600">Active & Verified</span>
+                <span className="font-medium text-emerald-600">Active & Verified</span>
               </div>
             </div>
           </CardContent>

@@ -66,7 +66,7 @@ export default function DashboardPage() {
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Toast Feedback Banner */}
       {toastMessage && (
-        <div className="p-4 bg-emerald-600 text-white font-semibold rounded-2xl shadow-lg flex items-center justify-between animate-in fade-in slide-in-from-top duration-300">
+        <div className="p-4 bg-emerald-600 text-white font-medium rounded-2xl shadow-lg flex items-center justify-between animate-in fade-in slide-in-from-top duration-300">
           <div className="flex items-center gap-3">
             <Check className="w-5 h-5 bg-white text-emerald-600 rounded-full p-0.5" />
             <span>{toastMessage}</span>
@@ -81,7 +81,7 @@ export default function DashboardPage() {
       <div className="relative overflow-hidden rounded-2xl bg-neutral-950 border border-neutral-800 p-6 text-white shadow-md">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <span className="text-xs font-bold tracking-wider text-neutral-400 uppercase">
+            <span className="text-xs font-medium tracking-wider text-neutral-400 uppercase">
               Daily Conversion Rate
             </span>
             <p className="text-sm text-neutral-300 mt-1">
@@ -89,8 +89,8 @@ export default function DashboardPage() {
             </p>
           </div>
           <div className="bg-white/10 backdrop-blur-md border border-white/15 px-6 py-3 rounded-2xl flex items-center gap-3">
-            <span className="text-2xl font-black tracking-tight">1 Point = 200 LKR</span>
-            <span className="text-xs bg-white text-neutral-950 font-extrabold px-2.5 py-1 rounded-full uppercase">
+            <span className="text-2xl font-medium tracking-tight">1 Point = 200 LKR</span>
+            <span className="text-xs bg-white text-neutral-950 font-medium px-2.5 py-1 rounded-full uppercase">
               LKR
             </span>
           </div>
@@ -106,7 +106,7 @@ export default function DashboardPage() {
               <div className="w-16 h-16 bg-amber-50 rounded-2xl border border-amber-100 mx-auto flex items-center justify-center text-[#C85A17] shadow-inner">
                 <QrCode className="w-8 h-8" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900">Manual Scan QR</h3>
+              <h3 className="text-lg font-medium text-slate-900">Manual Scan QR</h3>
               <p className="text-xs text-slate-500 max-w-sm mx-auto">
                 Ready to process member check-ins and issue Island Monkey points.
               </p>
@@ -136,7 +136,7 @@ export default function DashboardPage() {
             {/* Custom Amount Entry */}
             <div className="max-w-md mx-auto space-y-3">
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xs font-medium text-slate-400">
                   Pts:
                 </span>
                 <Input
@@ -144,7 +144,7 @@ export default function DashboardPage() {
                   placeholder="Enter custom amount"
                   value={customPts}
                   onChange={(e) => setCustomPts(e.target.value)}
-                  className="pl-14 h-11 bg-slate-50 border-slate-200 rounded-xl text-sm focus-visible:ring-amber-500 font-semibold"
+                  className="pl-14 h-11 bg-slate-50 border-slate-200 rounded-xl text-sm focus-visible:ring-amber-500 font-medium"
                 />
               </div>
 
@@ -187,12 +187,12 @@ export default function DashboardPage() {
         <CardContent className="p-6 space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-base font-bold text-slate-900">Recent Activity</h3>
+              <h3 className="text-base font-medium text-slate-900">Recent Activity</h3>
               <p className="text-xs text-slate-500">Live member point issuance log</p>
             </div>
             <Link
               href="/activity/users"
-              className="text-xs font-bold text-[#C85A17] hover:text-amber-800 flex items-center gap-1.5 transition-colors"
+              className="text-xs font-medium text-[#C85A17] hover:text-amber-800 flex items-center gap-1.5 transition-colors"
             >
               <span>View All</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -201,7 +201,7 @@ export default function DashboardPage() {
 
           <div className="overflow-x-auto rounded-xl border border-slate-100">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-500 font-bold uppercase border-b border-slate-100">
+              <thead className="bg-slate-50 text-slate-500 font-medium uppercase border-b border-slate-100">
                 <tr>
                   <th className="py-3 px-4">Member</th>
                   <th className="py-3 px-4">ID</th>
@@ -215,16 +215,16 @@ export default function DashboardPage() {
                     <td className="py-3.5 px-4 flex items-center gap-3">
                       <Avatar className="w-8 h-8">
                         <AvatarImage src={item.memberAvatar} />
-                        <AvatarFallback className="bg-amber-100 text-amber-900 text-xs font-bold">
+                        <AvatarFallback className="bg-amber-100 text-amber-900 text-xs font-medium">
                           {item.member.charAt(0)}
                         </AvatarFallback>
                       </Avatar>
-                      <span className="font-semibold text-slate-900">{item.member}</span>
+                      <span className="font-medium text-slate-900">{item.member}</span>
                     </td>
                     <td className="py-3.5 px-4 font-mono text-slate-600">{item.memberId}</td>
                     <td className="py-3.5 px-4">
                       <span
-                        className={`font-bold px-2 py-0.5 rounded-full text-xs ${
+                        className={`font-medium px-2 py-0.5 rounded-full text-xs ${
                           item.pointsAwarded > 0
                             ? 'bg-emerald-50 text-emerald-700'
                             : 'bg-slate-100 text-slate-600'

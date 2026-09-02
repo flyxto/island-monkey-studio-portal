@@ -37,14 +37,14 @@ export default function PendingGigPage({
     <div className="space-y-8 max-w-6xl mx-auto">
       {/* Toast Feedback Banner */}
       {toastMessage && (
-        <div className="p-4 bg-emerald-600 text-white font-semibold rounded-2xl shadow-lg flex items-center justify-between animate-in fade-in duration-300">
+        <div className="p-4 bg-emerald-600 text-white font-medium rounded-2xl shadow-lg flex items-center justify-between animate-in fade-in duration-300">
           <div className="flex items-center gap-3">
             <Check className="w-5 h-5 bg-white text-emerald-600 rounded-full p-0.5" />
             <span>{toastMessage}</span>
           </div>
           <Link
             href={`/models/${model.id}`}
-            className="text-xs underline hover:opacity-90 font-bold"
+            className="text-xs underline hover:opacity-90 font-medium"
           >
             Return to Profile
           </Link>
@@ -55,7 +55,7 @@ export default function PendingGigPage({
       <div>
         <Link
           href={`/models/${model.id}`}
-          className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to {model.name}'s Profile</span>
@@ -74,7 +74,7 @@ export default function PendingGigPage({
               className="object-cover"
             />
             <span
-              className={`absolute top-4 left-4 text-xs font-bold px-3 py-1 rounded-full shadow-md ${
+              className={`absolute top-4 left-4 text-xs font-medium px-3 py-1 rounded-full shadow-md ${
                 isApproved
                   ? 'bg-emerald-600 text-white'
                   : 'bg-amber-500 text-white'
@@ -106,40 +106,40 @@ export default function PendingGigPage({
         <Card className="lg:col-span-5 bg-white border-slate-200 shadow-xs">
           <CardContent className="p-6 space-y-6">
             <div className="space-y-2">
-              <span className="text-xs font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-100 inline-block">
+              <span className="text-xs font-medium text-amber-600 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-100 inline-block">
                 {gig.tag}
               </span>
-              <h1 className="text-xl font-black text-slate-900 tracking-tight">{gig.title}</h1>
+              <h1 className="text-xl font-medium text-slate-900 tracking-tight">{gig.title}</h1>
               <p className="text-xs text-slate-500 leading-relaxed">{gig.description}</p>
             </div>
 
             <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-500 uppercase">Hourly Rate</span>
-              <span className="text-xl font-black text-slate-900">{gig.rate}</span>
+              <span className="text-xs font-medium text-slate-500 uppercase">Hourly Rate</span>
+              <span className="text-xl font-medium text-slate-900">{gig.rate}</span>
             </div>
 
             {/* Booking parameters table / list */}
             <div className="space-y-3 pt-2 text-xs">
               <div className="flex justify-between py-2 border-b border-slate-100">
                 <span className="text-slate-500">Booking ID</span>
-                <span className="font-mono font-bold text-slate-900">{gig.bookingId}</span>
+                <span className="font-mono font-medium text-slate-900">{gig.bookingId}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-slate-100">
                 <span className="text-slate-500">Date & Time</span>
-                <span className="font-semibold text-slate-800">{gig.dateTime}</span>
+                <span className="font-medium text-slate-800">{gig.dateTime}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-slate-100">
                 <span className="text-slate-500">Duration</span>
-                <span className="font-semibold text-slate-800">{gig.duration}</span>
+                <span className="font-medium text-slate-800">{gig.duration}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-slate-100">
                 <span className="text-slate-500">Total Amount</span>
-                <span className="font-bold text-[#C85A17]">{gig.amount}</span>
+                <span className="font-medium text-[#C85A17]">{gig.amount}</span>
               </div>
               <div className="flex justify-between py-2">
                 <span className="text-slate-500">Approval Status</span>
                 <span
-                  className={`font-bold ${
+                  className={`font-medium ${
                     isApproved ? 'text-emerald-600' : 'text-amber-600'
                   }`}
                 >

@@ -21,14 +21,14 @@ export default function SettingsPage() {
   return (
     <div className="space-y-8 max-w-4xl mx-auto">
       <div>
-        <h1 className="text-2xl font-black text-slate-900 tracking-tight">Studio Settings</h1>
+        <h1 className="text-2xl font-medium text-slate-900 tracking-tight">Studio Settings</h1>
         <p className="text-xs text-slate-500 mt-1">
           Configure Island Monkey point exchange rates, studio parameters, and notification preferences
         </p>
       </div>
 
       {saved && (
-        <div className="p-4 bg-emerald-600 text-white font-semibold rounded-2xl shadow-lg flex items-center gap-3 animate-in fade-in duration-300">
+        <div className="p-4 bg-emerald-600 text-white font-medium rounded-2xl shadow-lg flex items-center gap-3 animate-in fade-in duration-300">
           <Check className="w-5 h-5 bg-white text-emerald-600 rounded-full p-0.5" />
           <span>Settings saved successfully!</span>
         </div>
@@ -38,29 +38,29 @@ export default function SettingsPage() {
         {/* Point Exchange Rate Settings */}
         <Card className="bg-white border-slate-200 shadow-xs">
           <CardContent className="p-6 space-y-4">
-            <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+            <h3 className="text-base font-medium text-slate-900 flex items-center gap-2">
               <Settings className="w-5 h-5 text-[#C85A17]" />
               <span>Points & Currency Configuration</span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
               <div className="space-y-2">
-                <label className="text-xs font-bold text-slate-600">Base Exchange Value (LKR per 1 Point)</label>
+                <label className="text-xs font-medium text-slate-600">Base Exchange Value (LKR per 1 Point)</label>
                 <Input
                   type="number"
                   value={lkrRate}
                   onChange={(e) => setLkrRate(e.target.value)}
-                  className="h-10 text-sm font-bold bg-slate-50"
+                  className="h-10 text-sm font-medium bg-slate-50"
                 />
                 <p className="text-[11px] text-slate-400">Current active exchange rate for member check-ins.</p>
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-bold text-slate-600">Studio Name</label>
+                <label className="text-xs font-medium text-slate-600">Studio Name</label>
                 <Input
                   type="text"
                   value={studioName}
                   onChange={(e) => setStudioName(e.target.value)}
-                  className="h-10 text-sm font-semibold bg-slate-50"
+                  className="h-10 text-sm font-medium bg-slate-50"
                 />
               </div>
             </div>
@@ -70,14 +70,14 @@ export default function SettingsPage() {
         {/* Admin Contact Settings */}
         <Card className="bg-white border-slate-200 shadow-xs">
           <CardContent className="p-6 space-y-4">
-            <h3 className="text-base font-bold text-slate-900">Admin Account Info</h3>
+            <h3 className="text-base font-medium text-slate-900">Admin Account Info</h3>
             <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-600">Admin Notification Email</label>
+              <label className="text-xs font-medium text-slate-600">Admin Notification Email</label>
               <Input
                 type="email"
                 value={adminEmail}
                 onChange={(e) => setAdminEmail(e.target.value)}
-                className="h-10 text-sm font-semibold bg-slate-50 max-w-md"
+                className="h-10 text-sm font-medium bg-slate-50 max-w-md"
               />
             </div>
           </CardContent>

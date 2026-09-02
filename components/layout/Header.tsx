@@ -12,7 +12,7 @@ export function Header({ title }: HeaderProps) {
   return (
     <header className="h-16 bg-white border-b border-slate-200 px-8 flex items-center justify-between sticky top-0 z-10 shadow-xs">
       <div className="flex items-center gap-4">
-        {title && <h2 className="text-xl font-bold text-slate-800 tracking-tight">{title}</h2>}
+        {title && <h2 className="text-xl font-medium text-slate-800 tracking-tight">{title}</h2>}
       </div>
 
       <div className="flex items-center gap-4">
