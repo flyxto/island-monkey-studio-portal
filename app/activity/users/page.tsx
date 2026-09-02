@@ -89,7 +89,7 @@ export default function UserActivityPage() {
                   <tr key={act.id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-3.5 px-4 flex items-center gap-3">
                       <Avatar className="w-8 h-8">
-                        <AvatarFallback className="bg-indigo-100 text-indigo-700 text-xs font-bold">
+                        <AvatarFallback className="bg-amber-100 text-amber-900 text-xs font-bold">
                           {act.member.charAt(0)}
                         </AvatarFallback>
                       </Avatar>
@@ -133,7 +133,7 @@ export default function UserActivityPage() {
                           variant="ghost"
                           size="sm"
                           onClick={() => alert(`Viewing activity detail for ${act.member}`)}
-                          className="h-8 text-xs font-semibold text-indigo-600 hover:text-indigo-800"
+                          className="h-8 text-xs font-semibold text-[#C85A17] hover:text-amber-800"
                         >
                           <Eye className="w-3.5 h-3.5 mr-1" />
                           <span>View</span>

@@ -49,7 +49,7 @@ export default function ModelProfilePage({ params }: { params: Promise<{ id: str
               <div className="space-y-2">
                 <div className="flex items-center gap-3 flex-wrap">
                   <h1 className="text-2xl font-black text-slate-900 tracking-tight">{model.name}</h1>
-                  <span className="bg-indigo-50 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full border border-indigo-100">
+                  <span className="bg-amber-50 text-amber-800 text-xs font-bold px-3 py-1 rounded-full border border-amber-100">
                     {model.specialty}
                   </span>
                 </div>
@@ -65,11 +65,11 @@ export default function ModelProfilePage({ params }: { params: Promise<{ id: str
             <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 space-y-3 w-full lg:w-72 shrink-0">
               <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Contact Details</p>
               <div className="flex items-center gap-3 text-xs font-medium text-slate-700">
-                <Mail className="w-4 h-4 text-indigo-500 shrink-0" />
+                <Mail className="w-4 h-4 text-amber-600 shrink-0" />
                 <span className="truncate">{model.email}</span>
               </div>
               <div className="flex items-center gap-3 text-xs font-medium text-slate-700">
-                <Phone className="w-4 h-4 text-indigo-500 shrink-0" />
+                <Phone className="w-4 h-4 text-amber-600 shrink-0" />
                 <span>{model.phone}</span>
               </div>
             </div>
@@ -103,7 +103,7 @@ export default function ModelProfilePage({ params }: { params: Promise<{ id: str
                   <div className="flex items-center justify-between pt-2 border-t border-slate-100">
                     <span className="text-sm font-black text-slate-900">{gig.rate}</span>
                     <Link href={`/models/${model.id}/gigs/${gig.id}/pending`}>
-                      <Button className="bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl px-5 h-9">
+                      <Button className="bg-black hover:bg-neutral-800 text-white text-xs font-bold rounded-xl px-5 h-9">
                         View Gig
                       </Button>
                     </Link>
@@ -144,7 +144,7 @@ export default function ModelProfilePage({ params }: { params: Promise<{ id: str
                 <div className="flex items-center justify-between pt-2 border-t border-slate-100">
                   <span className="text-sm font-black text-slate-900">{gig.rate}</span>
                   <Link href={`/models/${model.id}/gigs/${gig.id}`}>
-                    <Button className="bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl px-5 h-9">
+                    <Button className="bg-black hover:bg-neutral-800 text-white text-xs font-bold rounded-xl px-5 h-9">
                       View Gig
                     </Button>
                   </Link>

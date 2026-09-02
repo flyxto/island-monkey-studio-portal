@@ -112,7 +112,7 @@ export default function BookingsPage() {
                     <td className="py-3.5 px-4 flex items-center gap-3">
                       <Avatar className="w-8 h-8">
                         <AvatarImage src={b.customerAvatar} />
-                        <AvatarFallback className="bg-indigo-100 text-indigo-700 text-xs font-bold">
+                        <AvatarFallback className="bg-amber-100 text-amber-900 text-xs font-bold">
                           {b.customer.charAt(0)}
                         </AvatarFallback>
                       </Avatar>
@@ -120,7 +120,7 @@ export default function BookingsPage() {
                     </td>
                     <td className="py-3.5 px-4 font-mono text-slate-600">{b.bookingCode}</td>
                     <td className="py-3.5 px-4">
-                      <span className="bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded-md text-xs">
+                      <span className="bg-amber-50 text-amber-800 font-bold px-2 py-0.5 rounded-md text-xs">
                         {b.studioRoom}
                       </span>
                     </td>
@@ -134,7 +134,7 @@ export default function BookingsPage() {
                         variant="ghost"
                         size="sm"
                         onClick={() => alert(`Viewing details for Booking ${b.bookingCode}`)}
-                        className="h-8 text-xs font-semibold text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50"
+                        className="h-8 text-xs font-semibold text-[#C85A17] hover:text-amber-800 hover:bg-amber-50"
                       >
                         <Eye className="w-3.5 h-3.5 mr-1" />
                         <span>View</span>

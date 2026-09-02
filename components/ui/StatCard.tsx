@@ -15,7 +15,7 @@ export function StatCard({ label, value, subtext, change, icon: Icon }: StatCard
       <CardContent className="p-6">
         <div className="flex items-center justify-between">
           <p className="text-xs font-bold tracking-wider text-slate-500 uppercase">{label}</p>
-          {Icon && <Icon className="w-5 h-5 text-indigo-500 opacity-80" />}
+          {Icon && <Icon className="w-5 h-5 text-amber-600 opacity-80" />}
         </div>
         <div className="mt-3 flex items-baseline gap-3">
           <span className="text-3xl font-extrabold text-slate-900 tracking-tight">{value}</span>

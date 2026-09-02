@@ -78,19 +78,19 @@ export default function DashboardPage() {
       )}
 
       {/* Top Banner: Daily Conversion Rate */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 p-6 text-white shadow-md">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-amber-700 via-orange-700 to-stone-800 p-6 text-white shadow-md">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <span className="text-xs font-bold tracking-wider text-indigo-200 uppercase">
+            <span className="text-xs font-bold tracking-wider text-amber-200 uppercase">
               Daily Conversion Rate
             </span>
-            <p className="text-sm text-indigo-100 mt-1">
+            <p className="text-sm text-amber-100 mt-1">
               Current exchange value for active members in the Island Monkey ecosystem.
             </p>
           </div>
           <div className="bg-white/10 backdrop-blur-md border border-white/20 px-6 py-3 rounded-2xl flex items-center gap-3">
             <span className="text-2xl font-black tracking-tight">1 Point = 200 LKR</span>
-            <span className="text-xs bg-white text-indigo-900 font-extrabold px-2.5 py-1 rounded-full uppercase">
+            <span className="text-xs bg-white text-amber-950 font-extrabold px-2.5 py-1 rounded-full uppercase">
               LKR
             </span>
           </div>
@@ -103,7 +103,7 @@ export default function DashboardPage() {
         <Card className="lg:col-span-7 bg-white border-slate-200 shadow-xs flex flex-col justify-between">
           <CardContent className="p-6 space-y-6">
             <div className="text-center space-y-2">
-              <div className="w-16 h-16 bg-indigo-50 rounded-2xl border border-indigo-100 mx-auto flex items-center justify-center text-indigo-600 shadow-inner">
+              <div className="w-16 h-16 bg-amber-50 rounded-2xl border border-amber-100 mx-auto flex items-center justify-center text-[#C85A17] shadow-inner">
                 <QrCode className="w-8 h-8" />
               </div>
               <h3 className="text-lg font-bold text-slate-900">Manual Scan QR</h3>
@@ -124,7 +124,7 @@ export default function DashboardPage() {
                   }}
                   className={`px-5 py-2 rounded-full text-xs font-bold transition-all ${
                     activePreset === preset && !customPts
-                      ? 'bg-indigo-600 text-white shadow-sm ring-2 ring-indigo-200'
+                      ? 'bg-[#C85A17] text-white shadow-xs ring-2 ring-amber-200'
                       : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
                 >
@@ -144,13 +144,13 @@ export default function DashboardPage() {
                   placeholder="Enter custom amount"
                   value={customPts}
                   onChange={(e) => setCustomPts(e.target.value)}
-                  className="pl-14 h-11 bg-slate-50 border-slate-200 rounded-xl text-sm focus-visible:ring-indigo-500 font-semibold"
+                  className="pl-14 h-11 bg-slate-50 border-slate-200 rounded-xl text-sm focus-visible:ring-amber-500 font-semibold"
                 />
               </div>
 
               <Button
                 onClick={handleConfirmAddition}
-                className="w-full h-11 bg-slate-900 hover:bg-black text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+                className="w-full h-11 bg-black hover:bg-neutral-800 text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
               >
                 <Check className="w-4 h-4" />
                 <span>Confirm Addition</span>
@@ -192,7 +192,7 @@ export default function DashboardPage() {
             </div>
             <Link
               href="/activity/users"
-              className="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 transition-colors"
+              className="text-xs font-bold text-[#C85A17] hover:text-amber-800 flex items-center gap-1.5 transition-colors"
             >
               <span>View All</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -215,7 +215,7 @@ export default function DashboardPage() {
                     <td className="py-3.5 px-4 flex items-center gap-3">
                       <Avatar className="w-8 h-8">
                         <AvatarImage src={item.memberAvatar} />
-                        <AvatarFallback className="bg-indigo-100 text-indigo-700 text-xs font-bold">
+                        <AvatarFallback className="bg-amber-100 text-amber-900 text-xs font-bold">
                           {item.member.charAt(0)}
                         </AvatarFallback>
                       </Avatar>

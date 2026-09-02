@@ -57,7 +57,7 @@ export default function ActiveGigPage({
                 onClick={() => setSelectedImage(img)}
                 className={`relative w-24 h-24 rounded-xl overflow-hidden border-2 transition-all ${
                   selectedImage === img
-                    ? 'border-indigo-600 ring-2 ring-indigo-200 scale-105'
+                    ? 'border-amber-600 ring-2 ring-amber-200 scale-105'
                     : 'border-slate-200 opacity-70 hover:opacity-100'
                 }`}
               >
@@ -99,7 +99,7 @@ export default function ActiveGigPage({
               </div>
               <div className="flex justify-between py-2 border-b border-slate-100">
                 <span className="text-slate-500">Total Amount</span>
-                <span className="font-bold text-indigo-700">{gig.amount}</span>
+                <span className="font-bold text-[#C85A17]">{gig.amount}</span>
               </div>
               <div className="flex justify-between py-2">
                 <span className="text-slate-500">Status</span>
@@ -113,7 +113,7 @@ export default function ActiveGigPage({
             {/* Make Booking CTA */}
             <Button
               onClick={() => alert(`Initiating direct studio booking for ${gig.title}`)}
-              className="w-full h-12 bg-slate-900 hover:bg-black text-white font-bold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+              className="w-full h-12 bg-black hover:bg-neutral-800 text-white font-bold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
             >
               <Calendar className="w-4 h-4" />
               <span>Make Booking</span>

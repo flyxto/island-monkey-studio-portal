@@ -88,7 +88,7 @@ export default function PartnerActivityPage() {
                 {filteredActivities.map((act) => (
                   <tr key={act.id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-3.5 px-4 font-bold text-slate-900 flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-indigo-50 border border-indigo-100 text-indigo-700 flex items-center justify-center font-extrabold text-[10px]">
+                      <div className="w-7 h-7 rounded-lg bg-amber-50 border border-amber-100 text-amber-800 flex items-center justify-center font-extrabold text-[10px]">
                         {act.partnerName.charAt(0)}
                       </div>
                       <span>{act.partnerName}</span>
@@ -117,7 +117,7 @@ export default function PartnerActivityPage() {
                           variant="ghost"
                           size="sm"
                           onClick={() => alert(`Viewing partner transaction ${act.id}`)}
-                          className="h-8 text-xs font-semibold text-indigo-600 hover:text-indigo-800"
+                          className="h-8 text-xs font-semibold text-[#C85A17] hover:text-amber-800"
                         >
                           <Eye className="w-3.5 h-3.5 mr-1" />
                           <span>View</span>

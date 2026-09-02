@@ -34,7 +34,7 @@ export function StatusBadge({ status }: StatusBadgeProps) {
       );
     case 'completed':
       return (
-        <Badge className="bg-indigo-100 text-indigo-800 hover:bg-indigo-100 border-indigo-200 shadow-none font-medium text-xs px-2.5 py-0.5 rounded-full">
+        <Badge className="bg-slate-100 text-slate-800 hover:bg-slate-100 border-slate-200 shadow-none font-medium text-xs px-2.5 py-0.5 rounded-full">
           Completed
         </Badge>
       );

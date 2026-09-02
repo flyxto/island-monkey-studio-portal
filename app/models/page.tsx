@@ -95,7 +95,7 @@ export default function ModelsPage() {
                     <td className="py-3.5 px-4 flex items-center gap-3">
                       <Avatar className="w-9 h-9">
                         <AvatarImage src={m.avatar} />
-                        <AvatarFallback className="bg-indigo-100 text-indigo-700 text-xs font-bold">
+                        <AvatarFallback className="bg-amber-100 text-amber-900 text-xs font-bold">
                           {m.name.charAt(0)}
                         </AvatarFallback>
                       </Avatar>
@@ -119,7 +119,7 @@ export default function ModelsPage() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-8 text-xs font-semibold text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50"
+                          className="h-8 text-xs font-semibold text-[#C85A17] hover:text-amber-800 hover:bg-amber-50"
                         >
                           <Eye className="w-3.5 h-3.5 mr-1" />
                           <span>View Profile</span>

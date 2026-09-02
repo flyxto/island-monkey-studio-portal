@@ -39,7 +39,7 @@ export default function SettingsPage() {
         <Card className="bg-white border-slate-200 shadow-xs">
           <CardContent className="p-6 space-y-4">
             <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-              <Settings className="w-5 h-5 text-indigo-600" />
+              <Settings className="w-5 h-5 text-[#C85A17]" />
               <span>Points & Currency Configuration</span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
@@ -86,7 +86,7 @@ export default function SettingsPage() {
         <div className="flex justify-end">
           <Button
             type="submit"
-            className="h-11 bg-slate-900 hover:bg-black text-white font-bold text-xs px-8 rounded-xl shadow-md flex items-center gap-2"
+            className="h-11 bg-black hover:bg-neutral-800 text-white font-bold text-xs px-8 rounded-xl shadow-md flex items-center gap-2"
           >
             <Save className="w-4 h-4" />
             <span>Save Settings</span>
