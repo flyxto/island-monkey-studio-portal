@@ -124,7 +124,7 @@ export default function UserActivityPage() {
                           variant="ghost"
                           size="sm"
                           onClick={() => alert(`Re-issuing point event for ${act.member}`)}
-                          className="h-8 text-xs font-semibold text-slate-600 hover:text-slate-900"
+                          className="h-8 text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
                         >
                           <RefreshCw className="w-3 h-3 mr-1" />
                           <span>Re-issue</span>
@@ -133,7 +133,7 @@ export default function UserActivityPage() {
                           variant="ghost"
                           size="sm"
                           onClick={() => alert(`Viewing activity detail for ${act.member}`)}
-                          className="h-8 text-xs font-semibold text-[#C85A17] hover:text-amber-800"
+                          className="h-8 text-xs font-medium text-im-accent hover:text-im-accent hover:bg-im-accent-light rounded-lg transition-colors"
                         >
                           <Eye className="w-3.5 h-3.5 mr-1" />
                           <span>View</span>

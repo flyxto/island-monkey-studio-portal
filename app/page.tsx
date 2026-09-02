@@ -78,19 +78,19 @@ export default function DashboardPage() {
       )}
 
       {/* Top Banner: Daily Conversion Rate */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-amber-700 via-orange-700 to-stone-800 p-6 text-white shadow-md">
+      <div className="relative overflow-hidden rounded-2xl bg-neutral-950 border border-neutral-800 p-6 text-white shadow-md">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <span className="text-xs font-bold tracking-wider text-amber-200 uppercase">
+            <span className="text-xs font-bold tracking-wider text-neutral-400 uppercase">
               Daily Conversion Rate
             </span>
-            <p className="text-sm text-amber-100 mt-1">
+            <p className="text-sm text-neutral-300 mt-1">
               Current exchange value for active members in the Island Monkey ecosystem.
             </p>
           </div>
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 px-6 py-3 rounded-2xl flex items-center gap-3">
+          <div className="bg-white/10 backdrop-blur-md border border-white/15 px-6 py-3 rounded-2xl flex items-center gap-3">
             <span className="text-2xl font-black tracking-tight">1 Point = 200 LKR</span>
-            <span className="text-xs bg-white text-amber-950 font-extrabold px-2.5 py-1 rounded-full uppercase">
+            <span className="text-xs bg-white text-neutral-950 font-extrabold px-2.5 py-1 rounded-full uppercase">
               LKR
             </span>
           </div>
@@ -122,9 +122,9 @@ export default function DashboardPage() {
                     setActivePreset(preset);
                     setCustomPts('');
                   }}
-                  className={`px-5 py-2 rounded-full text-xs font-bold transition-all ${
+                  className={`px-5 py-2 rounded-lg text-xs font-medium transition-all ${
                     activePreset === preset && !customPts
-                      ? 'bg-[#C85A17] text-white shadow-xs ring-2 ring-amber-200'
+                      ? 'bg-im-accent text-white shadow-xs'
                       : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
                 >
@@ -150,7 +150,7 @@ export default function DashboardPage() {
 
               <Button
                 onClick={handleConfirmAddition}
-                className="w-full h-11 bg-black hover:bg-neutral-800 text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+                className="w-full h-11 bg-im-btn-primary hover:bg-im-btn-primary/90 active:bg-im-btn-primary/80 text-white font-medium text-sm rounded-lg shadow-md transition-all flex items-center justify-center gap-2"
               >
                 <Check className="w-4 h-4" />
                 <span>Confirm Addition</span>

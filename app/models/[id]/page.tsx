@@ -103,7 +103,7 @@ export default function ModelProfilePage({ params }: { params: Promise<{ id: str
                   <div className="flex items-center justify-between pt-2 border-t border-slate-100">
                     <span className="text-sm font-black text-slate-900">{gig.rate}</span>
                     <Link href={`/models/${model.id}/gigs/${gig.id}/pending`}>
-                      <Button className="bg-black hover:bg-neutral-800 text-white text-xs font-bold rounded-xl px-5 h-9">
+                      <Button className="bg-im-btn-primary hover:bg-im-btn-primary/90 active:bg-im-btn-primary/80 text-white text-xs font-medium rounded-lg px-5 h-9 transition-all shadow-xs">
                         View Gig
                       </Button>
                     </Link>
@@ -144,7 +144,7 @@ export default function ModelProfilePage({ params }: { params: Promise<{ id: str
                 <div className="flex items-center justify-between pt-2 border-t border-slate-100">
                   <span className="text-sm font-black text-slate-900">{gig.rate}</span>
                   <Link href={`/models/${model.id}/gigs/${gig.id}`}>
-                    <Button className="bg-black hover:bg-neutral-800 text-white text-xs font-bold rounded-xl px-5 h-9">
+                    <Button className="bg-im-btn-primary hover:bg-im-btn-primary/90 active:bg-im-btn-primary/80 text-white text-xs font-medium rounded-lg px-5 h-9 transition-all shadow-xs">
                       View Gig
                     </Button>
                   </Link>

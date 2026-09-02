@@ -74,14 +74,14 @@ export default function BookingsPage() {
               </div>
 
               {/* Status Filter Buttons */}
-              <div className="flex items-center bg-slate-100 p-1 rounded-full text-xs font-semibold">
+              <div className="flex items-center bg-slate-100 p-1 rounded-lg text-xs font-medium">
                 {['All', 'Pending', 'Approved', 'Completed'].map((status) => (
                   <button
                     key={status}
                     onClick={() => setStatusFilter(status)}
-                    className={`px-3 py-1 rounded-full transition-all ${
+                    className={`px-3 py-1.5 rounded-md transition-all ${
                       statusFilter === status
-                        ? 'bg-white text-slate-900 shadow-xs'
+                        ? 'bg-white text-slate-900 shadow-xs font-medium'
                         : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
@@ -134,7 +134,7 @@ export default function BookingsPage() {
                         variant="ghost"
                         size="sm"
                         onClick={() => alert(`Viewing details for Booking ${b.bookingCode}`)}
-                        className="h-8 text-xs font-semibold text-[#C85A17] hover:text-amber-800 hover:bg-amber-50"
+                        className="h-8 text-xs font-medium text-im-accent hover:text-im-accent hover:bg-im-accent-light rounded-lg transition-colors"
                       >
                         <Eye className="w-3.5 h-3.5 mr-1" />
                         <span>View</span>

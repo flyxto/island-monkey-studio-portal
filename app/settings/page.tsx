@@ -86,7 +86,7 @@ export default function SettingsPage() {
         <div className="flex justify-end">
           <Button
             type="submit"
-            className="h-11 bg-black hover:bg-neutral-800 text-white font-bold text-xs px-8 rounded-xl shadow-md flex items-center gap-2"
+            className="h-11 bg-im-btn-primary hover:bg-im-btn-primary/90 active:bg-im-btn-primary/80 text-white font-medium text-xs px-8 rounded-lg shadow-md flex items-center gap-2 transition-all"
           >
             <Save className="w-4 h-4" />
             <span>Save Settings</span>

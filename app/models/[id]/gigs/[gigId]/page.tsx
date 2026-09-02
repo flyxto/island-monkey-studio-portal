@@ -113,7 +113,7 @@ export default function ActiveGigPage({
             {/* Make Booking CTA */}
             <Button
               onClick={() => alert(`Initiating direct studio booking for ${gig.title}`)}
-              className="w-full h-12 bg-black hover:bg-neutral-800 text-white font-bold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+              className="w-full h-12 bg-im-btn-primary hover:bg-im-btn-primary/90 active:bg-im-btn-primary/80 text-white font-medium text-[15px] rounded-lg shadow-md transition-all flex items-center justify-center gap-2"
             >
               <Calendar className="w-4 h-4" />
               <span>Make Booking</span>

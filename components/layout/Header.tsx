@@ -29,7 +29,7 @@ export function Header({ title }: HeaderProps) {
         {/* Notifications */}
         <button className="relative p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-full transition-colors">
           <Bell className="w-5 h-5" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#C85A17] rounded-full ring-2 ring-white"></span>
+          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-im-accent rounded-full ring-2 ring-white"></span>
         </button>
 
         {/* Logout Quick Action */}
@@ -37,7 +37,7 @@ export function Header({ title }: HeaderProps) {
           variant="outline"
           size="sm"
           onClick={() => alert('Logged out.')}
-          className="gap-2 text-xs font-semibold rounded-full border-slate-200 hover:bg-slate-100 hover:text-slate-800 hover:border-slate-300"
+          className="gap-2 text-xs font-medium rounded-lg border-slate-200 hover:bg-slate-100 hover:text-slate-800 hover:border-slate-300 transition-colors"
         >
           <LogOut className="w-3.5 h-3.5" />
           <span>Logout</span>

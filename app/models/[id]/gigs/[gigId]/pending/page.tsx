@@ -152,7 +152,7 @@ export default function PendingGigPage({
             {!isApproved ? (
               <Button
                 onClick={handleApproveGig}
-                className="w-full h-12 bg-black hover:bg-neutral-800 text-white font-bold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+                className="w-full h-12 bg-im-btn-primary hover:bg-im-btn-primary/90 active:bg-im-btn-primary/80 text-white font-medium text-[15px] rounded-lg shadow-md transition-all flex items-center justify-center gap-2"
               >
                 <ShieldCheck className="w-4 h-4" />
                 <span>Approve Gig</span>
@@ -160,7 +160,7 @@ export default function PendingGigPage({
             ) : (
               <Button
                 disabled
-                className="w-full h-12 bg-emerald-600 text-white font-bold text-sm rounded-xl shadow-none opacity-100 flex items-center justify-center gap-2 cursor-default"
+                className="w-full h-12 bg-emerald-600 text-white font-medium text-[15px] rounded-lg shadow-none opacity-100 flex items-center justify-center gap-2 cursor-default"
               >
                 <CheckCircle2 className="w-4 h-4" />
                 <span>Gig Approved</span>

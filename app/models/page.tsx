@@ -119,7 +119,7 @@ export default function ModelsPage() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-8 text-xs font-semibold text-[#C85A17] hover:text-amber-800 hover:bg-amber-50"
+                          className="h-8 text-xs font-medium text-im-accent hover:text-im-accent hover:bg-im-accent-light rounded-lg transition-colors"
                         >
                           <Eye className="w-3.5 h-3.5 mr-1" />
                           <span>View Profile</span>
