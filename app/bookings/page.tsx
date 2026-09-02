@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Calendar, Search, Filter, Eye } from 'lucide-react';
 import { StatCard } from '@/components/ui/StatCard';
 import { StatusBadge } from '@/components/ui/StatusBadge';
@@ -130,15 +131,16 @@ export default function BookingsPage() {
                       <StatusBadge status={b.status} />
                     </td>
                     <td className="py-3.5 px-4 text-right">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => alert(`Viewing details for Booking ${b.bookingCode}`)}
-                        className="h-8 text-xs font-medium text-im-accent hover:text-im-accent hover:bg-im-accent-light rounded-lg transition-colors"
-                      >
-                        <Eye className="w-3.5 h-3.5 mr-1" />
-                        <span>View</span>
-                      </Button>
+                      <Link href={`/bookings/${b.id}`}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 text-xs font-medium text-im-accent hover:text-im-accent hover:bg-im-accent-light rounded-lg transition-colors"
+                        >
+                          <Eye className="w-3.5 h-3.5 mr-1" />
+                          <span>View</span>
+                        </Button>
+                      </Link>
                     </td>
                   </tr>
                 ))}

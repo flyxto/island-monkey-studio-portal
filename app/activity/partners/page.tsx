@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Handshake, Search, ArrowDownLeft, Eye, RefreshCw } from 'lucide-react';
 import { StatCard } from '@/components/ui/StatCard';
 import { Input } from '@/components/ui/input';
@@ -113,15 +114,16 @@ export default function PartnerActivityPage() {
                           <RefreshCw className="w-3 h-3 mr-1" />
                           <span>Re-issue</span>
                         </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => alert(`Viewing partner transaction ${act.id}`)}
-                          className="h-8 text-xs font-medium text-im-accent hover:text-im-accent hover:bg-im-accent-light rounded-lg transition-colors"
-                        >
-                          <Eye className="w-3.5 h-3.5 mr-1" />
-                          <span>View</span>
-                        </Button>
+                        <Link href={`/activity/partners/${act.id}`}>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-8 text-xs font-medium text-im-accent hover:text-im-accent hover:bg-im-accent-light rounded-lg transition-colors"
+                          >
+                            <Eye className="w-3.5 h-3.5 mr-1" />
+                            <span>View</span>
+                          </Button>
+                        </Link>
                       </div>
                     </td>
                   </tr>
