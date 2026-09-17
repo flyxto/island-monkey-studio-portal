@@ -109,3 +109,37 @@ export interface PartnerActivityStats {
   todaysDeductions: number;
   totalDeductions: number;
 }
+
+export interface Package {
+  id: string;
+  name: string;
+  description: string;
+  priceLkr: number;
+  isBestSeller: boolean;
+  durationHours: string;
+  studioName: string;
+  photographersCount: number;
+  metaLine: string;
+  highlightTitle: string;
+  highlightSubtitle: string;
+  whatsIncluded: string[];
+  imageUrl: string | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreatePackageDto {
+  name: string;
+  description: string;
+  priceLkr: number;
+  isBestSeller?: boolean;
+  durationHours: string;
+  studioName: string;
+  photographersCount: number;
+  metaLine: string;
+  highlightTitle: string;
+  highlightSubtitle: string;
+  whatsIncluded: string[];
+  imageUrl?: string;
+}

@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { logoutAdmin } from '@/lib/api/auth';
 import {
   Home,
   Calendar,
@@ -11,12 +12,14 @@ import {
   Settings,
   LogOut,
   Sparkles,
+  Package,
 } from 'lucide-react';
 
 const NAV_ITEMS = [
   { label: 'Home', href: '/', icon: Home },
   { label: 'Bookings', href: '/bookings', icon: Calendar },
   { label: 'Models', href: '/models', icon: Users },
+  { label: 'Packages', href: '/packages', icon: Package },
   { label: 'User Activity', href: '/activity/users', icon: Activity },
   { label: 'Partner Activity', href: '/activity/partners', icon: Handshake },
   { label: 'Settings', href: '/settings', icon: Settings },
@@ -24,6 +27,8 @@ const NAV_ITEMS = [
 
 export function Sidebar() {
   const pathname = usePathname();
+
+  if (pathname === '/login') return null;
 
   const isActive = (href: string) => {
     if (href === '/') {
@@ -88,7 +93,7 @@ export function Sidebar() {
       {/* Logout button at bottom */}
       <div className="p-4 border-t border-slate-200/60">
         <button
-          onClick={() => alert('Logged out successfully.')}
+          onClick={() => logoutAdmin()}
           className="flex items-center gap-3 w-full px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors"
         >
           <LogOut className="w-4 h-4 text-slate-500" />

@@ -1,14 +1,20 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { Bell, Search, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { logoutAdmin } from '@/lib/api/auth';
 
 interface HeaderProps {
   title?: string;
 }
 
 export function Header({ title }: HeaderProps) {
+  const pathname = usePathname();
+
+  if (pathname === '/login') return null;
+
   return (
     <header className="h-16 bg-white border-b border-slate-200 px-8 flex items-center justify-between sticky top-0 z-10 shadow-xs">
       <div className="flex items-center gap-4">
@@ -36,7 +42,7 @@ export function Header({ title }: HeaderProps) {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => alert('Logged out.')}
+          onClick={() => logoutAdmin()}
           className="gap-2 text-xs font-medium rounded-lg border-slate-200 hover:bg-slate-100 hover:text-slate-800 hover:border-slate-300 transition-colors"
         >
           <LogOut className="w-3.5 h-3.5" />
