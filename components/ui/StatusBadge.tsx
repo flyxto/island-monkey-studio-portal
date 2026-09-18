@@ -20,36 +20,36 @@ export function StatusBadge({ status }: StatusBadgeProps) {
   switch (normalized) {
     case 'pending':
       return (
-        <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-100 border-amber-200 shadow-none font-medium text-xs px-2.5 py-0.5 rounded-full">
+        <span className="inline-flex items-center bg-[#FFF9EB] text-[#B45309] border border-[#FDE68A] font-semibold text-[11px] px-2.5 py-0.5 rounded-full tracking-wide">
           Pending
-        </Badge>
+        </span>
       );
     case 'approved':
     case 'active':
     case 'available':
       return (
-        <Badge className="bg-emerald-100 text-emerald-800 hover:bg-emerald-100 border-emerald-200 shadow-none font-medium text-xs px-2.5 py-0.5 rounded-full">
+        <span className="inline-flex items-center bg-[#EDFDF3] text-[#16A34A] border border-[#BBF7D0] font-semibold text-[11px] px-2.5 py-0.5 rounded-full tracking-wide">
           {normalized === 'active' ? 'Active' : normalized === 'available' ? 'Available' : 'Approved'}
-        </Badge>
+        </span>
       );
     case 'completed':
       return (
-        <Badge className="bg-slate-100 text-slate-800 hover:bg-slate-100 border-slate-200 shadow-none font-medium text-xs px-2.5 py-0.5 rounded-full">
+        <span className="inline-flex items-center bg-[#F1F5F9] text-[#475569] border border-[#E2E8F0] font-semibold text-[11px] px-2.5 py-0.5 rounded-full tracking-wide">
           Completed
-        </Badge>
+        </span>
       );
     case 'cancelled':
     case 'unavailable':
       return (
-        <Badge className="bg-rose-100 text-rose-800 hover:bg-rose-100 border-rose-200 shadow-none font-medium text-xs px-2.5 py-0.5 rounded-full">
+        <span className="inline-flex items-center bg-[#FEF2F2] text-[#DC2626] border border-[#FECACA] font-semibold text-[11px] px-2.5 py-0.5 rounded-full tracking-wide">
           {normalized === 'unavailable' ? 'Unavailable' : 'Cancelled'}
-        </Badge>
+        </span>
       );
     default:
       return (
-        <Badge className="bg-slate-100 text-slate-700 hover:bg-slate-100 border-slate-200 shadow-none font-medium text-xs px-2.5 py-0.5 rounded-full">
+        <span className="inline-flex items-center bg-[#F8FAFC] text-[#64748B] border border-[#E2E8F0] font-semibold text-[11px] px-2.5 py-0.5 rounded-full tracking-wide">
           {status}
-        </Badge>
+        </span>
       );
   }
 }

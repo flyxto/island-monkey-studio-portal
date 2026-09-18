@@ -64,97 +64,96 @@ export default function ModelProfilePage({ params }: { params: Promise<{ id: str
       </div>
 
       {/* Model Profile Hero Card */}
-      <Card className="bg-white border-slate-200 shadow-xs overflow-hidden">
-        <CardContent className="p-8">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
-            {/* Left: Avatar + Details */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-              <div className="relative w-32 h-32 rounded-2xl overflow-hidden shadow-md border-2 border-slate-100 shrink-0 bg-slate-100 flex items-center justify-center">
-                {model.avatarUrl ? (
-                  <Image
-                    src={model.avatarUrl}
-                    alt={model.user.firstName}
-                    fill
-                    className="object-cover"
-                  />
-                ) : (
-                  <span className="text-4xl font-medium text-slate-400">
-                    {model.user.firstName.charAt(0)}
-                  </span>
-                )}
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center gap-3 flex-wrap">
-                  <h1 className="text-2xl font-medium text-slate-900 tracking-tight">
-                    {model.user.firstName} {model.user.lastName}
-                  </h1>
-                  <span className="bg-amber-50 text-amber-800 text-xs font-medium px-3 py-1 rounded-full border border-amber-100">
-                    {model.specialty}
-                  </span>
-                </div>
-                <p className="text-xs text-slate-500 max-w-xl leading-relaxed">{model.bio}</p>
-                <div className="pt-1 flex items-center gap-2">
-                  <StatusBadge status={model.availability} />
-                  <span className="text-xs text-slate-400">• Handle: {model.handle}</span>
-                </div>
-              </div>
+      <div className="bg-white rounded-[24px] border border-[#EBE4D8] shadow-2xs overflow-hidden p-6 sm:p-8">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+          {/* Left: Avatar + Details */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+            <div className="relative w-32 h-32 rounded-2xl overflow-hidden shadow-2xs border-2 border-[#EBE4D8] shrink-0 bg-[#FAF6F0] flex items-center justify-center">
+              {model.avatarUrl ? (
+                <Image
+                  src={model.avatarUrl}
+                  alt={model.user.firstName}
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <span className="text-4xl font-semibold text-[#C85A17]">
+                  {model.user.firstName.charAt(0)}
+                </span>
+              )}
             </div>
-
-            {/* Right: Contact Information Box */}
-            <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 space-y-3 w-full lg:w-72 shrink-0">
-              <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Contact Details</p>
-              <div className="flex items-center gap-3 text-xs font-medium text-slate-700">
-                <Mail className="w-4 h-4 text-amber-600 shrink-0" />
-                <span className="truncate">{model.user.email}</span>
+            <div className="space-y-2">
+              <div className="flex items-center gap-3 flex-wrap">
+                <h1 className="text-2xl font-semibold text-[#0B1C30] tracking-tight">
+                  {model.user.firstName} {model.user.lastName}
+                </h1>
+                <span className="bg-[#FDF2EA] text-[#C85A17] text-xs font-semibold px-3 py-1 rounded-full border border-[#F3DAC9]">
+                  {model.specialty}
+                </span>
               </div>
-              <div className="flex items-center gap-3 text-xs font-medium text-slate-700">
-                <Phone className="w-4 h-4 text-amber-600 shrink-0" />
-                <span>{model.user.phone}</span>
+              <p className="text-xs text-[#616161] font-medium max-w-xl leading-relaxed">{model.bio}</p>
+              <div className="pt-1 flex items-center gap-2">
+                <StatusBadge status={model.availability} />
+                <span className="text-xs text-[#8C8880] font-mono">• Handle: {model.handle}</span>
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+
+          {/* Right: Contact Information Box */}
+          <div className="bg-[#FAF6F0] border border-[#EBE4D8] rounded-2xl p-5 space-y-3 w-full lg:w-72 shrink-0">
+            <p className="text-[11px] font-semibold text-[#8C8880] uppercase tracking-wider">Contact Details</p>
+            <div className="flex items-center gap-3 text-xs font-semibold text-[#0B1C30]">
+              <Mail className="w-4 h-4 text-[#C85A17] shrink-0" />
+              <span className="truncate">{model.user.email}</span>
+            </div>
+            <div className="flex items-center gap-3 text-xs font-semibold text-[#0B1C30]">
+              <Phone className="w-4 h-4 text-[#C85A17] shrink-0" />
+              <span>{model.user.phone}</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Section 1: Pending Gigs */}
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <Clock className="w-5 h-5 text-amber-500" />
-          <h2 className="text-lg font-medium text-slate-900">Pending Gigs</h2>
+          <Clock className="w-5 h-5 text-[#C85A17]" />
+          <h2 className="text-lg font-semibold text-[#0B1C30]">Pending Gigs</h2>
         </div>
 
         {model.pendingGigs && model.pendingGigs.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {model.pendingGigs.map((gig) => (
-              <Card key={gig.id} className="bg-white border-slate-200 shadow-xs overflow-hidden hover:shadow-md transition-shadow">
-                <div className="relative h-48 w-full bg-slate-100">
+              <div key={gig.id} className="bg-white rounded-[24px] border border-[#EBE4D8] shadow-2xs overflow-hidden hover:shadow-xs hover:border-[#DFCFC0] transition-all flex flex-col justify-between">
+                <div className="relative h-48 w-full bg-[#FAF6F0]">
                   {gig.coverImageUrl && (
                     <Image src={gig.coverImageUrl} alt={gig.title} fill className="object-cover" />
                   )}
-                  <span className="absolute top-3 left-3 bg-amber-500 text-white text-[11px] font-medium px-3 py-1 rounded-full shadow-md">
+                  <span className="absolute top-3 left-3 bg-[#FF6433] text-white text-[11px] font-semibold px-3 py-1 rounded-full shadow-xs">
                     Pending Approval
                   </span>
                 </div>
-                <CardContent className="p-6 space-y-4">
+                <div className="p-6 space-y-4">
                   <div>
-                    <h3 className="text-base font-medium text-slate-900">{gig.title}</h3>
-                    <p className="text-xs text-slate-500 mt-1 line-clamp-2">{gig.description}</p>
+                    <h3 className="text-base font-semibold text-[#0B1C30]">{gig.title}</h3>
+                    <p className="text-xs text-[#616161] font-medium mt-1 line-clamp-2">{gig.description}</p>
                   </div>
 
-                  <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-                    <span className="text-sm font-medium text-slate-900">LKR {gig.hourlyRateLkr}/hr</span>
+                  <div className="flex items-center justify-between pt-3 border-t border-[#EBE4D8]">
+                    <span className="text-sm font-semibold text-[#0B1C30]">LKR {gig.hourlyRateLkr}/hr</span>
                     <Link href={`/models/${model.id}/gigs/${gig.id}/pending`}>
-                      <Button className="bg-im-btn-primary hover:bg-im-btn-primary/90 active:bg-im-btn-primary/80 text-white text-xs font-medium rounded-lg px-5 h-9 transition-all shadow-xs">
-                        Review Gig
-                      </Button>
+                      <span className="im-btn-specular text-white text-xs font-semibold rounded-xl px-5 h-9 cursor-pointer">
+                        <div className="absolute inset-x-2 top-0.5 h-[44%] bg-gradient-to-b from-white/70 via-white/20 to-transparent rounded-t-xl pointer-events-none" />
+                        <span>Review Gig</span>
+                      </span>
                     </Link>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
         ) : (
-          <p className="text-xs text-slate-400 bg-white p-6 rounded-2xl border border-slate-200">
+          <p className="text-xs text-[#8C8880] font-medium bg-white p-6 rounded-2xl border border-[#EBE4D8]">
             No pending gig requests for this model.
           </p>
         )}
@@ -163,42 +162,42 @@ export default function ModelProfilePage({ params }: { params: Promise<{ id: str
       {/* Section 2: Active Gigs */}
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <CheckCircle className="w-5 h-5 text-emerald-500" />
-          <h2 className="text-lg font-medium text-slate-900">Active Gigs</h2>
+          <CheckCircle className="w-5 h-5 text-emerald-600" />
+          <h2 className="text-lg font-semibold text-[#0B1C30]">Active Gigs</h2>
         </div>
 
         {model.activeGigs && model.activeGigs.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {model.activeGigs.map((gig) => (
-              <Card key={gig.id} className="bg-white border-slate-200 shadow-xs overflow-hidden hover:shadow-md transition-shadow">
-                <div className="relative h-48 w-full bg-slate-100">
+              <div key={gig.id} className="bg-white rounded-[24px] border border-[#EBE4D8] shadow-2xs overflow-hidden hover:shadow-xs hover:border-[#DFCFC0] transition-all flex flex-col justify-between">
+                <div className="relative h-48 w-full bg-[#FAF6F0]">
                   {gig.coverImageUrl && (
                     <Image src={gig.coverImageUrl} alt={gig.title} fill className="object-cover" />
                   )}
-                  <span className="absolute top-3 left-3 bg-emerald-600 text-white text-[11px] font-medium px-3 py-1 rounded-full shadow-md">
+                  <span className="absolute top-3 left-3 bg-emerald-600 text-white text-[11px] font-semibold px-3 py-1 rounded-full shadow-xs">
                     Active
                   </span>
                 </div>
-                <CardContent className="p-6 space-y-4">
+                <div className="p-6 space-y-4">
                   <div>
-                    <h3 className="text-base font-medium text-slate-900">{gig.title}</h3>
-                    <p className="text-xs text-slate-500 mt-1 line-clamp-2">{gig.description}</p>
+                    <h3 className="text-base font-semibold text-[#0B1C30]">{gig.title}</h3>
+                    <p className="text-xs text-[#616161] font-medium mt-1 line-clamp-2">{gig.description}</p>
                   </div>
 
-                  <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-                    <span className="text-sm font-medium text-slate-900">LKR {gig.hourlyRateLkr}/hr</span>
+                  <div className="flex items-center justify-between pt-3 border-t border-[#EBE4D8]">
+                    <span className="text-sm font-semibold text-[#0B1C30]">LKR {gig.hourlyRateLkr}/hr</span>
                     <Link href={`/models/${model.id}/gigs/${gig.id}`}>
-                      <Button className="bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium rounded-lg px-5 h-9 transition-all shadow-xs">
-                        View Gig
-                      </Button>
+                      <span className="im-btn-specular-secondary text-[#0B1C30] text-xs font-semibold rounded-xl px-5 h-9 cursor-pointer">
+                        <span>View Gig</span>
+                      </span>
                     </Link>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
         ) : (
-          <p className="text-xs text-slate-400 bg-white p-6 rounded-2xl border border-slate-200">
+          <p className="text-xs text-[#8C8880] font-medium bg-white p-6 rounded-2xl border border-[#EBE4D8]">
             No active gigs for this model.
           </p>
         )}

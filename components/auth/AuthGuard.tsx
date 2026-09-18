@@ -24,8 +24,8 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
   // to avoid flashing the protected content
   if (isAuthenticated === null && pathname !== '/login') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <div className="w-8 h-8 border-4 border-[#C85A17] border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen flex items-center justify-center bg-[#FAF6F0]">
+        <div className="w-8 h-8 border-3 border-[#C85A17] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }

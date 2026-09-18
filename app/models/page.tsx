@@ -55,8 +55,8 @@ export default function ModelsPage() {
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-medium text-slate-900 tracking-tight">Models</h1>
-        <p className="text-xs text-slate-500 mt-1">Manage talent profiles, availability, and gig approval status</p>
+        <h1 className="text-2xl font-semibold text-[#0B1C30] tracking-tight">Models</h1>
+        <p className="text-xs text-[#8C8880] font-medium mt-1">Manage talent profiles, availability, and gig approval status</p>
       </div>
 
       {/* Stats Cards Row */}
@@ -88,94 +88,88 @@ export default function ModelsPage() {
       </div>
 
       {/* Models List Table */}
-      <Card className="bg-white border-slate-200 shadow-xs">
-        <CardContent className="p-6 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <h3 className="text-base font-medium text-slate-900">Models Catalog</h3>
+      <div className="bg-white rounded-[24px] border border-[#EBE4D8] shadow-2xs p-6 sm:p-7 space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <h3 className="text-base font-semibold text-[#0B1C30]">Models Catalog</h3>
 
-            {/* Search Bar */}
-            <div className="relative w-64">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-              <Input
-                type="search"
-                placeholder="Search model name or specialty..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 h-9 bg-slate-50 border-slate-200 rounded-full text-xs"
-              />
-            </div>
+          {/* Search Bar */}
+          <div className="relative w-64">
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#8C8880]" />
+            <Input
+              type="search"
+              placeholder="Search model name or specialty..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-9 h-9 bg-[#FAF6F0] border-[#E8E1D5] rounded-full text-xs text-[#0B1C30] placeholder:text-[#8C8880] focus-visible:ring-2 focus-visible:ring-[#FF6433]/30 focus-visible:border-[#FF6433]"
+            />
           </div>
+        </div>
 
-          <div className="overflow-x-auto rounded-xl border border-slate-100">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-500 font-medium uppercase border-b border-slate-100">
-                <tr>
-                  <th className="py-3 px-4">Member</th>
-                  <th className="py-3 px-4">ID</th>
-                  <th className="py-3 px-4">Approved Gigs</th>
-                  <th className="py-3 px-4">Uploaded Time</th>
-                  <th className="py-3 px-4">Availability</th>
-                  <th className="py-3 px-4 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 font-medium">
-                {models.map((m) => (
-                  <tr key={m.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-3.5 px-4 flex items-center gap-3">
-                      <Avatar className="w-9 h-9">
-                        <AvatarImage src={m.avatarUrl || ''} />
-                        <AvatarFallback className="bg-amber-100 text-amber-900 text-xs font-medium">
-                          {m.user.firstName.charAt(0)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <p className="font-medium text-slate-900">
-                          {m.user.firstName} {m.user.lastName}
-                        </p>
-                        <p className="text-[11px] text-slate-400">{m.specialty}</p>
-                      </div>
-                    </td>
-                    <td className="py-3.5 px-4 font-mono text-slate-600">{m.handle}</td>
-                    <td className="py-3.5 px-4">
-                      <span className="bg-emerald-50 text-emerald-700 font-medium px-2 py-0.5 rounded-full text-xs">
-                        {m.approvedGigsCount || 0} Approved
+        <div className="overflow-x-auto rounded-2xl border border-[#EBE4D8]">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-[#FAF6F0] text-[#8C8880] font-semibold text-[11px] uppercase border-b border-[#EBE4D8]">
+              <tr>
+                <th className="py-3 px-4">Member</th>
+                <th className="py-3 px-4">ID</th>
+                <th className="py-3 px-4">Approved Gigs</th>
+                <th className="py-3 px-4">Uploaded Time</th>
+                <th className="py-3 px-4">Availability</th>
+                <th className="py-3 px-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#EBE4D8] font-medium">
+              {models.map((m) => (
+                <tr key={m.id} className="hover:bg-[#FAF6F0]/60 transition-colors">
+                  <td className="py-3.5 px-4 flex items-center gap-3">
+                    <Avatar className="w-9 h-9 border border-[#EBE4D8]">
+                      <AvatarImage src={m.avatarUrl || ''} />
+                      <AvatarFallback className="bg-[#FDF2EA] text-[#C85A17] text-xs font-semibold">
+                        {m.user.firstName.charAt(0)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="font-semibold text-[#0B1C30]">
+                        {m.user.firstName} {m.user.lastName}
+                      </p>
+                      <p className="text-[11px] text-[#8C8880] font-medium">{m.specialty}</p>
+                    </div>
+                  </td>
+                  <td className="py-3.5 px-4 font-mono text-[#616161] font-medium">{m.handle}</td>
+                  <td className="py-3.5 px-4">
+                    <span className="bg-[#EDFDF3] text-[#16A34A] border border-[#DCFCE7] font-semibold px-2.5 py-0.5 rounded-full text-xs">
+                      {m.approvedGigsCount || 0} Approved
+                    </span>
+                  </td>
+                  <td className="py-3.5 px-4 text-[#8C8880] font-medium">{formatDateTime(m.createdAt)}</td>
+                  <td className="py-3.5 px-4">
+                    <StatusBadge status={m.availability} />
+                  </td>
+                  <td className="py-3.5 px-4 text-right">
+                    <Link href={`/models/${m.id}`}>
+                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#FAF6F0] hover:bg-[#FDF2EA] text-[#C85A17] border border-[#EBE4D8] hover:border-[#F3DAC9] text-xs font-semibold transition-all">
+                        <Eye className="w-3.5 h-3.5" />
+                        <span>View Profile</span>
                       </span>
-                    </td>
-                    <td className="py-3.5 px-4 text-slate-500">{formatDateTime(m.createdAt)}</td>
-                    <td className="py-3.5 px-4">
-                      <StatusBadge status={m.availability} />
-                    </td>
-                    <td className="py-3.5 px-4 text-right">
-                      <Link href={`/models/${m.id}`}>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 text-xs font-medium text-im-accent hover:text-im-accent hover:bg-im-accent-light rounded-lg transition-colors"
-                        >
-                          <Eye className="w-3.5 h-3.5 mr-1" />
-                          <span>View Profile</span>
-                        </Button>
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-            {/* Empty / Loading State */}
-            {isLoading && (
-              <div className="p-8 flex justify-center text-slate-400">
-                <Loader2 className="w-5 h-5 animate-spin" />
-              </div>
-            )}
-            {!isLoading && models.length === 0 && (
-              <div className="p-8 text-center text-slate-500 text-sm">
-                No models found matching your criteria.
-              </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
+          {/* Empty / Loading State */}
+          {isLoading && (
+            <div className="p-8 flex justify-center text-[#C85A17]">
+              <Loader2 className="w-5 h-5 animate-spin" />
+            </div>
+          )}
+          {!isLoading && models.length === 0 && (
+            <div className="p-8 text-center text-[#8C8880] text-sm font-medium">
+              No models found matching your criteria.
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

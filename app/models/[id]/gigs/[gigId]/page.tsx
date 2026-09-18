@@ -23,6 +23,7 @@ function formatDateTime(isoString: string) {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true,
+    timeZone: 'UTC',
   }).replace(',', '').replace(' at', ' -');
 }
 
@@ -208,112 +209,116 @@ export default function ActiveGigPage({
         </div>
 
         {/* Right Column: Parameters & Booking Action */}
-        <Card className="lg:col-span-5 bg-white border-slate-200 shadow-xs">
-          <CardContent className="p-6 space-y-6">
-            <div className="space-y-2">
-              <span className="text-xs font-medium text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-100 inline-block">
-                {gig.tag}
+        {/* Right Column: Parameters & Booking Action */}
+        <div className="lg:col-span-5 bg-white rounded-[24px] border border-[#EBE4D8] shadow-2xs p-6 sm:p-7 space-y-6">
+          <div className="space-y-2">
+            <span className="text-xs font-semibold text-emerald-700 bg-[#EDFDF3] px-3 py-1 rounded-full border border-[#BBF7D0] inline-block">
+              {gig.tag}
+            </span>
+            <h1 className="text-xl font-semibold text-[#0B1C30] tracking-tight">{gig.title}</h1>
+            <p className="text-xs text-[#616161] font-medium leading-relaxed">{gig.description}</p>
+          </div>
+
+          <div className="p-4 bg-[#FAF6F0] border border-[#EBE4D8] rounded-2xl flex items-center justify-between">
+            <span className="text-[11px] font-semibold text-[#8C8880] uppercase tracking-wider">Hourly Rate</span>
+            <span className="text-xl font-semibold text-[#0B1C30]">LKR {gig.hourlyRateLkr}</span>
+          </div>
+
+          {/* Gig parameters list */}
+          <div className="space-y-3 pt-2 text-xs">
+            <div className="flex justify-between py-2 border-b border-[#EBE4D8]">
+              <span className="text-[#616161] font-medium">Duration</span>
+              <span className="font-semibold text-[#0B1C30]">{gig.durationHours} Hours</span>
+            </div>
+            <div className="flex justify-between py-2 border-b border-[#EBE4D8]">
+              <span className="text-[#616161] font-medium">Venue</span>
+              <span className="font-semibold text-[#0B1C30]">{gig.venueName}</span>
+            </div>
+            <div className="flex justify-between py-2 border-b border-[#EBE4D8]">
+              <span className="text-[#616161] font-medium">Approved On</span>
+              <span className="font-semibold text-[#0B1C30]">{formatDateTime(gig.createdAt)}</span>
+            </div>
+            <div className="flex justify-between py-2">
+              <span className="text-[#616161] font-medium">Status</span>
+              <span className="font-semibold text-emerald-600 flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Approved & Active</span>
               </span>
-              <h1 className="text-xl font-medium text-slate-900 tracking-tight">{gig.title}</h1>
-              <p className="text-xs text-slate-500 leading-relaxed">{gig.description}</p>
             </div>
+          </div>
 
-            <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-between">
-              <span className="text-xs font-medium text-slate-500 uppercase">Hourly Rate</span>
-              <span className="text-xl font-medium text-slate-900">LKR {gig.hourlyRateLkr}</span>
+          {/* Highlights */}
+          {(gig.highlightTitle || gig.highlightSubtitle) && (
+            <div className="bg-[#FAF6F0] p-4 rounded-2xl border border-[#EBE4D8] space-y-1">
+               <p className="text-xs font-semibold text-[#0B1C30]">{gig.highlightTitle}</p>
+               <p className="text-xs text-[#616161] font-medium">{gig.highlightSubtitle}</p>
             </div>
+          )}
 
-            {/* Gig parameters list */}
-            <div className="space-y-3 pt-2 text-xs">
-              <div className="flex justify-between py-2 border-b border-slate-100">
-                <span className="text-slate-500">Duration</span>
-                <span className="font-medium text-slate-800">{gig.durationHours} Hours</span>
-              </div>
-              <div className="flex justify-between py-2 border-b border-slate-100">
-                <span className="text-slate-500">Venue</span>
-                <span className="font-medium text-slate-800">{gig.venueName}</span>
-              </div>
-              <div className="flex justify-between py-2 border-b border-slate-100">
-                <span className="text-slate-500">Approved On</span>
-                <span className="font-medium text-slate-800">{formatDateTime(gig.createdAt)}</span>
-              </div>
-              <div className="flex justify-between py-2">
-                <span className="text-slate-500">Status</span>
-                <span className="font-medium text-emerald-600 flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Approved & Active</span>
-                </span>
-              </div>
+          {/* Included */}
+          {gig.whatsIncluded && gig.whatsIncluded.length > 0 && (
+            <div className="pt-2">
+              <p className="text-xs font-semibold text-[#0B1C30] mb-2">What's Included</p>
+              <ul className="space-y-1.5 text-xs text-[#616161]">
+                {gig.whatsIncluded.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2 font-medium">
+                     <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                     <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
+          )}
 
-            {/* Highlights */}
-            {(gig.highlightTitle || gig.highlightSubtitle) && (
-              <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 mt-4 space-y-1">
-                 <p className="text-xs font-medium text-slate-800">{gig.highlightTitle}</p>
-                 <p className="text-xs text-slate-500">{gig.highlightSubtitle}</p>
-              </div>
-            )}
-
-            {/* Included */}
-            {gig.whatsIncluded && gig.whatsIncluded.length > 0 && (
-              <div className="pt-2">
-                <p className="text-xs font-medium text-slate-800 mb-2">What's Included</p>
-                <ul className="space-y-1 text-xs text-slate-600">
-                  {gig.whatsIncluded.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                       <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                       <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Make Booking CTA */}
-            <Button
-              onClick={() => setIsDrawerOpen(true)}
-              className="w-full h-12 bg-im-btn-primary hover:bg-im-btn-primary/90 active:bg-im-btn-primary/80 text-white font-medium text-[15px] rounded-lg shadow-md transition-all flex items-center justify-center gap-2 mt-4"
-            >
-              <Calendar className="w-4 h-4" />
-              <span>Schedule Booking</span>
-            </Button>
-          </CardContent>
-        </Card>
+          {/* Make Booking CTA */}
+          <button
+            type="button"
+            onClick={() => setIsDrawerOpen(true)}
+            className="im-btn-specular w-full h-12 rounded-xl text-white font-semibold text-[15px] cursor-pointer gap-2 mt-4"
+          >
+            <div className="absolute inset-x-2 top-0.5 h-[44%] bg-gradient-to-b from-white/70 via-white/20 to-transparent rounded-t-xl pointer-events-none" />
+            <Calendar className="w-4 h-4" />
+            <span>Schedule Booking</span>
+          </button>
+        </div>
       </div>
 
       {/* Booking Slide-out Drawer */}
       {isDrawerOpen && (
         <>
           <div 
-            className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 transition-opacity"
+            className="fixed inset-0 bg-[#0B1C30]/40 backdrop-blur-sm z-40 transition-opacity"
             onClick={() => setIsDrawerOpen(false)}
           />
-          <div className="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 animate-in slide-in-from-right duration-300 flex flex-col border-l border-slate-200">
-            <div className="flex items-center justify-between p-6 border-b border-slate-100">
-              <h2 className="text-lg font-medium text-slate-900">Book Model Gig</h2>
+          <div className="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 animate-in slide-in-from-right duration-300 flex flex-col border-l border-[#EBE4D8]">
+            <div className="flex items-center justify-between p-6 border-b border-[#EBE4D8]">
+              <div>
+                <h2 className="text-lg font-semibold text-[#0B1C30]">Book Model Gig</h2>
+                <p className="text-xs text-[#8C8880] font-medium mt-0.5">Schedule this talent for a studio session</p>
+              </div>
               <button 
                 onClick={() => setIsDrawerOpen(false)}
-                className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
+                className="p-2 text-[#8C8880] hover:text-[#0B1C30] hover:bg-[#FAF6F0] rounded-full transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
             
             <div className="flex-1 overflow-y-auto p-6">
-              <form id="booking-form" onSubmit={handleBookingSubmit} className="space-y-6">
+              <form id="booking-form" onSubmit={handleBookingSubmit} className="space-y-5">
                 <div>
-                  <label className="block text-xs font-medium text-slate-700 mb-1.5">Client Name (Required)</label>
+                  <label className="block text-xs font-semibold text-[#45464D] mb-1.5">Client Name (Required)</label>
                   <Input 
                     required 
                     placeholder="Enter customer name" 
                     value={bookingForm.clientName}
                     onChange={e => setBookingForm(prev => ({ ...prev, clientName: e.target.value }))}
-                    className="text-sm border-slate-200 focus:ring-amber-500"
+                    className="text-sm bg-[#FAF6F0] border-[#E8E1D5] rounded-xl text-[#0B1C30] focus-visible:ring-2 focus-visible:ring-[#FF6433]/30"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-xs font-medium text-slate-700 mb-1.5">Studio Booking (Optional)</label>
+                  <label className="block text-xs font-semibold text-[#45464D] mb-1.5">Studio Booking (Optional)</label>
                   <select
                     value={bookingForm.bookingId}
                     onChange={e => {
@@ -334,7 +339,7 @@ export default function ActiveGigPage({
                         setBookingForm(prev => ({ ...prev, bookingId: selectedId }));
                       }
                     }}
-                    className="w-full text-sm border-slate-200 rounded-md focus:ring-amber-500 focus:border-amber-500 p-2.5 border"
+                    className="w-full text-sm bg-[#FAF6F0] border-[#E8E1D5] rounded-xl p-2.5 text-[#0B1C30] outline-none focus:ring-2 focus:ring-[#FF6433]/30 border"
                   >
                     <option value="">Select an unassigned booking...</option>
                     {availableBookings.map(b => (
@@ -343,22 +348,22 @@ export default function ActiveGigPage({
                       </option>
                     ))}
                   </select>
-                  <p className="text-[11px] text-slate-500 mt-1">Select a studio booking to auto-fill details.</p>
+                  <p className="text-[11px] text-[#8C8880] mt-1 font-medium">Select a studio booking to auto-fill details.</p>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-700 mb-1.5">Date & Time</label>
+                  <label className="block text-xs font-semibold text-[#45464D] mb-1.5">Date & Time</label>
                   <Input 
                     type="datetime-local"
                     required 
                     value={bookingForm.dateTime}
                     onChange={e => setBookingForm(prev => ({ ...prev, dateTime: e.target.value }))}
-                    className="text-sm border-slate-200 focus:ring-amber-500"
+                    className="text-sm bg-[#FAF6F0] border-[#E8E1D5] rounded-xl text-[#0B1C30] focus-visible:ring-2 focus-visible:ring-[#FF6433]/30"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-700 mb-1.5">Duration (Hours)</label>
+                  <label className="block text-xs font-semibold text-[#45464D] mb-1.5">Duration (Hours)</label>
                   <Input 
                     type="number"
                     required
@@ -366,50 +371,51 @@ export default function ActiveGigPage({
                     placeholder="e.g. 2"
                     value={bookingForm.durationHours}
                     onChange={e => setBookingForm(prev => ({ ...prev, durationHours: e.target.value }))}
-                    className="text-sm border-slate-200 focus:ring-amber-500"
+                    className="text-sm bg-[#FAF6F0] border-[#E8E1D5] rounded-xl text-[#0B1C30] focus-visible:ring-2 focus-visible:ring-[#FF6433]/30"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-xs font-medium text-slate-700 mb-1.5">Location</label>
+                  <label className="block text-xs font-semibold text-[#45464D] mb-1.5">Location</label>
                   <Input 
                     required 
                     value={bookingForm.location}
                     onChange={e => setBookingForm(prev => ({ ...prev, location: e.target.value }))}
-                    className="text-sm border-slate-200 focus:ring-amber-500"
+                    className="text-sm bg-[#FAF6F0] border-[#E8E1D5] rounded-xl text-[#0B1C30] focus-visible:ring-2 focus-visible:ring-[#FF6433]/30"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-xs font-medium text-slate-700 mb-1.5">Notes (Optional)</label>
+                  <label className="block text-xs font-semibold text-[#45464D] mb-1.5">Notes (Optional)</label>
                   <textarea 
                     rows={3}
                     placeholder="Any special requests or details..."
                     value={bookingForm.notes}
                     onChange={e => setBookingForm(prev => ({ ...prev, notes: e.target.value }))}
-                    className="w-full text-sm border-slate-200 rounded-md focus:ring-amber-500 focus:border-amber-500 p-3 outline-none border resize-none"
+                    className="w-full text-sm bg-[#FAF6F0] border-[#E8E1D5] rounded-xl p-3 outline-none border resize-none text-[#0B1C30] placeholder:text-[#8C8880] focus:ring-2 focus:ring-[#FF6433]/30"
                   />
                 </div>
 
                 {/* Calculation Preview */}
-                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 flex items-center justify-between">
-                  <span className="text-xs font-medium text-slate-600">Calculated Total</span>
-                  <span className="text-lg font-medium text-[#C85A17]">
+                <div className="bg-[#FAF6F0] p-4 rounded-2xl border border-[#EBE4D8] flex items-center justify-between">
+                  <span className="text-xs font-semibold text-[#616161]">Calculated Total</span>
+                  <span className="text-lg font-semibold text-[#C85A17]">
                     LKR {isNaN(calculatedTotal) ? '0' : calculatedTotal.toLocaleString()}
                   </span>
                 </div>
               </form>
             </div>
             
-            <div className="p-6 border-t border-slate-100 bg-slate-50">
-              <Button 
+            <div className="p-6 border-t border-[#EBE4D8] bg-[#FAF6F0]/60">
+              <button 
                 type="submit" 
                 form="booking-form"
                 disabled={isSubmitting}
-                className="w-full h-11 bg-im-btn-primary hover:bg-im-btn-primary/90 text-white font-medium rounded-lg shadow-md"
+                className="im-btn-specular w-full h-11 text-white font-semibold rounded-xl cursor-pointer"
               >
-                {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Confirm Booking'}
-              </Button>
+                <div className="absolute inset-x-2 top-0.5 h-[44%] bg-gradient-to-b from-white/70 via-white/20 to-transparent rounded-t-xl pointer-events-none" />
+                {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin text-white" /> : 'Confirm Booking'}
+              </button>
             </div>
           </div>
         </>

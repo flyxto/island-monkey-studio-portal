@@ -78,19 +78,23 @@ export default function DashboardPage() {
       )}
 
       {/* Top Banner: Daily Conversion Rate */}
-      <div className="relative overflow-hidden rounded-2xl bg-neutral-950 border border-neutral-800 p-6 text-white shadow-md">
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="relative overflow-hidden rounded-[24px] bg-[#0B1C30] border border-white/10 p-6 sm:p-7 text-white shadow-md">
+        {/* Glow shape */}
+        <div className="absolute -top-10 -right-10 w-48 h-48 bg-[#FF6433]/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-[#C85A17]/15 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
           <div>
-            <span className="text-xs font-medium tracking-wider text-neutral-400 uppercase">
+            <span className="text-[11px] font-semibold tracking-wider text-[#FDF2EA]/70 uppercase">
               Daily Conversion Rate
             </span>
-            <p className="text-sm text-neutral-300 mt-1">
+            <p className="text-sm text-slate-300 mt-1 font-medium">
               Current exchange value for active members in the Island Monkey ecosystem.
             </p>
           </div>
-          <div className="bg-white/10 backdrop-blur-md border border-white/15 px-6 py-3 rounded-2xl flex items-center gap-3">
-            <span className="text-2xl font-medium tracking-tight">1 Point = 200 LKR</span>
-            <span className="text-xs bg-white text-neutral-950 font-medium px-2.5 py-1 rounded-full uppercase">
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 px-6 py-3 rounded-2xl flex items-center gap-3 shadow-inner">
+            <span className="text-2xl font-semibold tracking-tight text-white">1 Point = 200 LKR</span>
+            <span className="text-xs bg-[#FF6433] text-white font-semibold px-2.5 py-1 rounded-full uppercase shadow-xs">
               LKR
             </span>
           </div>
@@ -100,64 +104,64 @@ export default function DashboardPage() {
       {/* Main Grid: Manual Scan QR Box + Stat Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Manual Scan QR tool (7 cols on lg) */}
-        <Card className="lg:col-span-7 bg-white border-slate-200 shadow-xs flex flex-col justify-between">
-          <CardContent className="p-6 space-y-6">
-            <div className="text-center space-y-2">
-              <div className="w-16 h-16 bg-amber-50 rounded-2xl border border-amber-100 mx-auto flex items-center justify-center text-[#C85A17] shadow-inner">
-                <QrCode className="w-8 h-8" />
-              </div>
-              <h3 className="text-lg font-medium text-slate-900">Manual Scan QR</h3>
-              <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                Ready to process member check-ins and issue Island Monkey points.
-              </p>
+        <div className="lg:col-span-7 bg-white rounded-[24px] border border-[#EBE4D8] shadow-2xs p-6 sm:p-7 flex flex-col justify-between space-y-6">
+          <div className="text-center space-y-2">
+            <div className="w-16 h-16 bg-[#FDF2EA] rounded-2xl border border-[#F3DAC9] mx-auto flex items-center justify-center text-[#C85A17] shadow-inner">
+              <QrCode className="w-8 h-8 stroke-[2.2]" />
             </div>
+            <h3 className="text-lg font-semibold text-[#0B1C30]">Manual Scan QR</h3>
+            <p className="text-xs text-[#616161] font-medium max-w-sm mx-auto">
+              Ready to process member check-ins and issue Island Monkey points.
+            </p>
+          </div>
 
-            {/* Quick Preset Buttons */}
-            <div className="flex items-center justify-center gap-3">
-              {[50, 100, 500].map((preset) => (
-                <button
-                  key={preset}
-                  type="button"
-                  onClick={() => {
-                    setActivePreset(preset);
-                    setCustomPts('');
-                  }}
-                  className={`px-5 py-2 rounded-lg text-xs font-medium transition-all ${
-                    activePreset === preset && !customPts
-                      ? 'bg-im-accent text-white shadow-xs'
-                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                  }`}
-                >
-                  +{preset}
-                </button>
-              ))}
-            </div>
-
-            {/* Custom Amount Entry */}
-            <div className="max-w-md mx-auto space-y-3">
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xs font-medium text-slate-400">
-                  Pts:
-                </span>
-                <Input
-                  type="number"
-                  placeholder="Enter custom amount"
-                  value={customPts}
-                  onChange={(e) => setCustomPts(e.target.value)}
-                  className="pl-14 h-11 bg-slate-50 border-slate-200 rounded-xl text-sm focus-visible:ring-amber-500 font-medium"
-                />
-              </div>
-
-              <Button
-                onClick={handleConfirmAddition}
-                className="w-full h-11 bg-im-btn-primary hover:bg-im-btn-primary/90 active:bg-im-btn-primary/80 text-white font-medium text-sm rounded-lg shadow-md transition-all flex items-center justify-center gap-2"
+          {/* Quick Preset Buttons */}
+          <div className="flex items-center justify-center gap-3">
+            {[50, 100, 500].map((preset) => (
+              <button
+                key={preset}
+                type="button"
+                onClick={() => {
+                  setActivePreset(preset);
+                  setCustomPts('');
+                }}
+                className={`px-5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                  activePreset === preset && !customPts
+                    ? 'im-btn-specular text-white'
+                    : 'bg-[#FAF6F0] text-[#45464D] hover:bg-[#F3EFE9] border border-[#EBE4D8]'
+                }`}
               >
-                <Check className="w-4 h-4" />
-                <span>Confirm Addition</span>
-              </Button>
+                +{preset}
+              </button>
+            ))}
+          </div>
+
+          {/* Custom Amount Entry */}
+          <div className="max-w-md mx-auto w-full space-y-3">
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xs font-semibold text-[#8C8880]">
+                Pts:
+              </span>
+              <Input
+                type="number"
+                placeholder="Enter custom amount"
+                value={customPts}
+                onChange={(e) => setCustomPts(e.target.value)}
+                className="pl-14 h-11 bg-[#FAF6F0] border-[#E8E1D5] rounded-xl text-sm text-[#0B1C30] placeholder:text-[#8C8880] focus-visible:ring-2 focus-visible:ring-[#FF6433]/30 focus-visible:border-[#FF6433] font-semibold"
+              />
             </div>
-          </CardContent>
-        </Card>
+
+            <button
+              type="button"
+              onClick={handleConfirmAddition}
+              className="im-btn-specular w-full h-11 rounded-xl text-sm font-semibold cursor-pointer gap-2"
+            >
+              <div className="absolute inset-x-2 top-0.5 h-[44%] bg-gradient-to-b from-white/70 via-white/20 to-transparent rounded-t-xl pointer-events-none" />
+              <Check className="w-4 h-4 stroke-[2.5]" />
+              <span>Confirm Addition</span>
+            </button>
+          </div>
+        </div>
 
         {/* Right Stack: Stat Cards (5 cols on lg) */}
         <div className="lg:col-span-5 space-y-4 flex flex-col justify-between">
@@ -183,64 +187,62 @@ export default function DashboardPage() {
       </div>
 
       {/* Bottom Section: Recent Activity Table */}
-      <Card className="bg-white border-slate-200 shadow-xs">
-        <CardContent className="p-6 space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-base font-medium text-slate-900">Recent Activity</h3>
-              <p className="text-xs text-slate-500">Live member point issuance log</p>
-            </div>
-            <Link
-              href="/activity/users"
-              className="text-xs font-medium text-[#C85A17] hover:text-amber-800 flex items-center gap-1.5 transition-colors"
-            >
-              <span>View All</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
+      <div className="bg-white rounded-[24px] border border-[#EBE4D8] shadow-2xs p-6 sm:p-7 space-y-5">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-base font-semibold text-[#0B1C30]">Recent Activity</h3>
+            <p className="text-xs text-[#8C8880] font-medium mt-0.5">Live member point issuance log</p>
           </div>
+          <Link
+            href="/activity/users"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#FDF2EA] text-[#C85A17] hover:bg-[#FAEFEA] border border-[#F3DAC9] text-xs font-semibold transition-colors"
+          >
+            <span>View All</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
 
-          <div className="overflow-x-auto rounded-xl border border-slate-100">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-500 font-medium uppercase border-b border-slate-100">
-                <tr>
-                  <th className="py-3 px-4">Member</th>
-                  <th className="py-3 px-4">ID</th>
-                  <th className="py-3 px-4">Points Awarded</th>
-                  <th className="py-3 px-4">Time</th>
+        <div className="overflow-x-auto rounded-2xl border border-[#EBE4D8]">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-[#FAF6F0] text-[#8C8880] font-semibold text-[11px] uppercase border-b border-[#EBE4D8]">
+              <tr>
+                <th className="py-3 px-4">Member</th>
+                <th className="py-3 px-4">ID</th>
+                <th className="py-3 px-4">Points Awarded</th>
+                <th className="py-3 px-4">Time</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#EBE4D8] font-medium">
+              {activities.map((item) => (
+                <tr key={item.id} className="hover:bg-[#FAF6F0]/60 transition-colors">
+                  <td className="py-3.5 px-4 flex items-center gap-3">
+                    <Avatar className="w-8 h-8 border border-[#EBE4D8]">
+                      <AvatarImage src={item.memberAvatar} />
+                      <AvatarFallback className="bg-[#FDF2EA] text-[#C85A17] text-xs font-semibold">
+                        {item.member.charAt(0)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="font-semibold text-[#0B1C30]">{item.member}</span>
+                  </td>
+                  <td className="py-3.5 px-4 font-mono text-[#616161] font-medium">{item.memberId}</td>
+                  <td className="py-3.5 px-4">
+                    <span
+                      className={`font-semibold px-2.5 py-0.5 rounded-full text-xs ${
+                        item.pointsAwarded > 0
+                          ? 'bg-[#EDFDF3] text-[#16A34A] border border-[#DCFCE7]'
+                          : 'bg-slate-100 text-slate-600'
+                      }`}
+                    >
+                      +{item.pointsAwarded} pts
+                    </span>
+                  </td>
+                  <td className="py-3.5 px-4 text-[#8C8880] font-medium">{item.time}</td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 font-medium">
-                {activities.map((item) => (
-                  <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-3.5 px-4 flex items-center gap-3">
-                      <Avatar className="w-8 h-8">
-                        <AvatarImage src={item.memberAvatar} />
-                        <AvatarFallback className="bg-amber-100 text-amber-900 text-xs font-medium">
-                          {item.member.charAt(0)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <span className="font-medium text-slate-900">{item.member}</span>
-                    </td>
-                    <td className="py-3.5 px-4 font-mono text-slate-600">{item.memberId}</td>
-                    <td className="py-3.5 px-4">
-                      <span
-                        className={`font-medium px-2 py-0.5 rounded-full text-xs ${
-                          item.pointsAwarded > 0
-                            ? 'bg-emerald-50 text-emerald-700'
-                            : 'bg-slate-100 text-slate-600'
-                        }`}
-                      >
-                        +{item.pointsAwarded} pts
-                      </span>
-                    </td>
-                    <td className="py-3.5 px-4 text-slate-500">{item.time}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }

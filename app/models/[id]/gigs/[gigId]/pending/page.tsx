@@ -191,102 +191,99 @@ export default function PendingGigPage({
         </div>
 
         {/* Right Column: Parameters & Approve Action (5 cols) */}
-        <Card className="lg:col-span-5 bg-white border-slate-200 shadow-xs">
-          <CardContent className="p-6 space-y-6">
-            <div className="space-y-2">
-              <span className="text-xs font-medium text-amber-600 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-100 inline-block">
-                {gig.tag}
-              </span>
-              <h1 className="text-xl font-medium text-slate-900 tracking-tight">{gig.title}</h1>
-              <p className="text-xs text-slate-500 leading-relaxed">{gig.description}</p>
-            </div>
+        <div className="lg:col-span-5 bg-white rounded-[24px] border border-[#EBE4D8] shadow-2xs p-6 sm:p-7 space-y-6">
+          <div className="space-y-2">
+            <span className="text-xs font-semibold text-[#C85A17] bg-[#FDF2EA] px-3 py-1 rounded-full border border-[#F3DAC9] inline-block">
+              {gig.tag}
+            </span>
+            <h1 className="text-xl font-semibold text-[#0B1C30] tracking-tight">{gig.title}</h1>
+            <p className="text-xs text-[#616161] font-medium leading-relaxed">{gig.description}</p>
+          </div>
 
-            <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-between">
-              <span className="text-xs font-medium text-slate-500 uppercase">Hourly Rate</span>
-              <span className="text-xl font-medium text-slate-900">LKR {gig.hourlyRateLkr}</span>
-            </div>
+          <div className="p-4 bg-[#FAF6F0] border border-[#EBE4D8] rounded-2xl flex items-center justify-between">
+            <span className="text-[11px] font-semibold text-[#8C8880] uppercase tracking-wider">Hourly Rate</span>
+            <span className="text-xl font-semibold text-[#0B1C30]">LKR {gig.hourlyRateLkr}</span>
+          </div>
 
-            {/* Booking parameters table / list */}
-            <div className="space-y-3 pt-2 text-xs">
-              <div className="flex justify-between py-2 border-b border-slate-100">
-                <span className="text-slate-500">Duration</span>
-                <span className="font-medium text-slate-800">{gig.durationHours} Hours</span>
-              </div>
-              <div className="flex justify-between py-2 border-b border-slate-100">
-                <span className="text-slate-500">Venue</span>
-                <span className="font-medium text-slate-800">{gig.venueName}</span>
-              </div>
-              <div className="flex justify-between py-2 border-b border-slate-100">
-                <span className="text-slate-500">Submitted On</span>
-                <span className="font-medium text-slate-800">{formatDateTime(gig.createdAt)}</span>
-              </div>
-              
-              <div className="flex justify-between py-2">
-                <span className="text-slate-500">Approval Status</span>
-                <span
-                  className={`font-medium ${
-                    isApproved ? 'text-emerald-600' : 'text-amber-600'
-                  }`}
-                >
-                  {isApproved ? 'Approved & Active' : 'Awaiting Studio Approval'}
-                </span>
-              </div>
+          {/* Booking parameters table / list */}
+          <div className="space-y-3 pt-2 text-xs">
+            <div className="flex justify-between py-2 border-b border-[#EBE4D8]">
+              <span className="text-[#616161] font-medium">Duration</span>
+              <span className="font-semibold text-[#0B1C30]">{gig.durationHours} Hours</span>
+            </div>
+            <div className="flex justify-between py-2 border-b border-[#EBE4D8]">
+              <span className="text-[#616161] font-medium">Venue</span>
+              <span className="font-semibold text-[#0B1C30]">{gig.venueName}</span>
+            </div>
+            <div className="flex justify-between py-2 border-b border-[#EBE4D8]">
+              <span className="text-[#616161] font-medium">Submitted On</span>
+              <span className="font-semibold text-[#0B1C30]">{formatDateTime(gig.createdAt)}</span>
             </div>
             
-            {/* Highlights */}
-            {(gig.highlightTitle || gig.highlightSubtitle) && (
-              <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 mt-4 space-y-1">
-                 <p className="text-xs font-medium text-slate-800">{gig.highlightTitle}</p>
-                 <p className="text-xs text-slate-500">{gig.highlightSubtitle}</p>
-              </div>
-            )}
-
-            {/* Included */}
-            {gig.whatsIncluded && gig.whatsIncluded.length > 0 && (
-              <div className="pt-2">
-                <p className="text-xs font-medium text-slate-800 mb-2">What's Included</p>
-                <ul className="space-y-1 text-xs text-slate-600">
-                  {gig.whatsIncluded.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                       <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                       <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Primary Action Button */}
-            {!isApproved ? (
-              <div className="grid grid-cols-2 gap-3 pt-4">
-                <Button
-                  onClick={handleRejectGig}
-                  disabled={isUpdating}
-                  variant="outline"
-                  className="w-full h-12 text-red-600 border-red-200 hover:bg-red-50 font-medium text-[14px] rounded-lg transition-all"
-                >
-                  Reject
-                </Button>
-                <Button
-                  onClick={handleApproveGig}
-                  disabled={isUpdating}
-                  className="w-full h-12 bg-im-btn-primary hover:bg-im-btn-primary/90 active:bg-im-btn-primary/80 text-white font-medium text-[14px] rounded-lg shadow-md transition-all flex items-center justify-center gap-2"
-                >
-                  <ShieldCheck className="w-4 h-4" />
-                  <span>Approve</span>
-                </Button>
-              </div>
-            ) : (
-              <Button
-                disabled
-                className="w-full h-12 bg-emerald-600 text-white font-medium text-[15px] rounded-lg shadow-none opacity-100 flex items-center justify-center gap-2 cursor-default pt-4"
+            <div className="flex justify-between py-2">
+              <span className="text-[#616161] font-medium">Approval Status</span>
+              <span
+                className={`font-semibold ${
+                  isApproved ? 'text-emerald-600' : 'text-[#C85A17]'
+                }`}
               >
-                <CheckCircle2 className="w-4 h-4" />
-                <span>Gig Approved</span>
-              </Button>
-            )}
-          </CardContent>
-        </Card>
+                {isApproved ? 'Approved & Active' : 'Awaiting Studio Approval'}
+              </span>
+            </div>
+          </div>
+          
+          {/* Highlights */}
+          {(gig.highlightTitle || gig.highlightSubtitle) && (
+            <div className="bg-[#FAF6F0] p-4 rounded-2xl border border-[#EBE4D8] space-y-1">
+               <p className="text-xs font-semibold text-[#0B1C30]">{gig.highlightTitle}</p>
+               <p className="text-xs text-[#616161] font-medium">{gig.highlightSubtitle}</p>
+            </div>
+          )}
+
+          {/* Included */}
+          {gig.whatsIncluded && gig.whatsIncluded.length > 0 && (
+            <div className="pt-2">
+              <p className="text-xs font-semibold text-[#0B1C30] mb-2">What's Included</p>
+              <ul className="space-y-1.5 text-xs text-[#616161]">
+                {gig.whatsIncluded.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2 font-medium">
+                     <Check className="w-3.5 h-3.5 text-[#C85A17] shrink-0 mt-0.5" />
+                     <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Primary Action Button */}
+          {!isApproved ? (
+            <div className="grid grid-cols-2 gap-3 pt-4">
+              <button
+                type="button"
+                onClick={handleRejectGig}
+                disabled={isUpdating}
+                className="im-btn-specular-secondary w-full h-12 text-rose-600 border-rose-200/90 hover:bg-rose-50 font-semibold text-sm rounded-xl cursor-pointer"
+              >
+                Reject
+              </button>
+              <button
+                type="button"
+                onClick={handleApproveGig}
+                disabled={isUpdating}
+                className="im-btn-specular w-full h-12 text-white font-semibold text-sm rounded-xl shadow-md cursor-pointer gap-2"
+              >
+                <div className="absolute inset-x-2 top-0.5 h-[44%] bg-gradient-to-b from-white/70 via-white/20 to-transparent rounded-t-xl pointer-events-none" />
+                <ShieldCheck className="w-4 h-4 stroke-[2.5]" />
+                <span>Approve</span>
+              </button>
+            </div>
+          ) : (
+            <div className="w-full h-12 bg-emerald-600 text-white font-semibold text-sm rounded-xl shadow-none flex items-center justify-center gap-2 cursor-default">
+              <CheckCircle2 className="w-4 h-4" />
+              <span>Gig Approved</span>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -76,15 +76,18 @@ export default function PackagesPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-medium text-slate-900 tracking-tight">Studio Packages</h1>
-          <p className="text-xs text-slate-500 mt-1">Manage pricing plans, duration, and included items</p>
+          <h1 className="text-2xl font-semibold text-[#0B1C30] tracking-tight">Studio Packages</h1>
+          <p className="text-xs text-[#8C8880] font-medium mt-1">Manage pricing plans, duration, and included items</p>
         </div>
-        <Button 
+        <button 
+          type="button"
           onClick={openCreateDrawer}
-          className="bg-[#C85A17] hover:bg-[#a64a13] text-white rounded-xl shadow-sm transition-all shadow-orange-100"
+          className="im-btn-specular h-10 px-5 rounded-xl text-xs font-semibold cursor-pointer gap-2"
         >
-          <Plus className="w-4 h-4 mr-2" /> Add Package
-        </Button>
+          <div className="absolute inset-x-2 top-0.5 h-[44%] bg-gradient-to-b from-white/70 via-white/20 to-transparent rounded-t-xl pointer-events-none" />
+          <Plus className="w-4 h-4" />
+          <span>Add Package</span>
+        </button>
       </div>
 
       {/* Stats Cards Row */}
@@ -104,95 +107,91 @@ export default function PackagesPage() {
       </div>
 
       {/* Packages List Table */}
-      <Card className="bg-white border-slate-200 shadow-xs">
-        <CardContent className="p-6 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <h3 className="text-base font-medium text-slate-900">All Packages</h3>
+      <div className="bg-white rounded-[24px] border border-[#EBE4D8] shadow-2xs p-6 sm:p-7 space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <h3 className="text-base font-semibold text-[#0B1C30]">All Packages</h3>
 
-            {/* Search Bar */}
-            <div className="relative w-64">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-              <Input
-                type="search"
-                placeholder="Search package or studio..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 h-9 bg-slate-50 border-slate-200 rounded-full text-xs"
-              />
-            </div>
+          {/* Search Bar */}
+          <div className="relative w-64">
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#8C8880]" />
+            <Input
+              type="search"
+              placeholder="Search package or studio..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-9 h-9 bg-[#FAF6F0] border-[#E8E1D5] rounded-full text-xs text-[#0B1C30] placeholder:text-[#8C8880] focus-visible:ring-2 focus-visible:ring-[#FF6433]/30 focus-visible:border-[#FF6433]"
+            />
           </div>
+        </div>
 
-          <div className="overflow-x-auto rounded-xl border border-slate-100">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-500 font-medium uppercase border-b border-slate-100">
+        <div className="overflow-x-auto rounded-2xl border border-[#EBE4D8]">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-[#FAF6F0] text-[#8C8880] font-semibold text-[11px] uppercase border-b border-[#EBE4D8]">
+              <tr>
+                <th className="py-3 px-4">Package Details</th>
+                <th className="py-3 px-4">Price</th>
+                <th className="py-3 px-4">Duration & Team</th>
+                <th className="py-3 px-4">Best Seller</th>
+                <th className="py-3 px-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#EBE4D8] font-medium">
+              {isLoading ? (
                 <tr>
-                  <th className="py-3 px-4">Package Details</th>
-                  <th className="py-3 px-4">Price</th>
-                  <th className="py-3 px-4">Duration & Team</th>
-                  <th className="py-3 px-4">Best Seller</th>
-                  <th className="py-3 px-4 text-right">Actions</th>
+                  <td colSpan={5} className="text-center py-8 text-[#8C8880] font-medium">Loading packages...</td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 font-medium">
-                {isLoading ? (
-                  <tr>
-                    <td colSpan={5} className="text-center py-8 text-slate-500">Loading packages...</td>
+              ) : filteredPackages.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className="text-center py-8 text-[#8C8880] font-medium">No packages found.</td>
+                </tr>
+              ) : (
+                filteredPackages.map((pkg) => (
+                  <tr key={pkg.id} className="hover:bg-[#FAF6F0]/60 transition-colors">
+                    <td className="py-3.5 px-4">
+                      <p className="font-semibold text-[#0B1C30] text-sm">{pkg.name}</p>
+                      <p className="text-[11px] text-[#8C8880] font-medium">{pkg.studioName}</p>
+                    </td>
+                    <td className="py-3.5 px-4 font-mono font-semibold text-[#0B1C30]">
+                      LKR {pkg.priceLkr.toLocaleString()}
+                    </td>
+                    <td className="py-3.5 px-4">
+                      <p className="text-[#0B1C30] font-semibold">{pkg.durationHours}</p>
+                      <p className="text-[11px] text-[#8C8880] font-medium">{pkg.photographersCount} Photographer(s)</p>
+                    </td>
+                    <td className="py-3.5 px-4">
+                      {pkg.isBestSeller ? (
+                        <span className="bg-[#FF6433] text-white font-semibold px-2.5 py-0.5 rounded-full text-[10px] uppercase tracking-wider shadow-xs">
+                          Popular
+                        </span>
+                      ) : (
+                        <span className="text-slate-300">-</span>
+                      )}
+                    </td>
+                    <td className="py-3.5 px-4 text-right">
+                      <div className="flex justify-end gap-2">
+                        <button
+                          type="button"
+                          onClick={() => openEditDrawer(pkg)}
+                          className="h-8 w-8 p-0 text-[#8C8880] hover:text-[#C85A17] hover:bg-[#FDF2EA] rounded-lg transition-colors inline-flex items-center justify-center cursor-pointer"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDelete(pkg.id)}
+                          className="h-8 w-8 p-0 text-[#8C8880] hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors inline-flex items-center justify-center cursor-pointer"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </td>
                   </tr>
-                ) : filteredPackages.length === 0 ? (
-                  <tr>
-                    <td colSpan={5} className="text-center py-8 text-slate-500">No packages found.</td>
-                  </tr>
-                ) : (
-                  filteredPackages.map((pkg) => (
-                    <tr key={pkg.id} className="hover:bg-slate-50/80 transition-colors">
-                      <td className="py-3.5 px-4">
-                        <p className="font-medium text-slate-900 text-sm">{pkg.name}</p>
-                        <p className="text-[11px] text-slate-400">{pkg.studioName}</p>
-                      </td>
-                      <td className="py-3.5 px-4 font-mono text-slate-700">
-                        LKR {pkg.priceLkr.toLocaleString()}
-                      </td>
-                      <td className="py-3.5 px-4">
-                        <p className="text-slate-700">{pkg.durationHours}</p>
-                        <p className="text-[11px] text-slate-400">{pkg.photographersCount} Photographer(s)</p>
-                      </td>
-                      <td className="py-3.5 px-4">
-                        {pkg.isBestSeller ? (
-                          <span className="bg-amber-50 text-amber-700 font-medium px-2 py-0.5 rounded-full text-[10px] border border-amber-100 uppercase tracking-wider">
-                            Popular
-                          </span>
-                        ) : (
-                          <span className="text-slate-300">-</span>
-                        )}
-                      </td>
-                      <td className="py-3.5 px-4 text-right">
-                        <div className="flex justify-end gap-2">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => openEditDrawer(pkg)}
-                            className="h-8 w-8 p-0 text-slate-400 hover:text-im-accent hover:bg-im-accent-light rounded-lg transition-colors"
-                          >
-                            <Edit2 className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDelete(pkg.id)}
-                            className="h-8 w-8 p-0 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       <PackageDrawer 
         isOpen={isDrawerOpen} 

@@ -67,7 +67,7 @@ export default function PartnerActivityDetailPage({
       <div>
         <Link
           href="/activity/partners"
-          className="inline-flex items-center gap-2 text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors mb-4"
+          className="inline-flex items-center gap-2 text-xs font-semibold text-[#8C8880] hover:text-[#0B1C30] transition-colors mb-4"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Partner Activity</span>
@@ -75,26 +75,26 @@ export default function PartnerActivityDetailPage({
       </div>
 
       {/* Hero Card */}
-      <Card className="bg-white border-slate-200 shadow-xs overflow-hidden">
+      <Card className="bg-white rounded-[24px] border border-[#EBE4D8] shadow-[0_4px_24px_rgba(11,28,48,0.04)] overflow-hidden">
         <CardContent className="p-8">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-6 border-b border-slate-100">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-6 border-b border-[#EBE4D8]">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-2xl bg-amber-50 text-[#C85A17] flex items-center justify-center border border-amber-100 shadow-sm shrink-0">
+              <div className="w-16 h-16 rounded-2xl bg-[#FDF2EA] text-[#C85A17] flex items-center justify-center border border-[#F3DAC9] shadow-sm shrink-0">
                 <Store className="w-8 h-8" />
               </div>
               <div>
                 <div className="flex items-center gap-3">
-                  <h1 className="text-2xl font-medium text-slate-900">
+                  <h1 className="text-2xl font-bold text-[#0B1C30] tracking-tight">
                     {activity.partnerName}
                   </h1>
-                  <span className="bg-emerald-50 text-emerald-700 font-medium px-3 py-1 rounded-full text-xs flex items-center gap-1">
+                  <span className="bg-[#EDFDF3] text-[#16A34A] border border-[#D1F7DE] font-semibold px-3 py-1 rounded-full text-xs flex items-center gap-1.5">
                     <CheckCircle2 className="w-3.5 h-3.5" />
                     <span>Settled & Logged</span>
                   </span>
                 </div>
-                <p className="text-xs font-mono text-slate-500 mt-1">
+                <p className="text-xs font-mono text-[#8C8880] mt-1 font-medium">
                   Transaction Ref:{' '}
-                  <span className="font-medium text-slate-700">
+                  <span className="font-semibold text-[#0B1C30]">
                     TXN-{activity.id.toUpperCase()}-IM
                   </span>
                 </p>
@@ -105,9 +105,9 @@ export default function PartnerActivityDetailPage({
             <div className="flex items-center gap-3">
               <Button
                 onClick={handleReissue}
-                className="h-10 bg-im-btn-primary hover:bg-im-btn-primary/90 active:bg-im-btn-primary/80 text-white font-medium text-xs px-5 rounded-lg shadow-sm transition-all flex items-center gap-2"
+                className="h-10 im-btn-specular font-semibold text-xs px-5 rounded-xl shadow-sm transition-all flex items-center gap-2 cursor-pointer"
               >
-                <RefreshCw className="w-4 h-4" />
+                <RefreshCw className="w-3.5 h-3.5" />
                 <span>Re-issue Transaction</span>
               </Button>
             </div>
@@ -115,43 +115,43 @@ export default function PartnerActivityDetailPage({
 
           {/* Key Stats Row */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-[#FAF6F0] border border-[#EBE4D8]/70">
+              <div className="w-10 h-10 rounded-xl bg-white text-[#0B1C30] border border-[#EBE4D8] flex items-center justify-center shrink-0">
                 <User className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-xs text-slate-400 font-medium">Customer</p>
-                <p className="text-sm font-medium text-slate-900">{activity.customerName}</p>
+                <p className="text-[11px] text-[#8C8880] font-bold uppercase tracking-wider">Customer</p>
+                <p className="text-sm font-bold text-[#0B1C30]">{activity.customerName}</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-50 text-[#C85A17] flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-[#FAF6F0] border border-[#EBE4D8]/70">
+              <div className="w-10 h-10 rounded-xl bg-[#FDF2EA] text-[#C85A17] border border-[#F3DAC9] flex items-center justify-center shrink-0">
                 <Clock className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-xs text-slate-400 font-medium">Logged Time</p>
-                <p className="text-sm font-medium text-slate-900">{activity.time}</p>
+                <p className="text-[11px] text-[#8C8880] font-bold uppercase tracking-wider">Logged Time</p>
+                <p className="text-sm font-bold text-[#0B1C30]">{activity.time}</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center shrink-0 font-medium text-sm">
+            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-[#FAF6F0] border border-[#EBE4D8]/70">
+              <div className="w-10 h-10 rounded-xl bg-[#FFF1F2] text-[#E11D48] border border-[#FFE4E6] flex items-center justify-center shrink-0 font-bold text-xs">
                 PTS
               </div>
               <div>
-                <p className="text-xs text-slate-400 font-medium">Points Redeemed</p>
-                <p className="text-sm font-medium text-red-600">{activity.amount} pts</p>
+                <p className="text-[11px] text-[#8C8880] font-bold uppercase tracking-wider">Points Redeemed</p>
+                <p className="text-sm font-bold text-[#E11D48]">{activity.amount} pts</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 font-medium text-xs">
+            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-[#FAF6F0] border border-[#EBE4D8]/70">
+              <div className="w-10 h-10 rounded-xl bg-[#EDFDF3] text-[#16A34A] border border-[#D1F7DE] flex items-center justify-center shrink-0 font-bold text-xs">
                 LKR
               </div>
               <div>
-                <p className="text-xs text-slate-400 font-medium">LKR Value Equivalent</p>
-                <p className="text-sm font-medium text-slate-900">LKR {lkrEquivalent}</p>
+                <p className="text-[11px] text-[#8C8880] font-bold uppercase tracking-wider">LKR Equivalent</p>
+                <p className="text-sm font-bold text-[#0B1C30]">LKR {lkrEquivalent}</p>
               </div>
             </div>
           </div>
@@ -161,66 +161,66 @@ export default function PartnerActivityDetailPage({
       {/* Two Column Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left: Transaction Details (7 cols) */}
-        <Card className="lg:col-span-7 bg-white border-slate-200 shadow-xs">
+        <Card className="lg:col-span-7 bg-white rounded-[24px] border border-[#EBE4D8] shadow-[0_4px_24px_rgba(11,28,48,0.04)] overflow-hidden">
           <CardContent className="p-6 space-y-6">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-amber-50 text-[#C85A17] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-[#FDF2EA] text-[#C85A17] border border-[#F3DAC9] flex items-center justify-center">
                 <FileText className="w-4 h-4" />
               </div>
-              <h3 className="text-base font-medium text-slate-900">Partner Settlement Breakdown</h3>
+              <h3 className="text-base font-bold text-[#0B1C30] tracking-tight">Partner Settlement Breakdown</h3>
             </div>
 
             <div className="space-y-3 text-xs">
-              <div className="flex justify-between py-2.5 border-b border-slate-100">
-                <span className="text-slate-500 font-medium">Partner Organization</span>
-                <span className="font-medium text-slate-900">{activity.partnerName}</span>
+              <div className="flex justify-between py-2.5 border-b border-[#EBE4D8]/60">
+                <span className="text-[#8C8880] font-medium">Partner Organization</span>
+                <span className="font-semibold text-[#0B1C30]">{activity.partnerName}</span>
               </div>
-              <div className="flex justify-between py-2.5 border-b border-slate-100">
-                <span className="text-slate-500 font-medium">Partner Tier</span>
-                <span className="font-medium text-emerald-600">Verified Ecosystem Partner</span>
+              <div className="flex justify-between py-2.5 border-b border-[#EBE4D8]/60">
+                <span className="text-[#8C8880] font-medium">Partner Tier</span>
+                <span className="font-semibold text-[#16A34A]">Verified Ecosystem Partner</span>
               </div>
-              <div className="flex justify-between py-2.5 border-b border-slate-100">
-                <span className="text-slate-500 font-medium">Point Conversion Rate</span>
-                <span className="font-medium text-slate-800">1 Point = 200 LKR</span>
+              <div className="flex justify-between py-2.5 border-b border-[#EBE4D8]/60">
+                <span className="text-[#8C8880] font-medium">Point Conversion Rate</span>
+                <span className="font-semibold text-[#0B1C30]">1 Point = 200 LKR</span>
               </div>
-              <div className="flex justify-between py-2.5 border-b border-slate-100">
-                <span className="text-slate-500 font-medium">Settlement Status</span>
-                <span className="font-medium text-emerald-600">Direct Portal Deduct</span>
+              <div className="flex justify-between py-2.5 border-b border-[#EBE4D8]/60">
+                <span className="text-[#8C8880] font-medium">Settlement Status</span>
+                <span className="font-semibold text-[#16A34A]">Direct Portal Deduct</span>
               </div>
               <div className="flex justify-between py-2.5">
-                <span className="text-slate-500 font-medium">Ledger Verification Hash</span>
-                <span className="font-mono text-slate-500 font-medium">0x8f3c...b291</span>
+                <span className="text-[#8C8880] font-medium">Ledger Verification Hash</span>
+                <span className="font-mono text-[#8C8880] font-semibold">0x8f3c...b291</span>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Right: Customer & Member Info (5 cols) */}
-        <Card className="lg:col-span-5 bg-white border-slate-200 shadow-xs">
+        <Card className="lg:col-span-5 bg-white rounded-[24px] border border-[#EBE4D8] shadow-[0_4px_24px_rgba(11,28,48,0.04)] overflow-hidden">
           <CardContent className="p-6 space-y-6">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-[#FAF6F0] text-[#0B1C30] border border-[#EBE4D8] flex items-center justify-center">
                 <Building2 className="w-4 h-4" />
               </div>
-              <h3 className="text-base font-medium text-slate-900">Member Attribution</h3>
+              <h3 className="text-base font-bold text-[#0B1C30] tracking-tight">Member Attribution</h3>
             </div>
 
             <div className="space-y-3 text-xs">
-              <div className="flex justify-between py-2.5 border-b border-slate-100">
-                <span className="text-slate-500 font-medium">Customer Name</span>
-                <span className="font-medium text-slate-900">{activity.customerName}</span>
+              <div className="flex justify-between py-2.5 border-b border-[#EBE4D8]/60">
+                <span className="text-[#8C8880] font-medium">Customer Name</span>
+                <span className="font-semibold text-[#0B1C30]">{activity.customerName}</span>
               </div>
-              <div className="flex justify-between py-2.5 border-b border-slate-100">
-                <span className="text-slate-500 font-medium">Customer ID</span>
-                <span className="font-mono font-medium text-slate-700">{activity.customerId}</span>
+              <div className="flex justify-between py-2.5 border-b border-[#EBE4D8]/60">
+                <span className="text-[#8C8880] font-medium">Customer ID</span>
+                <span className="font-mono font-semibold text-[#8C8880]">{activity.customerId}</span>
               </div>
-              <div className="flex justify-between py-2.5 border-b border-slate-100">
-                <span className="text-slate-500 font-medium">Deduction Method</span>
-                <span className="font-medium text-slate-800">QR Member Scan</span>
+              <div className="flex justify-between py-2.5 border-b border-[#EBE4D8]/60">
+                <span className="text-[#8C8880] font-medium">Deduction Method</span>
+                <span className="font-semibold text-[#0B1C30]">QR Member Scan</span>
               </div>
               <div className="flex justify-between py-2.5">
-                <span className="text-slate-500 font-medium">Net Value Processed</span>
-                <span className="text-sm font-medium text-slate-900">LKR {lkrEquivalent}</span>
+                <span className="text-[#8C8880] font-medium">Net Value Processed</span>
+                <span className="text-sm font-bold text-[#0B1C30]">LKR {lkrEquivalent}</span>
               </div>
             </div>
           </CardContent>

@@ -25,7 +25,8 @@ function formatDateTime(isoString: string) {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true,
-  }).replace(',', '').replace(' at', ' -'); // Adjust standard output to match desired format
+    timeZone: 'UTC',
+  }).replace(',', '').replace(' at', ' -');
 }
 
 export default function BookingsPage() {
@@ -100,8 +101,8 @@ export default function BookingsPage() {
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-medium text-slate-900 tracking-tight">Bookings</h1>
-        <p className="text-xs text-slate-500 mt-1">Manage and track all studio booking requests</p>
+        <h1 className="text-2xl font-semibold text-[#0B1C30] tracking-tight">Bookings</h1>
+        <p className="text-xs text-[#8C8880] font-medium mt-1">Manage and track all studio booking requests</p>
       </div>
 
       {/* Top Stat Cards Grid */}
@@ -127,100 +128,97 @@ export default function BookingsPage() {
       </div>
 
       {/* Main Card: All Bookings */}
-      <Card className="bg-white border-slate-200 shadow-xs">
-        <CardContent className="p-6 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <h3 className="text-base font-medium text-slate-900">All Bookings</h3>
+      <div className="bg-white rounded-[24px] border border-[#EBE4D8] shadow-2xs p-6 sm:p-7 space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <h3 className="text-base font-semibold text-[#0B1C30]">All Bookings</h3>
 
-            {/* Filter Controls */}
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="relative w-64">
-                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                <Input
-                  type="search"
-                  placeholder="Search customer or ID..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9 h-9 bg-slate-50 border-slate-200 rounded-full text-xs"
-                />
-              </div>
+          {/* Filter Controls */}
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="relative w-64">
+              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#8C8880]" />
+              <Input
+                type="search"
+                placeholder="Search customer or ID..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-9 h-9 bg-[#FAF6F0] border-[#E8E1D5] rounded-full text-xs text-[#0B1C30] placeholder:text-[#8C8880] focus-visible:ring-2 focus-visible:ring-[#FF6433]/30 focus-visible:border-[#FF6433]"
+              />
+            </div>
 
-              {/* Status Filter Buttons */}
-              <div className="flex items-center bg-slate-100 p-1 rounded-lg text-xs font-medium">
-                {['All', 'Pending', 'Approved', 'Completed', 'Cancelled'].map((status) => (
-                  <button
-                    key={status}
-                    onClick={() => setStatusFilter(status)}
-                    className={`px-3 py-1.5 rounded-md transition-all ${
-                      statusFilter === status
-                        ? 'bg-white text-slate-900 shadow-xs font-medium'
-                        : 'text-slate-600 hover:text-slate-900'
-                    }`}
-                  >
-                    {status}
-                  </button>
-                ))}
-              </div>
+            {/* Status Filter Buttons */}
+            <div className="flex items-center bg-[#FAF6F0] p-1 rounded-xl border border-[#EBE4D8] text-xs font-medium">
+              {['All', 'Pending', 'Approved', 'Completed', 'Cancelled'].map((status) => (
+                <button
+                  key={status}
+                  onClick={() => setStatusFilter(status)}
+                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                    statusFilter === status
+                      ? 'bg-white text-[#0B1C30] shadow-2xs font-semibold'
+                      : 'text-[#616161] hover:text-[#0B1C30]'
+                  }`}
+                >
+                  {status}
+                </button>
+              ))}
             </div>
           </div>
+        </div>
 
-          {/* Bookings Table */}
-          <div className="overflow-x-auto rounded-xl border border-slate-100">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-500 font-medium uppercase border-b border-slate-100">
-                <tr>
-                  <th className="py-3 px-4">Customer</th>
-                  <th className="py-3 px-4">Booking ID</th>
-                  <th className="py-3 px-4">Studio Room</th>
-                  <th className="py-3 px-4">Date & Time</th>
-                  <th className="py-3 px-4">Duration</th>
-                  <th className="py-3 px-4">Status</th>
-                  <th className="py-3 px-4 text-right">Actions</th>
+        {/* Bookings Table */}
+        <div className="overflow-x-auto rounded-2xl border border-[#EBE4D8]">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-[#FAF6F0] text-[#8C8880] font-semibold text-[11px] uppercase border-b border-[#EBE4D8]">
+              <tr>
+                <th className="py-3 px-4">Customer</th>
+                <th className="py-3 px-4">Booking ID</th>
+                <th className="py-3 px-4">Studio Room</th>
+                <th className="py-3 px-4">Date & Time</th>
+                <th className="py-3 px-4">Duration</th>
+                <th className="py-3 px-4">Status</th>
+                <th className="py-3 px-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#EBE4D8] font-medium">
+              {bookings.map((b) => (
+                <tr key={b.id} className="hover:bg-[#FAF6F0]/60 transition-colors">
+                  <td className="py-3.5 px-4 flex items-center gap-3">
+                    <Avatar className="w-8 h-8 border border-[#EBE4D8]">
+                      <AvatarImage src={b.customer.avatarUrl} />
+                      <AvatarFallback className="bg-[#FDF2EA] text-[#C85A17] text-xs font-semibold">
+                        {b.customer.firstName.charAt(0)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="font-semibold text-[#0B1C30]">
+                      {b.customer.firstName} {b.customer.lastName}
+                    </span>
+                  </td>
+                  <td className="py-3.5 px-4 font-mono text-[#616161] font-medium whitespace-nowrap">{b.bookingCode}</td>
+                  <td className="py-3.5 px-4">
+                    <span className="bg-[#FDF2EA] text-[#C85A17] font-semibold px-2.5 py-0.5 rounded-md text-xs whitespace-nowrap border border-[#F3DAC9]">
+                      {b.studioRoom}
+                    </span>
+                  </td>
+                  <td className="py-3.5 px-4 text-[#616161] whitespace-nowrap font-medium">
+                    {formatDateTime(b.dateTime)}
+                  </td>
+                  <td className="py-3.5 px-4 font-semibold text-[#0B1C30] whitespace-nowrap">
+                    {b.duration?.toLowerCase().includes('hour') ? b.duration : `${b.duration} Hours`}
+                  </td>
+                  <td className="py-3.5 px-4">
+                    <StatusBadge status={b.status} />
+                  </td>
+                  <td className="py-3.5 px-4 text-right">
+                    <Link href={`/bookings/${b.id}`}>
+                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#FAF6F0] hover:bg-[#FDF2EA] text-[#C85A17] border border-[#EBE4D8] hover:border-[#F3DAC9] text-xs font-semibold transition-all">
+                        <Eye className="w-3.5 h-3.5" />
+                        <span>View</span>
+                      </span>
+                    </Link>
+                  </td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 font-medium">
-                {bookings.map((b) => (
-                  <tr key={b.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-3.5 px-4 flex items-center gap-3">
-                      <Avatar className="w-8 h-8">
-                        <AvatarImage src={b.customer.avatarUrl} />
-                        <AvatarFallback className="bg-amber-100 text-amber-900 text-xs font-medium">
-                          {b.customer.firstName.charAt(0)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <span className="font-medium text-slate-900">
-                        {b.customer.firstName} {b.customer.lastName}
-                      </span>
-                    </td>
-                    <td className="py-3.5 px-4 font-mono text-slate-600">{b.bookingCode}</td>
-                    <td className="py-3.5 px-4">
-                      <span className="bg-amber-50 text-amber-800 font-medium px-2 py-0.5 rounded-md text-xs whitespace-nowrap">
-                        {b.studioRoom}
-                      </span>
-                    </td>
-                    <td className="py-3.5 px-4 text-slate-600 whitespace-nowrap">
-                      {formatDateTime(b.dateTime)}
-                    </td>
-                    <td className="py-3.5 px-4 font-medium text-slate-700">{b.duration}</td>
-                    <td className="py-3.5 px-4">
-                      <StatusBadge status={b.status} />
-                    </td>
-                    <td className="py-3.5 px-4 text-right">
-                      <Link href={`/bookings/${b.id}`}>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 text-xs font-medium text-im-accent hover:text-im-accent hover:bg-im-accent-light rounded-lg transition-colors"
-                        >
-                          <Eye className="w-3.5 h-3.5 mr-1" />
-                          <span>View</span>
-                        </Button>
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+              ))}
+            </tbody>
+          </table>
             
             {/* Empty State */}
             {!isLoading && bookings.length === 0 && (
@@ -234,8 +232,7 @@ export default function BookingsPage() {
               {isLoading && <Loader2 className="w-5 h-5 text-slate-400 animate-spin" />}
             </div>
           </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
-}
+        </div>
+      </div>
+    );
+  }
