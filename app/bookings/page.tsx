@@ -1,29 +1,100 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { Calendar, Search, Filter, Eye } from 'lucide-react';
+import { useInView } from 'react-intersection-observer';
+import { Calendar, Search, Eye, Loader2 } from 'lucide-react';
 import { StatCard } from '@/components/ui/StatCard';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { INITIAL_BOOKINGS, INITIAL_BOOKINGS_STATS } from '@/lib/mock-data/studio-dashboard';
+import { INITIAL_BOOKINGS_STATS } from '@/lib/mock-data/studio-dashboard';
+import { getBookings } from '@/lib/api/bookings';
+import { BookingResponse } from '@/lib/types';
+
+// Helper for 'Oct 24, 2026 - 10:00 AM'
+function formatDateTime(isoString: string) {
+  if (!isoString) return '';
+  const date = new Date(isoString);
+  return date.toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  }).replace(',', '').replace(' at', ' -'); // Adjust standard output to match desired format
+}
 
 export default function BookingsPage() {
-  const [bookings] = useState(INITIAL_BOOKINGS);
+  const [bookings, setBookings] = useState<BookingResponse[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('All');
+  
+  // Pagination
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const limit = 20;
 
-  const filteredBookings = bookings.filter((b) => {
-    const matchesSearch =
-      b.customer.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      b.bookingCode.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      b.studioRoom.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus = statusFilter === 'All' || b.status.toLowerCase() === statusFilter.toLowerCase();
-    return matchesSearch && matchesStatus;
-  });
+  const { ref, inView } = useInView();
+
+  const fetchBookings = useCallback(async (pageNum: number, search: string, status: string) => {
+    try {
+      setIsLoading(true);
+      const res = await getBookings({
+        page: pageNum,
+        limit,
+        search,
+        status,
+      });
+      
+      const newBookings = res?.bookings || [];
+      
+      if (pageNum === 1) {
+        setBookings(newBookings);
+      } else {
+        setBookings((prev) => {
+          // Prevent duplicates if API returns the same items
+          const existingIds = new Set(prev.map(b => b.id));
+          const uniqueNewBookings = newBookings.filter(b => !existingIds.has(b.id));
+          return [...prev, ...uniqueNewBookings];
+        });
+      }
+      
+      setHasMore(newBookings.length === limit);
+    } catch (error) {
+      console.error('Failed to fetch bookings:', error);
+      setHasMore(false); // Stop infinite looping on error
+    } finally {
+      setIsLoading(false);
+      setIsInitialLoad(false);
+    }
+  }, []);
+
+  // Fetch when filters or search change (debounce search slightly)
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setPage(1);
+      setHasMore(true);
+      fetchBookings(1, searchQuery, statusFilter);
+    }, 400); // 400ms debounce
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery, statusFilter, fetchBookings]);
+
+  // Fetch more when scrolled to bottom
+  useEffect(() => {
+    if (inView && hasMore && !isLoading && !isInitialLoad) {
+      setPage((prevPage) => {
+        const nextPage = prevPage + 1;
+        fetchBookings(nextPage, searchQuery, statusFilter);
+        return nextPage;
+      });
+    }
+  }, [inView, hasMore, isLoading, isInitialLoad, searchQuery, statusFilter, fetchBookings]);
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
@@ -76,7 +147,7 @@ export default function BookingsPage() {
 
               {/* Status Filter Buttons */}
               <div className="flex items-center bg-slate-100 p-1 rounded-lg text-xs font-medium">
-                {['All', 'Pending', 'Approved', 'Completed'].map((status) => (
+                {['All', 'Pending', 'Approved', 'Completed', 'Cancelled'].map((status) => (
                   <button
                     key={status}
                     onClick={() => setStatusFilter(status)}
@@ -108,24 +179,28 @@ export default function BookingsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 font-medium">
-                {filteredBookings.map((b) => (
+                {bookings.map((b) => (
                   <tr key={b.id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-3.5 px-4 flex items-center gap-3">
                       <Avatar className="w-8 h-8">
-                        <AvatarImage src={b.customerAvatar} />
+                        <AvatarImage src={b.customer.avatarUrl} />
                         <AvatarFallback className="bg-amber-100 text-amber-900 text-xs font-medium">
-                          {b.customer.charAt(0)}
+                          {b.customer.firstName.charAt(0)}
                         </AvatarFallback>
                       </Avatar>
-                      <span className="font-medium text-slate-900">{b.customer}</span>
+                      <span className="font-medium text-slate-900">
+                        {b.customer.firstName} {b.customer.lastName}
+                      </span>
                     </td>
                     <td className="py-3.5 px-4 font-mono text-slate-600">{b.bookingCode}</td>
                     <td className="py-3.5 px-4">
-                      <span className="bg-amber-50 text-amber-800 font-medium px-2 py-0.5 rounded-md text-xs">
+                      <span className="bg-amber-50 text-amber-800 font-medium px-2 py-0.5 rounded-md text-xs whitespace-nowrap">
                         {b.studioRoom}
                       </span>
                     </td>
-                    <td className="py-3.5 px-4 text-slate-600">{b.dateTime}</td>
+                    <td className="py-3.5 px-4 text-slate-600 whitespace-nowrap">
+                      {formatDateTime(b.dateTime)}
+                    </td>
                     <td className="py-3.5 px-4 font-medium text-slate-700">{b.duration}</td>
                     <td className="py-3.5 px-4">
                       <StatusBadge status={b.status} />
@@ -146,6 +221,18 @@ export default function BookingsPage() {
                 ))}
               </tbody>
             </table>
+            
+            {/* Empty State */}
+            {!isLoading && bookings.length === 0 && (
+              <div className="p-8 text-center text-slate-500 text-sm">
+                No bookings found matching your criteria.
+              </div>
+            )}
+            
+            {/* Loading / Infinite Scroll Sentinel */}
+            <div ref={ref} className="py-4 flex justify-center">
+              {isLoading && <Loader2 className="w-5 h-5 text-slate-400 animate-spin" />}
+            </div>
           </div>
         </CardContent>
       </Card>

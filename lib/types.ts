@@ -12,6 +12,39 @@ export interface Booking {
   amount: string;
 }
 
+export interface BookingResponse {
+  id: string;
+  bookingCode: string;
+  customerId: string;
+  packageId: string;
+  studioRoom: string;
+  dateTime: string;
+  duration: string;
+  status: BookingStatus;
+  amountLkr: number;
+  notes: string | null;
+  createdAt: string;
+  updatedAt: string;
+  customer: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    avatarUrl?: string;
+    memberId?: string;
+  };
+  package: {
+    name: string;
+    studioName?: string;
+  };
+}
+
+export interface GetBookingsResponse {
+  bookings: BookingResponse[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
 export type GigStatus = 'pending' | 'active';
 
 export interface Gig {

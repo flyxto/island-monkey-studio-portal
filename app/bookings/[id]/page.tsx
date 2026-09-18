@@ -1,7 +1,8 @@
 'use client';
 
-import { use, useState } from 'react';
+import { use, useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   ArrowLeft,
   Calendar,
@@ -13,13 +14,27 @@ import {
   Check,
   Camera,
   User,
+  Loader2,
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { INITIAL_BOOKINGS } from '@/lib/mock-data/studio-dashboard';
-import { BookingStatus } from '@/lib/types';
+import { getBookingById, updateBookingStatus } from '@/lib/api/bookings';
+import { BookingResponse, BookingStatus } from '@/lib/types';
+
+function formatDateTime(isoString: string) {
+  if (!isoString) return '';
+  const date = new Date(isoString);
+  return date.toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  }).replace(',', '').replace(' at', ' -');
+}
 
 export default function BookingDetailPage({
   params,
@@ -28,18 +43,63 @@ export default function BookingDetailPage({
 }) {
   const resolvedParams = use(params);
   const bookingId = resolvedParams.id;
+  const router = useRouter();
 
-  const initialBooking =
-    INITIAL_BOOKINGS.find((b) => b.id === bookingId) || INITIAL_BOOKINGS[0];
-
-  const [booking, setBooking] = useState(initialBooking);
+  const [booking, setBooking] = useState<BookingResponse | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
 
-  const handleUpdateStatus = (newStatus: BookingStatus) => {
-    setBooking((prev) => ({ ...prev, status: newStatus }));
-    setToastMessage(`Booking ${booking.bookingCode} updated to ${newStatus}!`);
-    setTimeout(() => setToastMessage(null), 4000);
+  useEffect(() => {
+    async function load() {
+      try {
+        const data = await getBookingById(bookingId);
+        setBooking(data);
+      } catch (err) {
+        console.error('Failed to load booking details', err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    load();
+  }, [bookingId]);
+
+  const handleUpdateStatus = async (newStatus: BookingStatus) => {
+    if (!booking) return;
+    setIsUpdating(true);
+    try {
+      await updateBookingStatus(bookingId, newStatus);
+      setBooking((prev) => (prev ? { ...prev, status: newStatus } : prev));
+      setToastMessage(`Booking ${booking.bookingCode} updated to ${newStatus}!`);
+      setTimeout(() => setToastMessage(null), 4000);
+      
+      // Refresh the current route to ensure everything is synced (optional)
+      router.refresh();
+    } catch (err) {
+      console.error('Failed to update status', err);
+    } finally {
+      setIsUpdating(false);
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex h-64 items-center justify-center">
+        <Loader2 className="w-8 h-8 text-[#C85A17] animate-spin" />
+      </div>
+    );
+  }
+
+  if (!booking) {
+    return (
+      <div className="text-center py-12">
+        <h2 className="text-xl font-medium text-slate-800">Booking not found</h2>
+        <Link href="/bookings" className="text-im-accent hover:underline mt-2 inline-block">
+          Return to Bookings
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
@@ -76,15 +136,15 @@ export default function BookingDetailPage({
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-6 border-b border-slate-100">
             <div className="flex items-center gap-4">
               <Avatar className="w-16 h-16 border-2 border-slate-100 shadow-sm">
-                <AvatarImage src={booking.customerAvatar} />
+                <AvatarImage src={booking.customer.avatarUrl} />
                 <AvatarFallback className="bg-amber-100 text-amber-900 text-lg font-medium">
-                  {booking.customer.charAt(0)}
+                  {booking.customer.firstName.charAt(0)}
                 </AvatarFallback>
               </Avatar>
               <div>
                 <div className="flex items-center gap-3">
                   <h1 className="text-2xl font-medium text-slate-900">
-                    {booking.customer}
+                    {booking.customer.firstName} {booking.customer.lastName}
                   </h1>
                   <StatusBadge status={booking.status} />
                 </div>
@@ -100,6 +160,7 @@ export default function BookingDetailPage({
                 <>
                   <Button
                     onClick={() => handleUpdateStatus('Approved')}
+                    disabled={isUpdating}
                     className="h-10 bg-im-btn-primary hover:bg-im-btn-primary/90 active:bg-im-btn-primary/80 text-white font-medium text-xs px-5 rounded-lg shadow-sm transition-all flex items-center gap-2"
                   >
                     <ShieldCheck className="w-4 h-4" />
@@ -107,6 +168,7 @@ export default function BookingDetailPage({
                   </Button>
                   <Button
                     onClick={() => handleUpdateStatus('Cancelled')}
+                    disabled={isUpdating}
                     variant="outline"
                     className="h-10 text-xs font-medium text-red-600 border-red-200 hover:bg-red-50 rounded-lg transition-colors flex items-center gap-2"
                   >
@@ -120,6 +182,7 @@ export default function BookingDetailPage({
                 <>
                   <Button
                     onClick={() => handleUpdateStatus('Completed')}
+                    disabled={isUpdating}
                     className="h-10 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-medium text-xs px-5 rounded-lg shadow-sm transition-all flex items-center gap-2"
                   >
                     <CheckCircle2 className="w-4 h-4" />
@@ -127,6 +190,7 @@ export default function BookingDetailPage({
                   </Button>
                   <Button
                     onClick={() => handleUpdateStatus('Cancelled')}
+                    disabled={isUpdating}
                     variant="outline"
                     className="h-10 text-xs font-medium text-red-600 border-red-200 hover:bg-red-50 rounded-lg transition-colors flex items-center gap-2"
                   >
@@ -170,7 +234,7 @@ export default function BookingDetailPage({
               </div>
               <div>
                 <p className="text-xs text-slate-400 font-medium">Date & Time</p>
-                <p className="text-sm font-medium text-slate-900">{booking.dateTime}</p>
+                <p className="text-sm font-medium text-slate-900 whitespace-nowrap">{formatDateTime(booking.dateTime)}</p>
               </div>
             </div>
 
@@ -190,7 +254,7 @@ export default function BookingDetailPage({
               </div>
               <div>
                 <p className="text-xs text-slate-400 font-medium">Total Amount</p>
-                <p className="text-sm font-medium text-slate-900">{booking.amount}</p>
+                <p className="text-sm font-medium text-slate-900">{booking.amountLkr}</p>
               </div>
             </div>
           </div>
@@ -206,30 +270,30 @@ export default function BookingDetailPage({
               <div className="w-8 h-8 rounded-lg bg-amber-50 text-[#C85A17] flex items-center justify-center">
                 <Camera className="w-4 h-4" />
               </div>
-              <h3 className="text-base font-medium text-slate-900">Studio Setup & Equipment</h3>
+              <h3 className="text-base font-medium text-slate-900">Package & Studio Information</h3>
             </div>
 
             <div className="space-y-3 text-xs">
               <div className="flex justify-between py-2.5 border-b border-slate-100">
-                <span className="text-slate-500 font-medium">Room Name</span>
-                <span className="font-medium text-slate-800">Studio Room A (Cyclorama Wall)</span>
+                <span className="text-slate-500 font-medium">Package Booked</span>
+                <span className="font-medium text-slate-800">{booking.package.name}</span>
               </div>
               <div className="flex justify-between py-2.5 border-b border-slate-100">
-                <span className="text-slate-500 font-medium">Lighting Package</span>
-                <span className="font-medium text-slate-800">3x Profoto D2 500W Strobes + Modifiers</span>
+                <span className="text-slate-500 font-medium">Studio Room</span>
+                <span className="font-medium text-slate-800">{booking.studioRoom}</span>
               </div>
-              <div className="flex justify-between py-2.5 border-b border-slate-100">
-                <span className="text-slate-500 font-medium">Backdrops Included</span>
-                <span className="font-medium text-slate-800">Pure White, Warm Stone, Deep Charcoal</span>
-              </div>
-              <div className="flex justify-between py-2.5 border-b border-slate-100">
-                <span className="text-slate-500 font-medium">Assistant on Standby</span>
-                <span className="font-medium text-emerald-600">Included</span>
-              </div>
-              <div className="flex justify-between py-2.5">
-                <span className="text-slate-500 font-medium">WiFi & Tether Station</span>
-                <span className="font-medium text-emerald-600">Available (Calibrated Display)</span>
-              </div>
+              {booking.package.studioName && (
+                <div className="flex justify-between py-2.5 border-b border-slate-100">
+                  <span className="text-slate-500 font-medium">Assigned Studio</span>
+                  <span className="font-medium text-slate-800">{booking.package.studioName}</span>
+                </div>
+              )}
+              {booking.notes && (
+                <div className="flex justify-between py-2.5">
+                  <span className="text-slate-500 font-medium">Customer Notes</span>
+                  <span className="font-medium text-slate-800 max-w-sm text-right">{booking.notes}</span>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -241,25 +305,29 @@ export default function BookingDetailPage({
               <div className="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center">
                 <User className="w-4 h-4" />
               </div>
-              <h3 className="text-base font-medium text-slate-900">Customer & Invoice</h3>
+              <h3 className="text-base font-medium text-slate-900">Customer Details</h3>
             </div>
 
             <div className="space-y-3 text-xs">
               <div className="flex justify-between py-2.5 border-b border-slate-100">
                 <span className="text-slate-500 font-medium">Customer Name</span>
-                <span className="font-medium text-slate-900">{booking.customer}</span>
+                <span className="font-medium text-slate-900">
+                  {booking.customer.firstName} {booking.customer.lastName}
+                </span>
               </div>
               <div className="flex justify-between py-2.5 border-b border-slate-100">
-                <span className="text-slate-500 font-medium">Member ID</span>
-                <span className="font-mono font-medium text-slate-700">NX-682-A</span>
+                <span className="text-slate-500 font-medium">Email</span>
+                <span className="font-medium text-slate-900">{booking.customer.email}</span>
               </div>
+              {booking.customer.memberId && (
+                <div className="flex justify-between py-2.5 border-b border-slate-100">
+                  <span className="text-slate-500 font-medium">Member ID</span>
+                  <span className="font-mono font-medium text-slate-700">{booking.customer.memberId}</span>
+                </div>
+              )}
               <div className="flex justify-between py-2.5 border-b border-slate-100">
-                <span className="text-slate-500 font-medium">Payment Mode</span>
-                <span className="font-medium text-slate-800">Card / Studio Credit</span>
-              </div>
-              <div className="flex justify-between py-2.5">
                 <span className="text-slate-500 font-medium">Total Billed</span>
-                <span className="text-sm font-medium text-slate-900">{booking.amount}</span>
+                <span className="text-sm font-medium text-slate-900">LKR {booking.amountLkr}</span>
               </div>
             </div>
           </CardContent>
