@@ -36,6 +36,7 @@ export interface BookingResponse {
     name: string;
     studioName?: string;
   };
+  modelBookings?: ModelBookingResponse[];
 }
 
 export interface GetBookingsResponse {
@@ -52,32 +53,38 @@ export interface Gig {
   modelId: string;
   title: string;
   tag: string;
-  rate: string;
   description: string;
-  bookingId: string;
-  dateTime: string;
-  duration: string;
-  amount: string;
-  status: GigStatus;
-  coverImage: string;
+  hourlyRateLkr: number;
+  durationHours: string;
+  venueName: string;
+  highlightTitle: string;
+  highlightSubtitle: string;
+  whatsIncluded: string[];
+  coverImageUrl: string;
   galleryImages: string[];
+  status: GigStatus;
+  createdAt: string;
 }
 
 export interface ModelProfile {
   id: string;
-  name: string;
+  userId: string;
   handle: string;
-  avatar: string;
-  email: string;
-  phone: string;
-  bio: string;
   specialty: string;
+  bio: string;
+  avatarUrl: string | null;
   availability: 'Available' | 'Unavailable';
-  uploadedTime: string;
-  approvedGigsCount: number;
-  pendingGigsCount: number;
-  pendingGigs: Gig[];
-  activeGigs: Gig[];
+  createdAt: string;
+  user: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+  };
+  approvedGigsCount?: number;
+  pendingGigsCount?: number;
+  pendingGigs?: Gig[];
+  activeGigs?: Gig[];
 }
 
 export interface RecentScanActivity {
@@ -175,4 +182,37 @@ export interface CreatePackageDto {
   highlightSubtitle: string;
   whatsIncluded: string[];
   imageUrl?: string;
+}
+
+export interface CreateModelBookingRequest {
+  gigId: string;
+  modelId: string;
+  clientName: string;
+  dateTime: string;
+  duration: string;
+  location: string;
+  paymentLkr: number;
+  notes?: string;
+  bookingId?: string;
+}
+
+export interface ModelBookingResponse {
+  id: string;
+  gigId: string;
+  modelId: string;
+  clientName: string;
+  dateTime: string;
+  duration: string;
+  location: string;
+  status: 'pending' | 'accepted' | 'rejected' | 'completed';
+  paymentLkr: number;
+  notes: string | null;
+  bookingId: string | null;
+  model?: {
+    user: {
+      firstName: string;
+      lastName: string;
+      avatarUrl?: string | null;
+    }
+  };
 }

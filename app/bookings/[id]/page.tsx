@@ -15,6 +15,7 @@ import {
   Camera,
   User,
   Loader2,
+  Users,
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -330,6 +331,54 @@ export default function BookingDetailPage({
                 <span className="text-sm font-medium text-slate-900">LKR {booking.amountLkr}</span>
               </div>
             </div>
+          </CardContent>
+        </Card>
+
+        {/* Right: Assigned Model Card (5 cols) */}
+        <Card className="lg:col-span-5 bg-white border-slate-200 shadow-xs mt-8">
+          <CardContent className="p-6 space-y-6">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                <Users className="w-4 h-4" />
+              </div>
+              <h3 className="text-base font-medium text-slate-900">Assigned Model</h3>
+            </div>
+
+            {booking.modelBookings && booking.modelBookings.length > 0 ? (
+              <div className="space-y-4">
+                {booking.modelBookings.map((mb) => (
+                  <div key={mb.id} className="p-4 bg-slate-50 border border-slate-100 rounded-xl space-y-3">
+                    <div className="flex items-center gap-3">
+                      <Avatar className="w-10 h-10 border border-slate-200">
+                        <AvatarImage src={mb.model?.user.avatarUrl || undefined} />
+                        <AvatarFallback className="bg-emerald-100 text-emerald-700">
+                          {mb.model?.user.firstName.charAt(0)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="text-sm font-medium text-slate-900">
+                          {mb.model?.user.firstName} {mb.model?.user.lastName}
+                        </p>
+                        <p className="text-xs text-slate-500 capitalize">Status: {mb.status}</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center pt-2 border-t border-slate-200 text-xs">
+                       <span className="text-slate-500 font-medium">Model Fee</span>
+                       <span className="font-medium text-slate-900">LKR {mb.paymentLkr}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-6 px-4 bg-slate-50 border border-slate-100 rounded-xl">
+                <p className="text-xs text-slate-500 mb-3">No model assigned to this booking.</p>
+                <Link href="/models">
+                  <Button variant="outline" className="h-8 text-xs font-medium border-slate-200 text-slate-700 hover:bg-slate-100">
+                    Find a Model
+                  </Button>
+                </Link>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
