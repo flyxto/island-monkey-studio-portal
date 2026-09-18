@@ -1,26 +1,55 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Users, Search, Eye } from 'lucide-react';
+import { Users, Search, Eye, Loader2 } from 'lucide-react';
 import { StatCard } from '@/components/ui/StatCard';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { INITIAL_MODELS, INITIAL_MODELS_STATS } from '@/lib/mock-data/studio-dashboard';
+import { INITIAL_MODELS_STATS } from '@/lib/mock-data/studio-dashboard';
+import { getModels } from '@/lib/api/models';
+import { ModelProfile } from '@/lib/types';
+
+function formatDateTime(isoString: string) {
+  if (!isoString) return '';
+  const date = new Date(isoString);
+  return date.toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  }).replace(',', '').replace(' at', ' -');
+}
 
 export default function ModelsPage() {
-  const [models] = useState(INITIAL_MODELS);
+  const [models, setModels] = useState<ModelProfile[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
-  const filteredModels = models.filter(
-    (m) =>
-      m.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      m.handle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      m.specialty.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      async function fetchModels() {
+        setIsLoading(true);
+        try {
+          const data = await getModels(searchQuery);
+          setModels(data || []);
+        } catch (err) {
+          console.error('Failed to fetch models', err);
+          setModels([]);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+      fetchModels();
+    }, 400); // Debounce search
+
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery]);
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
@@ -90,27 +119,29 @@ export default function ModelsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 font-medium">
-                {filteredModels.map((m) => (
+                {models.map((m) => (
                   <tr key={m.id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-3.5 px-4 flex items-center gap-3">
                       <Avatar className="w-9 h-9">
-                        <AvatarImage src={m.avatar} />
+                        <AvatarImage src={m.avatarUrl || ''} />
                         <AvatarFallback className="bg-amber-100 text-amber-900 text-xs font-medium">
-                          {m.name.charAt(0)}
+                          {m.user.firstName.charAt(0)}
                         </AvatarFallback>
                       </Avatar>
                       <div>
-                        <p className="font-medium text-slate-900">{m.name}</p>
+                        <p className="font-medium text-slate-900">
+                          {m.user.firstName} {m.user.lastName}
+                        </p>
                         <p className="text-[11px] text-slate-400">{m.specialty}</p>
                       </div>
                     </td>
-                    <td className="py-3.5 px-4 font-mono text-slate-600">NX-682-A</td>
+                    <td className="py-3.5 px-4 font-mono text-slate-600">{m.handle}</td>
                     <td className="py-3.5 px-4">
                       <span className="bg-emerald-50 text-emerald-700 font-medium px-2 py-0.5 rounded-full text-xs">
-                        {m.approvedGigsCount} Approved
+                        {m.approvedGigsCount || 0} Approved
                       </span>
                     </td>
-                    <td className="py-3.5 px-4 text-slate-500">{m.uploadedTime}</td>
+                    <td className="py-3.5 px-4 text-slate-500">{formatDateTime(m.createdAt)}</td>
                     <td className="py-3.5 px-4">
                       <StatusBadge status={m.availability} />
                     </td>
@@ -130,6 +161,18 @@ export default function ModelsPage() {
                 ))}
               </tbody>
             </table>
+
+            {/* Empty / Loading State */}
+            {isLoading && (
+              <div className="p-8 flex justify-center text-slate-400">
+                <Loader2 className="w-5 h-5 animate-spin" />
+              </div>
+            )}
+            {!isLoading && models.length === 0 && (
+              <div className="p-8 text-center text-slate-500 text-sm">
+                No models found matching your criteria.
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>

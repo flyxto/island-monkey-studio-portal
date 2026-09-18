@@ -152,7 +152,7 @@ export const INITIAL_BOOKINGS: Booking[] = [
   },
 ];
 
-export const INITIAL_GIGS: Gig[] = [
+export const INITIAL_GIGS  = [
   {
     id: 'gig-1',
     modelId: 'sarah-jenkins',
@@ -211,7 +211,7 @@ export const INITIAL_GIGS: Gig[] = [
   },
 ];
 
-export const INITIAL_MODELS: ModelProfile[] = [
+export const INITIAL_MODELS  = [
   {
     id: 'sarah-jenkins',
     name: 'Sarah Jenkins',
