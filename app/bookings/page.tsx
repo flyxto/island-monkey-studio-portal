@@ -13,21 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { INITIAL_BOOKINGS_STATS } from '@/lib/mock-data/studio-dashboard';
 import { getBookings } from '@/lib/api/bookings';
 import { BookingResponse } from '@/lib/types';
-
-// Helper for 'Oct 24, 2026 - 10:00 AM'
-function formatDateTime(isoString: string) {
-  if (!isoString) return '';
-  const date = new Date(isoString);
-  return date.toLocaleString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true,
-    timeZone: 'UTC',
-  }).replace(',', '').replace(' at', ' -');
-}
+import { formatDateTime } from '@/lib/utils';
 
 export default function BookingsPage() {
   const [bookings, setBookings] = useState<BookingResponse[]>([]);

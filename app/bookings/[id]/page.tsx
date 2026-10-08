@@ -23,20 +23,7 @@ import { StatusBadge } from '@/components/ui/StatusBadge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { getBookingById, updateBookingStatus } from '@/lib/api/bookings';
 import { BookingResponse, BookingStatus } from '@/lib/types';
-
-function formatDateTime(isoString: string) {
-  if (!isoString) return '';
-  const date = new Date(isoString);
-  return date.toLocaleString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true,
-    timeZone: 'UTC',
-  }).replace(',', '').replace(' at', ' -');
-}
+import { formatDateTime } from '@/lib/utils';
 
 export default function BookingDetailPage({
   params,

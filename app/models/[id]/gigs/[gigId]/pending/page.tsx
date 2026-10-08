@@ -10,19 +10,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { getGigById, approveGig, rejectGig } from '@/lib/api/gigs';
 import { getModelById } from '@/lib/api/models';
 import { Gig, ModelProfile } from '@/lib/types';
+import { formatDateTime } from '@/lib/utils';
 
-function formatDateTime(isoString: string) {
-  if (!isoString) return '';
-  const date = new Date(isoString);
-  return date.toLocaleString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true,
-  }).replace(',', '').replace(' at', ' -');
-}
 
 export default function PendingGigPage({
   params,

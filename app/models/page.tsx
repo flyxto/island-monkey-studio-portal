@@ -12,19 +12,8 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { INITIAL_MODELS_STATS } from '@/lib/mock-data/studio-dashboard';
 import { getModels } from '@/lib/api/models';
 import { ModelProfile } from '@/lib/types';
+import { formatDateTime } from '@/lib/utils';
 
-function formatDateTime(isoString: string) {
-  if (!isoString) return '';
-  const date = new Date(isoString);
-  return date.toLocaleString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true,
-  }).replace(',', '').replace(' at', ' -');
-}
 
 export default function ModelsPage() {
   const [models, setModels] = useState<ModelProfile[]>([]);

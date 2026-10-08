@@ -12,20 +12,8 @@ import { getModelById } from '@/lib/api/models';
 import { createModelBooking } from '@/lib/api/model-bookings';
 import { getBookings } from '@/lib/api/bookings';
 import { Gig, ModelProfile, BookingResponse } from '@/lib/types';
+import { formatDateTime } from '@/lib/utils';
 
-function formatDateTime(isoString: string) {
-  if (!isoString) return '';
-  const date = new Date(isoString);
-  return date.toLocaleString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true,
-    timeZone: 'UTC',
-  }).replace(',', '').replace(' at', ' -');
-}
 
 export default function ActiveGigPage({
   params,
