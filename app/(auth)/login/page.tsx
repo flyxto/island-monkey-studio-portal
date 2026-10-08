@@ -29,7 +29,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center -mt-8 px-4">
+    <div className="w-full flex items-center justify-center">
       <div className="bg-white p-8 sm:p-10 rounded-[28px] shadow-[0_12px_40px_rgba(11,28,48,0.06)] border border-[#EBE4D8] w-full max-w-md relative overflow-hidden">
         <div className="text-center mb-8">
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#FF7A45] via-[#FF6433] to-[#E84A23] flex items-center justify-center text-white font-extrabold shadow-[0_8px_20px_rgba(232,74,35,0.35)] mx-auto mb-4 text-xl border border-white/30 relative overflow-hidden">
