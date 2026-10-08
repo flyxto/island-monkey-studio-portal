@@ -1,22 +1,85 @@
 'use client';
 
-import { useState } from 'react';
-import { Settings, Save, Check } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Settings, Save, Check, Loader2, AlertCircle } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { getSettings, updateSettings } from '@/lib/api/settings';
 
 export default function SettingsPage() {
-  const [lkrRate, setLkrRate] = useState('200');
-  const [studioName, setStudioName] = useState('Island Monkey Studio - Main Hub');
-  const [adminEmail, setAdminEmail] = useState('admin@islandmonkey.com');
+  const [lkrRate, setLkrRate] = useState('');
+  const [studioName, setStudioName] = useState('');
+  const [adminEmail, setAdminEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSave = (e: React.FormEvent) => {
+  useEffect(() => {
+    async function loadSettings() {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const data = await getSettings();
+        if (data) {
+          setLkrRate(data.conversion_rate_lkr || '200');
+          setStudioName(data.studio_name || 'Island Monkey Studio - Main Hub');
+          setAdminEmail(data.admin_email || 'admin@islandmonkey.com');
+        }
+      } catch (err: any) {
+        console.error('Failed to load settings:', err);
+        setError(err.message || 'Failed to load system settings from server.');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadSettings();
+  }, []);
+
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    try {
+      setIsSaving(true);
+      setError(null);
+      setSaved(false);
+
+      const parsedRate = Number(lkrRate);
+      if (isNaN(parsedRate) || parsedRate <= 0) {
+        throw new Error('Please enter a valid positive exchange rate.');
+      }
+
+      const updated = await updateSettings({
+        conversionRateLkr: parsedRate,
+        studioName: studioName.trim(),
+        adminEmail: adminEmail.trim(),
+      });
+
+      if (updated) {
+        if (updated.conversion_rate_lkr) setLkrRate(updated.conversion_rate_lkr);
+        if (updated.studio_name) setStudioName(updated.studio_name);
+        if (updated.admin_email) setAdminEmail(updated.admin_email);
+      }
+
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3500);
+    } catch (err: any) {
+      console.error('Failed to update settings:', err);
+      setError(err.message || 'Failed to save settings.');
+    } finally {
+      setIsSaving(false);
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center py-24 text-center">
+        <Loader2 className="w-8 h-8 animate-spin text-[#FF6433] mb-3" />
+        <p className="text-sm font-medium text-[#8C8880]">Loading studio settings...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 max-w-4xl mx-auto">
@@ -31,6 +94,13 @@ export default function SettingsPage() {
         <div className="p-4 bg-[#EDFDF3] border border-[#D1F7DE] text-[#16A34A] font-semibold rounded-2xl shadow-sm flex items-center gap-3 animate-in fade-in duration-300">
           <Check className="w-5 h-5 bg-[#16A34A] text-white rounded-full p-1" />
           <span>Settings saved successfully!</span>
+        </div>
+      )}
+
+      {error && (
+        <div className="p-4 bg-[#FFF1F2] border border-[#FFE4E6] text-[#E11D48] font-semibold rounded-2xl shadow-sm flex items-center gap-3 animate-in fade-in duration-300">
+          <AlertCircle className="w-5 h-5 text-[#E11D48] shrink-0" />
+          <span>{error}</span>
         </div>
       )}
 
@@ -49,6 +119,9 @@ export default function SettingsPage() {
                 <label className="text-[11px] font-bold text-[#8C8880] uppercase tracking-wider">Base Exchange Value (LKR per 1 Point)</label>
                 <Input
                   type="number"
+                  min="1"
+                  step="any"
+                  required
                   value={lkrRate}
                   onChange={(e) => setLkrRate(e.target.value)}
                   className="h-11 text-sm font-semibold bg-[#FAF6F0] border-[#E8E1D5] rounded-xl text-[#0B1C30] focus:border-[#C85A17] focus:ring-[#C85A17]/20"
@@ -60,6 +133,7 @@ export default function SettingsPage() {
                 <label className="text-[11px] font-bold text-[#8C8880] uppercase tracking-wider">Studio Name</label>
                 <Input
                   type="text"
+                  required
                   value={studioName}
                   onChange={(e) => setStudioName(e.target.value)}
                   className="h-11 text-sm font-semibold bg-[#FAF6F0] border-[#E8E1D5] rounded-xl text-[#0B1C30] focus:border-[#C85A17] focus:ring-[#C85A17]/20"
@@ -77,6 +151,7 @@ export default function SettingsPage() {
               <label className="text-[11px] font-bold text-[#8C8880] uppercase tracking-wider">Admin Notification Email</label>
               <Input
                 type="email"
+                required
                 value={adminEmail}
                 onChange={(e) => setAdminEmail(e.target.value)}
                 className="h-11 text-sm font-semibold bg-[#FAF6F0] border-[#E8E1D5] rounded-xl text-[#0B1C30] focus:border-[#C85A17] focus:ring-[#C85A17]/20 max-w-md"
@@ -88,10 +163,11 @@ export default function SettingsPage() {
         <div className="flex justify-end">
           <Button
             type="submit"
-            className="h-11 im-btn-specular font-semibold text-xs px-8 rounded-xl shadow-md flex items-center gap-2 transition-all cursor-pointer"
+            disabled={isSaving}
+            className="h-11 im-btn-specular font-semibold text-xs px-8 rounded-xl shadow-md flex items-center gap-2 transition-all cursor-pointer disabled:opacity-60"
           >
-            <Save className="w-4 h-4" />
-            <span>Save Settings</span>
+            {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+            <span>{isSaving ? 'Saving...' : 'Save Settings'}</span>
           </Button>
         </div>
       </form>
