@@ -54,7 +54,9 @@ export default function ActiveGigPage({
         setModel(modelData);
         setSelectedImage(gigData.coverImageUrl || '');
         setBookingForm(prev => ({ ...prev, location: gigData.venueName || '' }));
-        setAvailableBookings(bookingsData.bookings.filter(b => 
+        const rawBookings = Array.isArray(bookingsData?.bookings) ? bookingsData.bookings : [];
+        setAvailableBookings(rawBookings.filter(b => 
+          b &&
           b.status !== 'Completed' && 
           b.status !== 'Cancelled' && 
           (!b.modelBookings || b.modelBookings.length === 0)
