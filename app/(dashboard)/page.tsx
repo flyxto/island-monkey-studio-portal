@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   QrCode,
@@ -9,12 +9,20 @@ import {
   UserPlus,
   Zap,
   Check,
+  AlertCircle,
+  Loader2,
+  RefreshCw,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent } from '@/components/ui/card';
 import { StatCard } from '@/components/ui/StatCard';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+  getDashboardStats,
+  issuePoints,
+  DashboardStats,
+} from '@/lib/api/dashboard';
+import { getTransactions, PointTransaction } from '@/lib/api/activity';
+import { formatStudioDateTime } from '@/lib/utils';
 import {
   INITIAL_DASHBOARD_STATS,
   INITIAL_RECENT_ACTIVITIES,
@@ -22,44 +30,113 @@ import {
 import { RecentScanActivity } from '@/lib/types';
 
 export default function DashboardPage() {
-  const [stats, setStats] = useState(INITIAL_DASHBOARD_STATS);
+  const [stats, setStats] = useState<DashboardStats>(INITIAL_DASHBOARD_STATS);
   const [activities, setActivities] = useState<RecentScanActivity[]>(INITIAL_RECENT_ACTIVITIES);
+  const [isLoadingStats, setIsLoadingStats] = useState(true);
 
-  // Manual Scan state
-  const [selectedMember, setSelectedMember] = useState('Sarah Jenkins (NX-682-A)');
+  // Manual Scan & Point Issuance state
+  const [targetMemberId, setTargetMemberId] = useState('');
   const [customPts, setCustomPts] = useState('');
   const [activePreset, setActivePreset] = useState<number | null>(50);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleConfirmAddition = () => {
+  const loadDashboardData = async () => {
+    try {
+      setIsLoadingStats(true);
+      const [liveStats, txsRes] = await Promise.allSettled([
+        getDashboardStats(),
+        getTransactions({ limit: 10 }),
+      ]);
+
+      if (liveStats.status === 'fulfilled' && liveStats.value) {
+        setStats(liveStats.value);
+      }
+
+      if (txsRes.status === 'fulfilled' && txsRes.value?.transactions) {
+        const liveTxs = txsRes.value.transactions;
+        if (liveTxs.length > 0) {
+          const mapped: RecentScanActivity[] = liveTxs.map((t: PointTransaction) => ({
+            id: t.id,
+            member: t.user ? `${t.user.firstName} ${t.user.lastName}`.trim() : 'Studio Member',
+            memberId: t.user?.memberId || `MB-${t.userId.slice(0, 5).toUpperCase()}`,
+            pointsAwarded: t.amount,
+            time: formatStudioDateTime(t.createdAt),
+          }));
+          setActivities(mapped);
+        }
+      }
+    } catch (err: any) {
+      console.error('Failed to load dashboard data:', err);
+    } finally {
+      setIsLoadingStats(false);
+    }
+  };
+
+  useEffect(() => {
+    loadDashboardData();
+  }, []);
+
+  const handleConfirmAddition = async () => {
     const pointsToAdd = customPts ? parseInt(customPts, 10) : activePreset || 50;
-    if (isNaN(pointsToAdd) || pointsToAdd <= 0) return;
+    if (isNaN(pointsToAdd) || pointsToAdd <= 0) {
+      setErrorMessage('Please specify a positive point amount.');
+      return;
+    }
 
-    // Update stats
-    setStats((prev) => ({
-      ...prev,
-      pointsIssued: prev.pointsIssued + pointsToAdd,
-      activeScansToday: prev.activeScansToday + 1,
-    }));
+    const memberIdentifier = targetMemberId.trim();
+    if (!memberIdentifier) {
+      setErrorMessage('Please enter a Member ID, Customer ID, or QR code value.');
+      return;
+    }
 
-    // Add new activity
-    const newAct: RecentScanActivity = {
-      id: `act-${Date.now()}`,
-      member: 'Sarah Jenkins',
-      memberId: 'NX-682-A',
-      pointsAwarded: pointsToAdd,
-      time: 'Just now',
-      memberAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop',
-    };
+    try {
+      setIsSubmitting(true);
+      setErrorMessage(null);
+      setToastMessage(null);
 
-    setActivities((prev) => [newAct, ...prev]);
+      const res = await issuePoints({
+        userId: memberIdentifier,
+        amount: pointsToAdd,
+        description: `Manual studio scan award — +${pointsToAdd} pts`,
+      });
 
-    // Toast feedback
-    setToastMessage(`Successfully issued +${pointsToAdd} Island Monkey points to Sarah Jenkins!`);
-    setTimeout(() => setToastMessage(null), 4000);
+      const memberName = res?.member?.name || memberIdentifier;
+      const assignedId = res?.member?.memberId || memberIdentifier;
 
-    // Reset custom field
-    setCustomPts('');
+      // Optimistically update live stats
+      setStats((prev) => ({
+        ...prev,
+        pointsIssued: prev.pointsIssued + pointsToAdd,
+        activeScansToday: prev.activeScansToday + 1,
+      }));
+
+      // Prepend to activity feed
+      const newAct: RecentScanActivity = {
+        id: res?.transaction?.id || `act-${Date.now()}`,
+        member: memberName,
+        memberId: assignedId,
+        pointsAwarded: pointsToAdd,
+        time: 'Just now',
+      };
+      setActivities((prev) => [newAct, ...prev]);
+
+      // Success feedback
+      setToastMessage(
+        `Successfully issued +${pointsToAdd} Island Monkey points to ${memberName}! (New Balance: ${res?.newBalance ?? 'Updated'})`
+      );
+      setTimeout(() => setToastMessage(null), 5000);
+
+      // Reset fields
+      setTargetMemberId('');
+      setCustomPts('');
+    } catch (err: any) {
+      console.error('Failed to issue points:', err);
+      setErrorMessage(err.message || 'Failed to issue points to member.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -72,6 +149,19 @@ export default function DashboardPage() {
             <span>{toastMessage}</span>
           </div>
           <button onClick={() => setToastMessage(null)} className="text-xs underline hover:opacity-80">
+            Dismiss
+          </button>
+        </div>
+      )}
+
+      {/* Error Banner */}
+      {errorMessage && (
+        <div className="p-4 bg-[#FFF1F2] border border-[#FFE4E6] text-[#E11D48] font-semibold rounded-2xl shadow-sm flex items-center justify-between animate-in fade-in duration-300">
+          <div className="flex items-center gap-3">
+            <AlertCircle className="w-5 h-5 text-[#E11D48] shrink-0" />
+            <span>{errorMessage}</span>
+          </div>
+          <button onClick={() => setErrorMessage(null)} className="text-xs underline hover:opacity-80">
             Dismiss
           </button>
         </div>
@@ -92,11 +182,22 @@ export default function DashboardPage() {
               Current exchange value for active members in the Island Monkey ecosystem.
             </p>
           </div>
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 px-6 py-3 rounded-2xl flex items-center gap-3 shadow-inner">
-            <span className="text-2xl font-semibold tracking-tight text-white">1 Point = 200 LKR</span>
-            <span className="text-xs bg-[#FF6433] text-white font-semibold px-2.5 py-1 rounded-full uppercase shadow-xs">
-              LKR
-            </span>
+          <div className="flex items-center gap-3">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 px-6 py-3 rounded-2xl flex items-center gap-3 shadow-inner">
+              <span className="text-2xl font-semibold tracking-tight text-white">
+                1 Point = {stats.conversionRate?.lkr || 200} LKR
+              </span>
+              <span className="text-xs bg-[#FF6433] text-white font-semibold px-2.5 py-1 rounded-full uppercase shadow-xs">
+                LKR
+              </span>
+            </div>
+            <button
+              onClick={loadDashboardData}
+              title="Refresh dashboard stats"
+              className="p-3 bg-white/10 hover:bg-white/20 rounded-2xl border border-white/20 text-white transition-colors cursor-pointer"
+            >
+              <RefreshCw className={`w-4 h-4 ${isLoadingStats ? 'animate-spin' : ''}`} />
+            </button>
           </div>
         </div>
       </div>
@@ -109,15 +210,29 @@ export default function DashboardPage() {
             <div className="w-16 h-16 bg-[#FDF2EA] rounded-2xl border border-[#F3DAC9] mx-auto flex items-center justify-center text-[#C85A17] shadow-inner">
               <QrCode className="w-8 h-8 stroke-[2.2]" />
             </div>
-            <h3 className="text-lg font-semibold text-[#0B1C30]">Manual Scan QR</h3>
+            <h3 className="text-lg font-semibold text-[#0B1C30]">Manual Scan QR & Point Issuance</h3>
             <p className="text-xs text-[#616161] font-medium max-w-sm mx-auto">
-              Ready to process member check-ins and issue Island Monkey points.
+              Scan member QR or enter Member ID / Customer ID to issue Island Monkey points.
             </p>
+          </div>
+
+          {/* Member ID / QR Code Input */}
+          <div className="max-w-md mx-auto w-full space-y-2">
+            <label className="text-[11px] font-bold text-[#8C8880] uppercase tracking-wider block">
+              Member ID, Customer ID, or QR Code
+            </label>
+            <Input
+              type="text"
+              placeholder="e.g. NX-682-A or Customer UUID"
+              value={targetMemberId}
+              onChange={(e) => setTargetMemberId(e.target.value)}
+              className="h-11 bg-[#FAF6F0] border-[#E8E1D5] rounded-xl text-sm text-[#0B1C30] placeholder:text-[#8C8880] focus-visible:ring-2 focus-visible:ring-[#FF6433]/30 font-medium"
+            />
           </div>
 
           {/* Quick Preset Buttons */}
           <div className="flex items-center justify-center gap-3">
-            {[50, 100, 500].map((preset) => (
+            {[50, 100, 250, 500].map((preset) => (
               <button
                 key={preset}
                 type="button"
@@ -144,21 +259,27 @@ export default function DashboardPage() {
               </span>
               <Input
                 type="number"
-                placeholder="Enter custom amount"
+                min="1"
+                placeholder="Enter custom points"
                 value={customPts}
                 onChange={(e) => setCustomPts(e.target.value)}
-                className="pl-14 h-11 bg-[#FAF6F0] border-[#E8E1D5] rounded-xl text-sm text-[#0B1C30] placeholder:text-[#8C8880] focus-visible:ring-2 focus-visible:ring-[#FF6433]/30 focus-visible:border-[#FF6433] font-semibold"
+                className="pl-14 h-11 bg-[#FAF6F0] border-[#E8E1D5] rounded-xl text-sm text-[#0B1C30] placeholder:text-[#8C8880] focus-visible:ring-2 focus-visible:ring-[#FF6433]/30 font-semibold"
               />
             </div>
 
             <button
               type="button"
+              disabled={isSubmitting}
               onClick={handleConfirmAddition}
-              className="im-btn-specular w-full h-11 rounded-xl text-sm font-semibold cursor-pointer gap-2"
+              className="im-btn-specular w-full h-11 rounded-xl text-sm font-semibold cursor-pointer gap-2 disabled:opacity-60 flex items-center justify-center relative overflow-hidden"
             >
               <div className="absolute inset-x-2 top-0.5 h-[44%] bg-gradient-to-b from-white/70 via-white/20 to-transparent rounded-t-xl pointer-events-none" />
-              <Check className="w-4 h-4 stroke-[2.5]" />
-              <span>Confirm Addition</span>
+              {isSubmitting ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Check className="w-4 h-4 stroke-[2.5]" />
+              )}
+              <span>{isSubmitting ? 'Issuing Points...' : 'Confirm Addition'}</span>
             </button>
           </div>
         </div>
@@ -166,7 +287,7 @@ export default function DashboardPage() {
         {/* Right Stack: Stat Cards (5 cols on lg) */}
         <div className="lg:col-span-5 space-y-4 flex flex-col justify-between">
           <StatCard
-            label="POINTS ISSUED"
+            label="POINTS ISSUED TODAY"
             value={stats.pointsIssued.toLocaleString()}
             change={stats.pointsIssuedChange}
             icon={Zap}
