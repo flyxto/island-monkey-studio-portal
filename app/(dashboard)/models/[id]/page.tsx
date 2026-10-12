@@ -20,6 +20,7 @@ import {
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { getModelById } from '@/lib/api/models';
 import { ModelProfile } from '@/lib/types';
+import { getR2PublicUrl } from '@/lib/r2';
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
@@ -120,9 +121,10 @@ export default function ModelProfilePage({ params }: { params: Promise<{ id: str
             <div className="relative w-32 h-32 rounded-2xl overflow-hidden shadow-2xs border-2 border-[#EBE4D8] shrink-0 bg-[#FAF6F0] flex items-center justify-center">
               {model.avatarUrl ? (
                 <Image
-                  src={model.avatarUrl}
+                  src={getR2PublicUrl(model.avatarUrl)}
                   alt={model.user.firstName}
                   fill
+                  unoptimized
                   className="object-cover"
                 />
               ) : (

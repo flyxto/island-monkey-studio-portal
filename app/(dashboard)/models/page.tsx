@@ -13,6 +13,7 @@ import { INITIAL_MODELS_STATS } from '@/lib/mock-data/studio-dashboard';
 import { getModels } from '@/lib/api/models';
 import { ModelProfile } from '@/lib/types';
 import { formatDateTime } from '@/lib/utils';
+import { getR2PublicUrl } from '@/lib/r2';
 
 
 export default function ModelsPage() {
@@ -112,7 +113,7 @@ export default function ModelsPage() {
                 <tr key={m.id} className="hover:bg-[#FAF6F0]/60 transition-colors">
                   <td className="py-3.5 px-4 flex items-center gap-3">
                     <Avatar className="w-9 h-9 border border-[#EBE4D8]">
-                      <AvatarImage src={m.avatarUrl || ''} />
+                      <AvatarImage src={getR2PublicUrl(m.avatarUrl)} />
                       <AvatarFallback className="bg-[#FDF2EA] text-[#C85A17] text-xs font-semibold">
                         {m.user.firstName.charAt(0)}
                       </AvatarFallback>
