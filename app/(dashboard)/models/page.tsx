@@ -100,6 +100,7 @@ export default function ModelsPage() {
               <tr>
                 <th className="py-3 px-4">Member</th>
                 <th className="py-3 px-4">ID</th>
+                <th className="py-3 px-4">Comp Card Specs</th>
                 <th className="py-3 px-4">Approved Gigs</th>
                 <th className="py-3 px-4">Uploaded Time</th>
                 <th className="py-3 px-4">Availability</th>
@@ -117,13 +118,43 @@ export default function ModelsPage() {
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="font-semibold text-[#0B1C30]">
-                        {m.user.firstName} {m.user.lastName}
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <p className="font-semibold text-[#0B1C30]">
+                          {m.user.firstName} {m.user.lastName}
+                        </p>
+                        {m.origin && (
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#FDF2EA] text-[#C85A17] border border-[#F3DAC9]">
+                            {m.origin}
+                          </span>
+                        )}
+                        {m.gender && (
+                          <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
+                            {m.gender}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-[#8C8880] font-medium mt-0.5">
+                        {m.modelingType && m.modelingType.length > 0
+                          ? m.modelingType.slice(0, 2).join(' • ')
+                          : m.specialty || 'General Model'}
                       </p>
-                      <p className="text-[11px] text-[#8C8880] font-medium">{m.specialty}</p>
                     </div>
                   </td>
                   <td className="py-3.5 px-4 font-mono text-[#616161] font-medium">{m.handle}</td>
+                  <td className="py-3.5 px-4">
+                    <div className="flex flex-col text-xs">
+                      <span className="font-semibold text-[#0B1C30]">
+                        {m.height || 'Height —'}
+                      </span>
+                      <span className="text-[11px] text-[#8C8880]">
+                        {m.bust && m.waist && m.hips
+                          ? `${m.bust} / ${m.waist} / ${m.hips}`
+                          : m.shoeSize
+                          ? `Shoe: ${m.shoeSize}`
+                          : 'Specs pending'}
+                      </span>
+                    </div>
+                  </td>
                   <td className="py-3.5 px-4">
                     <span className="bg-[#EDFDF3] text-[#16A34A] border border-[#DCFCE7] font-semibold px-2.5 py-0.5 rounded-full text-xs">
                       {m.approvedGigsCount || 0} Approved

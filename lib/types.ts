@@ -70,11 +70,39 @@ export interface ModelProfile {
   id: string;
   userId: string;
   handle: string;
-  specialty: string;
-  bio: string;
+  specialty?: string;
+  bio?: string;
   avatarUrl: string | null;
   availability: 'Available' | 'Unavailable';
   createdAt: string;
+
+  // Casting & Demographics
+  dateOfBirth?: string | null;
+  gender?: string | null;
+  origin?: string | null;
+  modelingType?: string[];
+  location?: string | null;
+  nationality?: string | null;
+  ethnicity?: string | null;
+  experience?: string | null;
+
+  // Social & Direct Casting Contact
+  instagram?: string | null;
+  whatsapp?: string | null;
+  availableForInternational?: boolean;
+
+  // Physical Comp Card Measurements
+  height?: string | null;
+  weight?: string | null;
+  bust?: string | null;
+  waist?: string | null;
+  hips?: string | null;
+  shoeSize?: string | null;
+  dressSize?: string | null;
+  hairColor?: string | null;
+  eyeColor?: string | null;
+  skinComplexion?: string | null;
+
   user: {
     firstName: string;
     lastName: string;
