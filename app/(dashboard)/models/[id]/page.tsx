@@ -396,7 +396,13 @@ export default function ModelProfilePage({ params }: { params: Promise<{ id: str
               <div key={gig.id} className="bg-white rounded-[24px] border border-[#EBE4D8] shadow-2xs overflow-hidden hover:shadow-xs hover:border-[#DFCFC0] transition-all flex flex-col justify-between">
                 <div className="relative h-48 w-full bg-[#FAF6F0]">
                   {gig.coverImageUrl && (
-                    <Image src={gig.coverImageUrl} alt={gig.title} fill className="object-cover" />
+                    <Image
+                      src={getR2PublicUrl(gig.coverImageUrl)}
+                      alt={gig.title}
+                      fill
+                      unoptimized
+                      className="object-cover"
+                    />
                   )}
                   <span className="absolute top-3 left-3 bg-[#FF6433] text-white text-[11px] font-semibold px-3 py-1 rounded-full shadow-xs">
                     Pending Approval
@@ -441,7 +447,13 @@ export default function ModelProfilePage({ params }: { params: Promise<{ id: str
               <div key={gig.id} className="bg-white rounded-[24px] border border-[#EBE4D8] shadow-2xs overflow-hidden hover:shadow-xs hover:border-[#DFCFC0] transition-all flex flex-col justify-between">
                 <div className="relative h-48 w-full bg-[#FAF6F0]">
                   {gig.coverImageUrl && (
-                    <Image src={gig.coverImageUrl} alt={gig.title} fill className="object-cover" />
+                    <Image
+                      src={getR2PublicUrl(gig.coverImageUrl)}
+                      alt={gig.title}
+                      fill
+                      unoptimized
+                      className="object-cover"
+                    />
                   )}
                   <span className="absolute top-3 left-3 bg-emerald-600 text-white text-[11px] font-semibold px-3 py-1 rounded-full shadow-xs">
                     Active

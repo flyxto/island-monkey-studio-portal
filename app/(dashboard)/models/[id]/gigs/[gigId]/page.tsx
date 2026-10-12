@@ -13,6 +13,7 @@ import { createModelBooking } from '@/lib/api/model-bookings';
 import { getBookings } from '@/lib/api/bookings';
 import { Gig, ModelProfile, BookingResponse } from '@/lib/types';
 import { formatDateTime } from '@/lib/utils';
+import { getR2PublicUrl } from '@/lib/r2';
 
 
 export default function ActiveGigPage({
@@ -169,7 +170,13 @@ export default function ActiveGigPage({
         <div className="lg:col-span-7 space-y-4">
           <div className="relative h-[420px] w-full rounded-2xl overflow-hidden shadow-md border border-slate-200 bg-slate-100 flex items-center justify-center">
             {selectedImage ? (
-              <Image src={selectedImage} alt={gig.title} fill className="object-cover" />
+              <Image
+                src={getR2PublicUrl(selectedImage)}
+                alt={gig.title}
+                fill
+                unoptimized
+                className="object-cover"
+              />
             ) : (
               <span className="text-slate-400">No Image Available</span>
             )}
@@ -191,7 +198,13 @@ export default function ActiveGigPage({
                       : 'border-slate-200 opacity-70 hover:opacity-100'
                   }`}
                 >
-                  <Image src={img} alt={`Gallery ${idx}`} fill className="object-cover" />
+                  <Image
+                    src={getR2PublicUrl(img)}
+                    alt={`Gallery ${idx}`}
+                    fill
+                    unoptimized
+                    className="object-cover"
+                  />
                 </button>
               ))}
             </div>
