@@ -19,6 +19,8 @@ export function PackageDrawer({ isOpen, onClose, onSave, packageToEdit }: Packag
     name: '',
     description: '',
     priceLkr: 0,
+    additionalHourPriceLkr: 0,
+    category: 'STUDIO',
     isBestSeller: false,
     durationHours: '',
     studioName: '',
@@ -36,6 +38,8 @@ export function PackageDrawer({ isOpen, onClose, onSave, packageToEdit }: Packag
         name: packageToEdit.name,
         description: packageToEdit.description,
         priceLkr: packageToEdit.priceLkr,
+        additionalHourPriceLkr: packageToEdit.additionalHourPriceLkr ?? 0,
+        category: packageToEdit.category ?? 'STUDIO',
         isBestSeller: packageToEdit.isBestSeller,
         durationHours: packageToEdit.durationHours,
         studioName: packageToEdit.studioName,
@@ -51,10 +55,12 @@ export function PackageDrawer({ isOpen, onClose, onSave, packageToEdit }: Packag
         name: '',
         description: '',
         priceLkr: 0,
+        additionalHourPriceLkr: 0,
+        category: 'STUDIO',
         isBestSeller: false,
         durationHours: '',
         studioName: '',
-        photographersCount: 1,
+        photographersCount: 0,
         metaLine: '',
         highlightTitle: '',
         highlightSubtitle: '',
@@ -87,7 +93,8 @@ export function PackageDrawer({ isOpen, onClose, onSave, packageToEdit }: Packag
       const payload = {
         ...formData,
         priceLkr: Number(formData.priceLkr),
-        photographersCount: Number(formData.photographersCount),
+        additionalHourPriceLkr: Number(formData.additionalHourPriceLkr || 0),
+        photographersCount: Number(formData.photographersCount || 0),
         whatsIncluded: formData.whatsIncluded?.filter(i => i.trim() !== ''),
       };
       await onSave(payload);
@@ -116,7 +123,7 @@ export function PackageDrawer({ isOpen, onClose, onSave, packageToEdit }: Packag
               {packageToEdit ? 'Edit Package' : 'New Package'}
             </h2>
             <p className="text-xs text-[#8C8880] mt-1 font-medium">
-              {packageToEdit ? 'Update package details and pricing below.' : 'Fill in the details to create a new photography package.'}
+              {packageToEdit ? 'Update package details and pricing below.' : 'Set up a new studio or podcast pricing package.'}
             </p>
           </div>
           <button 
@@ -130,19 +137,47 @@ export function PackageDrawer({ isOpen, onClose, onSave, packageToEdit }: Packag
         <div className="flex-1 overflow-y-auto p-6 space-y-5">
           <form id="package-form" onSubmit={handleSubmit} className="space-y-5">
             <div>
+              <label className="block text-[11px] font-bold text-[#8C8880] uppercase tracking-wider mb-1.5">Package Category</label>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, category: 'STUDIO' })}
+                  className={`h-10 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                    formData.category === 'STUDIO'
+                      ? 'bg-[#FF6433] text-white border-[#FF6433] shadow-xs'
+                      : 'bg-white text-[#616161] border-[#E8E1D5] hover:bg-[#FAF6F0]'
+                  }`}
+                >
+                  Studio Space
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, category: 'PODCAST' })}
+                  className={`h-10 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                    formData.category === 'PODCAST'
+                      ? 'bg-[#FF6433] text-white border-[#FF6433] shadow-xs'
+                      : 'bg-white text-[#616161] border-[#E8E1D5] hover:bg-[#FAF6F0]'
+                  }`}
+                >
+                  Podcast Studio
+                </button>
+              </div>
+            </div>
+
+            <div>
               <label className="block text-[11px] font-bold text-[#8C8880] uppercase tracking-wider mb-1.5">Package Name</label>
               <Input
                 required
                 value={formData.name}
                 onChange={e => setFormData({ ...formData, name: e.target.value })}
-                placeholder="e.g. Premium Island Wedding"
+                placeholder="e.g. Podcast Room + 2 Lights"
                 className="bg-white border-[#E8E1D5] focus:border-[#C85A17] focus:ring-[#C85A17]/20 text-[#0B1C30] rounded-xl h-11"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-[11px] font-bold text-[#8C8880] uppercase tracking-wider mb-1.5">Price (LKR)</label>
+                <label className="block text-[11px] font-bold text-[#8C8880] uppercase tracking-wider mb-1.5">Base Price (LKR)</label>
                 <Input
                   required
                   type="number"
@@ -153,12 +188,13 @@ export function PackageDrawer({ isOpen, onClose, onSave, packageToEdit }: Packag
                 />
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-[#8C8880] uppercase tracking-wider mb-1.5">Duration</label>
+                <label className="block text-[11px] font-bold text-[#8C8880] uppercase tracking-wider mb-1.5">Additional Hour (LKR)</label>
                 <Input
-                  required
-                  value={formData.durationHours}
-                  onChange={e => setFormData({ ...formData, durationHours: e.target.value })}
-                  placeholder="e.g. 4 Hours"
+                  type="number"
+                  min="0"
+                  value={formData.additionalHourPriceLkr ?? ''}
+                  onChange={e => setFormData({ ...formData, additionalHourPriceLkr: Number(e.target.value) })}
+                  placeholder="e.g. 4000"
                   className="bg-white border-[#E8E1D5] focus:border-[#C85A17] focus:ring-[#C85A17]/20 text-[#0B1C30] rounded-xl h-11"
                 />
               </div>
@@ -166,26 +202,37 @@ export function PackageDrawer({ isOpen, onClose, onSave, packageToEdit }: Packag
 
             <div className="grid grid-cols-2 gap-4">
               <div>
+                <label className="block text-[11px] font-bold text-[#8C8880] uppercase tracking-wider mb-1.5">Duration</label>
+                <Input
+                  required
+                  value={formData.durationHours}
+                  onChange={e => setFormData({ ...formData, durationHours: e.target.value })}
+                  placeholder="e.g. 2 Hours"
+                  className="bg-white border-[#E8E1D5] focus:border-[#C85A17] focus:ring-[#C85A17]/20 text-[#0B1C30] rounded-xl h-11"
+                />
+              </div>
+              <div>
                 <label className="block text-[11px] font-bold text-[#8C8880] uppercase tracking-wider mb-1.5">Studio Name</label>
                 <Input
                   required
                   value={formData.studioName}
                   onChange={e => setFormData({ ...formData, studioName: e.target.value })}
-                  placeholder="e.g. Main Studio"
+                  placeholder="e.g. Podcast Studio"
                   className="bg-white border-[#E8E1D5] focus:border-[#C85A17] focus:ring-[#C85A17]/20 text-[#0B1C30] rounded-xl h-11"
                 />
               </div>
-              <div>
-                <label className="block text-[11px] font-bold text-[#8C8880] uppercase tracking-wider mb-1.5">Photographers Count</label>
-                <Input
-                  required
-                  type="number"
-                  min="1"
-                  value={formData.photographersCount}
-                  onChange={e => setFormData({ ...formData, photographersCount: Number(e.target.value) })}
-                  className="bg-white border-[#E8E1D5] focus:border-[#C85A17] focus:ring-[#C85A17]/20 text-[#0B1C30] rounded-xl h-11"
-                />
-              </div>
+            </div>
+
+            <div>
+              <label className="block text-[11px] font-bold text-[#8C8880] uppercase tracking-wider mb-1.5">Photographers / Crew Count</label>
+              <Input
+                required
+                type="number"
+                min="0"
+                value={formData.photographersCount}
+                onChange={e => setFormData({ ...formData, photographersCount: Number(e.target.value) })}
+                className="bg-white border-[#E8E1D5] focus:border-[#C85A17] focus:ring-[#C85A17]/20 text-[#0B1C30] rounded-xl h-11"
+              />
             </div>
 
             <div>

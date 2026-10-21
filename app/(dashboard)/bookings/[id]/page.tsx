@@ -16,6 +16,9 @@ import {
   User,
   Loader2,
   Users,
+  Mic,
+  Sparkles,
+  Layers,
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -247,7 +250,9 @@ export default function BookingDetailPage({
             </div>
             <div>
               <p className="text-[11px] text-[#8C8880] font-semibold uppercase tracking-wider">Total Amount</p>
-              <p className="text-sm font-semibold text-[#0B1C30] mt-0.5">{booking.amountLkr}</p>
+              <p className="text-sm font-semibold text-[#0B1C30] mt-0.5 font-mono">
+                LKR {Number(booking.amountLkr).toLocaleString()}
+              </p>
             </div>
           </div>
         </div>
@@ -257,11 +262,24 @@ export default function BookingDetailPage({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left: Studio Spec Details (7 cols) */}
         <div className="lg:col-span-7 bg-white rounded-[24px] border border-[#EBE4D8] shadow-2xs p-6 sm:p-7 space-y-6">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-[#FDF2EA] text-[#C85A17] flex items-center justify-center border border-[#F3DAC9]">
-              <Camera className="w-4 h-4" />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-[#FDF2EA] text-[#C85A17] flex items-center justify-center border border-[#F3DAC9]">
+                {booking.package.category === 'PODCAST' ? <Mic className="w-4 h-4" /> : <Camera className="w-4 h-4" />}
+              </div>
+              <h3 className="text-base font-semibold text-[#0B1C30]">Package & Studio Information</h3>
             </div>
-            <h3 className="text-base font-semibold text-[#0B1C30]">Package & Studio Information</h3>
+            {booking.package.category === 'PODCAST' ? (
+              <span className="inline-flex items-center gap-1 bg-[#FDF2EA] text-[#C85A17] border border-[#F3DAC9] px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">
+                <Mic className="w-3 h-3" />
+                Podcast Setup
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 bg-slate-100 text-slate-700 border border-slate-200 px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">
+                <Camera className="w-3 h-3" />
+                Studio Space
+              </span>
+            )}
           </div>
 
           <div className="space-y-3 text-xs">
@@ -279,6 +297,34 @@ export default function BookingDetailPage({
                 <span className="font-semibold text-[#0B1C30]">{booking.package.studioName}</span>
               </div>
             )}
+            {booking.extraHours && booking.extraHours > 0 ? (
+              <div className="flex justify-between py-2.5 border-b border-[#EBE4D8]">
+                <span className="text-[#616161] font-medium">Overtime / Extra Hours</span>
+                <span className="font-semibold text-emerald-700">
+                  +{booking.extraHours} hr{booking.extraHours > 1 ? 's' : ''} (LKR {Number(booking.extraHoursRateLkr || 0).toLocaleString()}/hr)
+                </span>
+              </div>
+            ) : null}
+
+            {/* Booked Add-on Equipment & Services */}
+            {booking.addons && booking.addons.length > 0 && (
+              <div className="py-2.5 border-b border-[#EBE4D8] space-y-2">
+                <span className="text-[#616161] font-medium block">Booked Add-ons & Equipment</span>
+                <div className="space-y-1.5 pl-2">
+                  {booking.addons.map((item) => (
+                    <div key={item.id} className="flex justify-between items-center text-[11px] bg-[#FAF6F0] p-2 rounded-lg">
+                      <span className="font-semibold text-[#0B1C30]">
+                        {item.addon?.name || 'Add-on'} {item.quantity > 1 ? `(×${item.quantity})` : ''}
+                      </span>
+                      <span className="font-mono text-[#C85A17] font-semibold">
+                        LKR {Number(item.unitPriceLkr * item.quantity).toLocaleString()}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {booking.notes && (
               <div className="flex justify-between py-2.5">
                 <span className="text-[#616161] font-medium">Customer Notes</span>

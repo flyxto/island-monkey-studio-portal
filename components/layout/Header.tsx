@@ -32,15 +32,15 @@ export function Header({ title }: HeaderProps) {
           />
         </div>
 
-        {/* Notifications */}
-        <button 
+        {/* Notifications (temporarily hidden) */}
+        {/* <button 
           type="button"
           aria-label="Notifications"
           className="relative p-2 text-[#616161] hover:text-[#0B1C30] hover:bg-[#FAF6F0] rounded-full transition-colors cursor-pointer"
         >
           <Bell className="w-5 h-5" />
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#FF6433] rounded-full ring-2 ring-white"></span>
-        </button>
+        </button> */}
 
         {/* Logout Quick Action */}
         <button
