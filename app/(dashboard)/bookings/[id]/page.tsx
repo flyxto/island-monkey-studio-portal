@@ -157,17 +157,24 @@ export default function BookingDetailPage({
                 >
                   <div className="absolute inset-x-2 top-0.5 h-[44%] bg-gradient-to-b from-white/70 via-white/20 to-transparent rounded-t-xl pointer-events-none" />
                   <ShieldCheck className="w-4 h-4 stroke-[2.5]" />
-                  <span>Approve Booking</span>
+                  <span>Confirm Booking</span>
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleUpdateStatus('Cancelled')}
+                  onClick={() => {
+                    if (window.confirm('Reject this request? The time slot will be released.')) {
+                      handleUpdateStatus('Cancelled');
+                    }
+                  }}
                   disabled={isUpdating}
                   className="im-btn-specular-secondary h-10 px-4 rounded-xl text-xs font-semibold text-rose-600 border-rose-200/90 hover:bg-rose-50 cursor-pointer gap-2"
                 >
                   <XCircle className="w-4 h-4" />
-                  <span>Cancel</span>
+                  <span>Reject Request</span>
                 </button>
+                <p className="w-full text-[11px] text-[#8C8880]">
+                  Payment is verified manually. The slot is held while this request is pending — confirm once payment is received, or reject to release the slot.
+                </p>
               </>
             )}
 
