@@ -20,6 +20,8 @@ export interface BookingResponse {
   studioRoom: string;
   dateTime: string;
   duration: string;
+  extraHours?: number;
+  extraHoursRateLkr?: number | null;
   status: BookingStatus;
   amountLkr: number;
   notes: string | null;
@@ -35,7 +37,11 @@ export interface BookingResponse {
   package: {
     name: string;
     studioName?: string;
+    category?: PackageCategory;
+    priceLkr?: number;
+    additionalHourPriceLkr?: number | null;
   };
+  addons?: BookingAddonItem[];
   modelBookings?: ModelBookingResponse[];
 }
 
@@ -70,11 +76,39 @@ export interface ModelProfile {
   id: string;
   userId: string;
   handle: string;
-  specialty: string;
-  bio: string;
+  specialty?: string;
+  bio?: string;
   avatarUrl: string | null;
   availability: 'Available' | 'Unavailable';
   createdAt: string;
+
+  // Casting & Demographics
+  dateOfBirth?: string | null;
+  gender?: string | null;
+  origin?: string | null;
+  modelingType?: string[];
+  location?: string | null;
+  nationality?: string | null;
+  ethnicity?: string | null;
+  experience?: string | null;
+
+  // Social & Direct Casting Contact
+  instagram?: string | null;
+  whatsapp?: string | null;
+  availableForInternational?: boolean;
+
+  // Physical Comp Card Measurements
+  height?: string | null;
+  weight?: string | null;
+  bust?: string | null;
+  waist?: string | null;
+  hips?: string | null;
+  shoeSize?: string | null;
+  dressSize?: string | null;
+  hairColor?: string | null;
+  eyeColor?: string | null;
+  skinComplexion?: string | null;
+
   user: {
     firstName: string;
     lastName: string;
@@ -150,11 +184,46 @@ export interface PartnerActivityStats {
   totalDeductions: number;
 }
 
+export type PackageCategory = 'STUDIO' | 'PODCAST';
+export type AddonType = 'EQUIPMENT' | 'EDITING';
+
+export interface Addon {
+  id: string;
+  name: string;
+  type: AddonType;
+  priceLkr: number;
+  description?: string | null;
+  imageUrl?: string | null;
+  isActive: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface BookingAddonItem {
+  id: string;
+  bookingId: string;
+  addonId: string;
+  quantity: number;
+  unitPriceLkr: number;
+  addon: Addon;
+}
+
+export interface CreateAddonDto {
+  name: string;
+  type: AddonType;
+  priceLkr: number;
+  description?: string;
+  imageUrl?: string;
+  isActive?: boolean;
+}
+
 export interface Package {
   id: string;
   name: string;
   description: string;
   priceLkr: number;
+  additionalHourPriceLkr?: number | null;
+  category?: PackageCategory;
   isBestSeller: boolean;
   durationHours: string;
   studioName: string;
@@ -173,6 +242,8 @@ export interface CreatePackageDto {
   name: string;
   description: string;
   priceLkr: number;
+  additionalHourPriceLkr?: number;
+  category?: PackageCategory;
   isBestSeller?: boolean;
   durationHours: string;
   studioName: string;

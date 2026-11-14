@@ -1,8 +1,9 @@
 import { fetchApi } from './client';
-import { Package, CreatePackageDto } from '../types';
+import { Package, CreatePackageDto, PackageCategory } from '../types';
 
-export const getPackages = async (): Promise<Package[]> => {
-  return fetchApi('/packages', {
+export const getPackages = async (category?: PackageCategory): Promise<Package[]> => {
+  const query = category ? `?category=${category}` : '';
+  return fetchApi(`/packages${query}`, {
     method: 'GET',
   });
 };

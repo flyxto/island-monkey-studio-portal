@@ -164,11 +164,86 @@
   opacity: 0.8;
 }
 
-.im-badge-indigo {
+/* Island Monkey Signature Specular Primary Button */
+.im-btn-specular {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #FF7A45 0%, #FF6433 48%, #E84A23 100%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  font-weight: 500;
+  box-shadow: inset 0 1.5px 1.5px rgba(255, 255, 255, 0.7),
+              inset 0 -2px 4px rgba(0, 0, 0, 0.15),
+              0 4px 14px rgba(232, 74, 35, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.im-btn-specular:hover {
+  filter: brightness(1.05);
+  box-shadow: inset 0 1.5px 1.5px rgba(255, 255, 255, 0.8),
+              inset 0 -2px 4px rgba(0, 0, 0, 0.18),
+              0 6px 20px rgba(232, 74, 35, 0.35);
+}
+
+.im-btn-specular:active {
+  transform: scale(0.985);
+  filter: brightness(0.98);
+}
+
+/* Specular Secondary (Frosted Glass / Light Specular) */
+.im-btn-specular-secondary {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #ffffff 0%, #F8FAFC 60%, #EDF2F7 100%);
+  border: 1px solid rgba(203, 213, 225, 0.8);
+  color: #0B1C30;
+  font-weight: 500;
+  box-shadow: inset 0 1.5px 1.5px rgba(255, 255, 255, 1),
+              inset 0 -1px 2px rgba(0, 0, 0, 0.04),
+              0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.im-btn-specular-secondary:hover {
+  filter: brightness(0.97);
+  border-color: rgba(148, 163, 184, 0.9);
+}
+
+.im-btn-specular-secondary:active {
+  transform: scale(0.985);
+}
+
+.im-badge-indigo,
+.im-badge-brand {
   background-color: #fdf2ea;
   color: #C85A17;
-  font-weight: 500;
+  font-weight: 600;
   border-radius: 9999px;
+}
+
+/* Custom warm scrollbar for dashboard */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E2D9CE;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C8BDB0;
 }
 
 @layer base {
